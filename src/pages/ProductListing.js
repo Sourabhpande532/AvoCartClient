@@ -23,7 +23,7 @@ function useQuery() {
 }
 
 export const ProductListing = () => {
-    const { products, categories,loading } = useAppFeatures();
+    const { products,loading } = useAppFeatures();
     const [filtered, setFiltered] = useState( [] );
     const [selectedCats, setSelectedCats] = useState( "" );
     const [rating, setRating] = useState( 0 );
@@ -38,7 +38,8 @@ export const ProductListing = () => {
         const qsearch = query.get( 'search' );
         if ( qcat ) setSelectedCats( qcat )
         if ( qsearch ) setSearch( qsearch )
-    }, [] );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedCats] );
     // UPADATE CATE HERE NO SEPARATE THIS setCategories[QCAT] TO [..here..] FROM STATE selectedCats
 
 

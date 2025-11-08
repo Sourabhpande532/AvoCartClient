@@ -6,7 +6,7 @@ export const CartPage = () => {
         <h4>My Cart</h4>
           <div className="card mb-2 p-2">
             <div className="d-flex">
-              <img src={'https://picsum.photos/id/1/200/300'} style={{width:100, height:100, objectFit:'cover'}} />
+              <img src={'https://picsum.photos/id/1/200/300'} alt="imgCart" style={{width:100, height:100, objectFit:'cover'}} />
               <div className="ms-3 flex-grow-1">
                 <h6>Premium</h6>
                 <p>₹46</p>
