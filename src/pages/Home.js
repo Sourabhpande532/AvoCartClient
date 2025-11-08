@@ -12,7 +12,7 @@ export const Home = () => {
                 { Array.isArray( categories ) && categories.length > 0 ? (
                     categories.map( ( cat ) => (
                         <div key={ cat._id } className="col-md-4 mb-3">
-                            <div className="card" style={ { cursor: "pointer" } } onClick={ () => navigate( `/products?category=${ cat._id }` ) }>
+                            <div className="card" style={ { cursor: "pointer" } } onClick={ () => navigate( `/products?categorysent=${ cat._id }` ) }>
                                 <img src={ cat.image || 'https://picsum.photos/id/21/200/300' } className="img-fluid card-img-top" alt={ cat.name }
                                 style={{maxWidth:"440px", maxHeight:"250px", objectFit:"cover"}}
                                 />
