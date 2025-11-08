@@ -13,7 +13,7 @@ export const Home = () => {
                     categories.map( ( cat ) => (
                         <div key={ cat._id } className="col-md-4 mb-3">
                             <div className="card" style={ { cursor: "pointer" } } onClick={ () => navigate( `/products?category=${ cat._id }` ) }>
-                                <img src={ cat.image || 'https://via.placeholder.com/400x200' } className="img-fluid card-img-top" alt={ cat.name }
+                                <img src={ cat.image || 'https://picsum.photos/id/21/200/300' } className="img-fluid card-img-top" alt={ cat.name }
                                 style={{maxWidth:"440px", maxHeight:"250px", objectFit:"cover"}}
                                 />
                                 <div className="card-body">

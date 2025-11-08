@@ -8,6 +8,7 @@ import { CartPage } from "./pages/CartPage";
 import { AppProvider } from "./contexts/AppContext";
 import { ProductListing } from "./pages/ProductListing";
 import { ProductDetails } from "./pages/ProductDetails";
+import { Profile } from "./pages/Profile";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                         <Route path="/products/:id" element={ <ProductDetails /> } />
                         <Route path="/wishlist" element={ <Wishlist /> } />
                         <Route path="/cart" element={ <CartPage /> } />
+                        <Route path="/profile" element={<Profile/>}/>
                     </Routes>
                 </div>
             </BrowserRouter>
