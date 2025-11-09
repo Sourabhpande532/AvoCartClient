@@ -348,9 +348,15 @@ Step	What happens
 a - b → ascending order  
 b - a → descending order 
 
+const numbers = [3,5,2,50,33]
+a=3,b=5 3 - 5 = -2 put sam 3,5 
+a=5 b=2 5 - 2 = +3 swap it 2,5 result [3,2,5] asencding...
+a=3, b=5i.e 5-2 = 3 swap 5,3 
+a=3,b =2 i.e 2-3 = -1 result [5,3,2]
+
 const fruits = ["Bannana", "Apple", "Orange"];
 console.log( fruits.sort() );
 const numbers = [100, 20, 5, 15]
-numbers.sort( ( a, b ) => b - a ) //ascenging 
+numbers.sort( ( a, b ) => b - a ) //dscenging 
 console.log( numbers );
 */
