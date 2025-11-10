@@ -3,13 +3,8 @@ import { useAppFeatures } from "../contexts/AppContext";
 import { useEffect } from "react";
 export default function ProductCart( { product } ) {
     const navigate = useNavigate();
-    const { addToWishlist, alert:messsage } = useAppFeatures();
-    console.log(messsage);
+    const { addToWishlist} = useAppFeatures();
     
-    useEffect( () => {
-        // alert(messsage.text)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
     return (
         <div className="card h-100">
             <img src={ product.images[0] || 'https://placehold.co/200' } alt={ product.title } style={ { height: 200, objectFit: "cover" } } />

@@ -29,9 +29,10 @@ export const ProductListing = () => {
     const [rating, setRating] = useState( 0 );
     const [sort, setSort] = useState( '' )
     const [search, setSearch] = useState( "" );
+    const [rat, setRat] = useState("")
     const query = useQuery();
-    
-    
+
+
     // PAGE LOAD ....FIRT TIME GET ID LOGIC ENSURE UI LOAD PROPERLY THEN RUN THIS WHRN REDIRECT FORM HOME TO HERE LISTING PAGE 
     useEffect( () => {
         const qcat = query.get( "categorysent" ); //return ID: e.g 690c2841fb89580b5ca2f5d0
@@ -48,20 +49,21 @@ export const ProductListing = () => {
         // Copy of all products nNum to Filter one into 3 or 4 ... product cart so product change i.w [products]
         let res = [...products];
         if ( selectedCats.length ) res = res.filter( ( product ) => selectedCats.includes( String( product.category?._id ) ) );
-        if(price) res = res.filter((product)=>product.price > price)
+        if ( price ) res = res.filter( ( product ) => product.price > price )
         if ( rating ) res = res.filter( ( product ) => product.rating >= rating )
+        if ( rat === 4 ) res = res.filter( ( product ) => product.rating > rat )
         if ( sort === "low" ) res.sort( ( a, b ) => a.price - b.price )
         if ( sort === "high" ) res.sort( ( a, b ) => b.price - a.price )
         setFiltered( res )
-    }, [products, selectedCats, price, rating, sort] )
+    }, [products, selectedCats, price, rating, rat, sort] )
 
-    const clearAll = () => { setSelectedCats( [query.get( "categorysent" )] ); setRating( 0 ); setSort( "" ) }
+    const clearAll = () => { setSelectedCats( [query.get( "categorysent" )] ); setRating( 0 ); setSort( "" ); setPrice( 300 ); setRat( "" ) }
     if ( loading ) return <p className="text-center">Loading...</p>
 
     return (
         <div className="row">
             <div className="col-md-3">
-                <FiltersSidebar categories={ categories } selectedCats={ selectedCats } setSelectedCats={ setSelectedCats } price={price} setPrice={setPrice} rating={ rating } setRating={ setRating } sort={ sort } setSort={ setSort } clearAll={ clearAll } />
+                <FiltersSidebar categories={ categories } selectedCats={ selectedCats } setSelectedCats={ setSelectedCats } price={ price } setPrice={ setPrice } rating={ rating } setRating={ setRating } rat={ rat } setRat={ setRat } sort={ sort } setSort={ setSort } clearAll={ clearAll } />
             </div>
             <div className="col-md-9">
                 <div className="mb-3 d-flex justify-content-between">

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-anonymous-default-export
-export default function( { categories, selectedCats, setSelectedCats, rating, setRating, sort, setSort, clearAll, price, setPrice } ) {
+export default function( { categories, selectedCats, setSelectedCats, rating, setRating, rat, setRat, sort, setSort, clearAll, price, setPrice } ) {
   const toggleCategoryChange = ( categoryId ) => {
     const alreadySelected = selectedCats.includes( categoryId );
     // When uncheck it removed from here now exits remove it 
@@ -32,7 +32,7 @@ export default function( { categories, selectedCats, setSelectedCats, rating, se
             onChange={ ( e ) => setPrice( Number( e.target.value ) ) }
             className="form-range"
           />
-          <p>Up to ₹{price}</p>
+          <p>Up to ₹{ price }</p>
         </div>
 
         <div className="mt-3">
@@ -62,6 +62,32 @@ export default function( { categories, selectedCats, setSelectedCats, rating, se
             className="form-range"
             onChange={ ( e ) => setRating( Number( e.target.value ) ) }
           />
+        </div>
+
+        <div className="mt-4">
+          <h4><strong>Rating +{ rat }</strong></h4>
+          <div className="form-check">
+            <input
+              type="radio"
+              name="rating"
+              className="form-check-input"
+              id="filterByFour"
+              checked={ rat === 4 }
+              onChange={ () => setRat( 4 ) }
+            />
+            <label className="form-check-label" htmlFor="filterByFour">4 Star & above</label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              name="rating"
+              className="form-check-input"
+              id="filterByThree"
+              checked={ rat === 3 }
+              onChange={ () => setRat( 3 ) }
+            />
+            <label className="form-check-label" htmlFor="filterByThree">3- Star and above</label>
+          </div>
         </div>
 
         <div className="mt-4">
