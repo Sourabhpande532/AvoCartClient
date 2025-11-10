@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { useAppFeatures } from "../contexts/AppContext";
-import { useEffect } from "react";
 export default function ProductCart( { product } ) {
     const navigate = useNavigate();
     const { addToWishlist} = useAppFeatures();
