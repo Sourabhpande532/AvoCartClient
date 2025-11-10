@@ -30,6 +30,8 @@ export const ProductListing = () => {
     const [sort, setSort] = useState( '' )
     const [search, setSearch] = useState( "" );
     const query = useQuery();
+    
+    
     // PAGE LOAD ....FIRT TIME GET ID LOGIC ENSURE UI LOAD PROPERLY THEN RUN THIS WHRN REDIRECT FORM HOME TO HERE LISTING PAGE 
     useEffect( () => {
         const qcat = query.get( "categorysent" ); //return ID: e.g 690c2841fb89580b5ca2f5d0

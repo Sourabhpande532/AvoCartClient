@@ -3,10 +3,9 @@ import { useAppFeatures } from "../contexts/AppContext";
 
 export const ProductDetails = () => {
     const { id } = useParams();
-    const { products, loading } = useAppFeatures();
+    const { products,addToWishlist, loading } = useAppFeatures();
     // eslint-disable-next-line eqeqeq
     const product = products.find( ( p ) => p._id == id );
-    console.log( product );
     if ( loading ) return <div>Loading...</div>
     return (
         <div className="row">
@@ -17,7 +16,7 @@ export const ProductDetails = () => {
                 <p>Rating: { product.rating }</p>
                 <p>{ product.description }</p>
                 <button className="btn btn-primary me-2">Add to cart</button>
-                <button className="btn btn-outline-secondary">Add to wishlist</button>
+                <button className="btn btn-outline-secondary" onClick={()=>addToWishlist(product._id)}>Add to wishlist</button>
             </div>
         </div>
     )

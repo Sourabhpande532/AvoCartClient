@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useAppFeatures } from "../contexts/AppContext";
 
 const Header = () => {
+  const {wishlist} = useAppFeatures();
   return (
     <nav className=' container navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4 py-2'>
       <div className='container-fluid'>
@@ -29,7 +31,7 @@ const Header = () => {
             <span className='position-relative'>
               <span className='fs-5'>♥️</span>
               <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-              5
+              {wishlist.length}
               </span>
             </span>
           </NavLink>

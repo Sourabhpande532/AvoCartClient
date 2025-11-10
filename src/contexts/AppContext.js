@@ -7,9 +7,9 @@ const AppProvider = ( { children } ) => {
     const [products, setProducts] = useState( [] );
     const [categories, setCategories] = useState( [] );
     const [loading, setLoading] = useState( false );
-    // console.log( "Initial Loading..products", products );
-    // console.log( "Initial Loading..categories", categories );
-
+    const [wishlist, setWishlist] = useState( [] );
+    const [alert, setAlert] = useState( [] );
+ 
     useEffect( () => {
         async function fetchData() {
             setLoading( true );
@@ -25,8 +25,40 @@ const AppProvider = ( { children } ) => {
         fetchData()
     }, [] )
 
+    const fetchWishlist = async () => {
+        try {
+            const res = await API.get( "/wishlist" );
+            setWishlist( res.data.data.wishlist || [] );
+        } catch ( error ) {
+            console.error( error );
+        }
+    }
+
+    const addToWishlist = async ( productId ) => {
+        try {
+            const res = await API.post( "/wishlist", { productId } );
+            setWishlist( res.data.data.wishlist || [] );
+            setAlert( prev => [...prev, { type: "success", text: "Added to wishlist" }] )
+        } catch ( error ) {
+            console.error( error );
+        }
+    }
+
+    const removeFromWishlist = async ( id ) => {
+        try {
+            await API.delete( `/wishlist/${ id }` );
+            await fetchWishlist();
+            setAlert( prev => [...prev, { type: "warning", text: "Removed from wishlist" }] )
+        } catch ( error ) {
+            console.error( error );
+        }
+    }
+    useEffect( () => {
+        fetchWishlist();
+        addToWishlist();
+    }, [] )
     return (
-        <AppContext.Provider value={ { products, setProducts, categories, loading } }>
+        <AppContext.Provider value={ { products, setProducts, categories, loading, setLoading, wishlist, setWishlist, addToWishlist,removeFromWishlist, alert, setAlert } }>
             { children }
         </AppContext.Provider>
     )
