@@ -2,6 +2,8 @@ import { useAppFeatures } from "../contexts/AppContext"
 
 export const CartPage = () => {
   const { cart, loading, updateCartQty, removeFromCart, addToWishlist } = useAppFeatures();
+  console.log(cart);
+  
   //   const total = cart.reduce((sum, item)=> sum + (item?.product?.price * item?.qty), 0);
   const total = cart?.reduce( ( sum, item ) => sum + ( item.product?.price * item?.qty ), 0 );
 
@@ -40,7 +42,9 @@ export const CartPage = () => {
         <div className="col-md-4">
           <div className="card p-3">
             <h5>Price Details</h5>
-            <p>Items: { cart.length }</p>
+            <p>Price ({cart.length} item): {cart[0]?.product?.price}</p>
+            <p>Discount: {cart[0].product.discount}</p>
+            <p>Delivery Charges: {cart[0].product.deliveryCharge}</p>
             <p>Total:
               <strong>  ₹{ `${ total }` }</strong>
             </p>
