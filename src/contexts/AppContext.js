@@ -9,7 +9,7 @@ const AppProvider = ( { children } ) => {
     const [loading, setLoading] = useState( false );
     const [wishlist, setWishlist] = useState( [] );
     const [alert, setAlert] = useState( [] );
- 
+    const [cart, setCart] = useState( [] );
     useEffect( () => {
         async function fetchData() {
             setLoading( true );
@@ -24,6 +24,45 @@ const AppProvider = ( { children } ) => {
         }
         fetchData()
     }, [] )
+
+    const fetchCart = async () => {
+        try {
+            const res = await API.get( "/cart" );
+            setCart( res.data.data.cart || [] )
+        } catch ( error ) {
+            console.error( error );
+        }
+    }
+
+    const addToCart = async ( productId ) => {
+        try {
+            const res = await API.post( "/cart", { productId } )
+            setCart( res.data.data.cart || [] );
+            setAlert( prev => [...prev, { type: "Success", text: "Added to cart" }] )
+        } catch ( error ) {
+            console.error( error );
+        }
+    }
+
+    const updateCartQty = async ( cartItemId, qty ) => {
+        try {
+            await API.put( `/cart/${ cartItemId }`, { qty } );
+            await fetchCart();
+            setAlert( prev => [...prev, { type: 'info', text: 'Cart updated' }] );
+        } catch ( error ) {
+            console.error( error );
+        }
+    }
+
+    const removeFromCart = async ( cartItemId ) => {
+        try {
+            await API.delete( `/cart/${ cartItemId }` );
+            await fetchCart();
+            setAlert( prev => [...prev, { type: 'warning', text: 'Removed from cart' }] );
+        } catch ( error ) {
+            console.error( error );
+        }
+    }
 
     const fetchWishlist = async () => {
         try {
@@ -54,11 +93,11 @@ const AppProvider = ( { children } ) => {
         }
     }
     useEffect( () => {
+        fetchCart();
         fetchWishlist();
-        addToWishlist();
     }, [] )
     return (
-        <AppContext.Provider value={ { products, setProducts, categories, loading, setLoading, wishlist, setWishlist, addToWishlist,removeFromWishlist, alert, setAlert } }>
+        <AppContext.Provider value={ { products, setProducts, categories, loading, wishlist, setWishlist, addToWishlist, removeFromWishlist,cart,setCart, addToCart, updateCartQty, removeFromCart, alert, setAlert } }>
             { children }
         </AppContext.Provider>
     )

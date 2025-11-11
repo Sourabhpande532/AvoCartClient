@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom"
 import { useAppFeatures } from "../contexts/AppContext";
 export default function ProductCart( { product } ) {
     const navigate = useNavigate();
-    const { addToWishlist} = useAppFeatures();
-    
+    const { addToCart, addToWishlist } = useAppFeatures();
+
     return (
         <div className="card h-100">
             <img src={ product.images[0] || 'https://placehold.co/200' } alt={ product.title } style={ { height: 200, objectFit: "cover" } } />
@@ -12,7 +12,7 @@ export default function ProductCart( { product } ) {
                 <p className="mb-1">₹{ product.price }</p>
                 <p className="mb-2">Rating: { product.rating }</p>
                 <div className="mt-auto d-flex gap-2">
-                    <button className="btn btn-primary btn-sm" >Add to Cart</button>
+                    <button className="btn btn-primary btn-sm" onClick={ () => addToCart( product._id ) }>Add to Cart</button>
                     <button className="btn btn-outline-secondary btn-sm" onClick={ () => addToWishlist( product._id ) }>Wishlist</button>
                 </div>
             </div>

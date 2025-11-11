@@ -29,14 +29,14 @@ export const ProductListing = () => {
     const [rating, setRating] = useState( 0 );
     const [sort, setSort] = useState( '' )
     const [search, setSearch] = useState( "" );
-    const [rat, setRat] = useState("")
+    const [rat, setRat] = useState( "" )
     const query = useQuery();
 
 
     // PAGE LOAD ....FIRT TIME GET ID LOGIC ENSURE UI LOAD PROPERLY THEN RUN THIS WHRN REDIRECT FORM HOME TO HERE LISTING PAGE 
     useEffect( () => {
         const qcat = query.get( "categorysent" ); //return ID: e.g 690c2841fb89580b5ca2f5d0
-        const qsearch = query.get( 'search' );
+        const qsearch = query.get( 'search' )
         if ( qcat ) setSelectedCats( [qcat] )
         if ( qsearch ) setSearch( qsearch )
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,10 +52,11 @@ export const ProductListing = () => {
         if ( price ) res = res.filter( ( product ) => product.price > price )
         if ( rating ) res = res.filter( ( product ) => product.rating >= rating )
         if ( rat === 4 ) res = res.filter( ( product ) => product.rating > rat )
+        if ( search ) res = res.filter( p => p.title.toLowerCase().includes( search.toLowerCase() ) )
         if ( sort === "low" ) res.sort( ( a, b ) => a.price - b.price )
         if ( sort === "high" ) res.sort( ( a, b ) => b.price - a.price )
         setFiltered( res )
-    }, [products, selectedCats, price, rating, rat, sort] )
+    }, [products, selectedCats, price, rating, rat, sort, search] )
 
     const clearAll = () => { setSelectedCats( [query.get( "categorysent" )] ); setRating( 0 ); setSort( "" ); setPrice( 300 ); setRat( "" ) }
     if ( loading ) return <p className="text-center">Loading...</p>
