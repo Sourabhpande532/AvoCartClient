@@ -10,6 +10,9 @@ const AppProvider = ( { children } ) => {
     const [wishlist, setWishlist] = useState( [] );
     const [alert, setAlert] = useState( [] );
     const [cart, setCart] = useState( [] );
+    const [addresses, setAddresses] = useState( [] );
+    const [orders, setOrders] = useState( [] )
+
     useEffect( () => {
         async function fetchData() {
             setLoading( true );
@@ -92,12 +95,53 @@ const AppProvider = ( { children } ) => {
             console.error( error );
         }
     }
+
+    const fetchAddresses = async () => {
+        try {
+            const res = await API.get( "/addresses" );
+            setAddresses( res.data.data.addresses || [] );
+        } catch ( error ) {
+            throw error
+        }
+    }
+
+    const addAddress = async ( address ) => {
+        try {
+            const res = await API.post( "/addresses", address );
+            setAddresses( res.data.data.addresses || [] );
+        } catch ( error ) {
+            throw error
+        }
+    }
+    //PENDING>>
+
+    const fetchOrders = async () => {
+        try {
+            const res = await API.get( "/orders" );
+            setOrders( res.data.data.orders || [] )
+        } catch ( error ) {
+            throw error
+        }
+    }
+
+    const placeOrders = async ( order ) => {
+        try {
+            const res = await API.post( '/orders', order );
+            setOrders( prev => [res.data.data.order, ...prev] )
+            setAlert( prev => [...prev, { type: "success", text: "Order placed successfully" }] );
+            return res.data.data.order;
+        } catch ( error ) {
+            throw error
+        }
+    }
     useEffect( () => {
         fetchCart();
         fetchWishlist();
+        fetchAddresses();
+        fetchOrders();
     }, [] )
     return (
-        <AppContext.Provider value={ { products, setProducts, categories, loading, wishlist, setWishlist, addToWishlist, removeFromWishlist,cart,setCart, addToCart, updateCartQty, removeFromCart, alert, setAlert } }>
+        <AppContext.Provider value={ { products, setProducts, categories, loading, wishlist, setWishlist, addToWishlist, removeFromWishlist, cart, setCart, addToCart, updateCartQty, removeFromCart, alert, setAlert, addAddress, addresses, orders, placeOrders } }>
             { children }
         </AppContext.Provider>
     )

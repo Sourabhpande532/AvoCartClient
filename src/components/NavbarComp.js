@@ -54,7 +54,6 @@ const Header = () => {
               </span>
             </span>
           </NavLink>
-
           <NavLink className="nav-link" to="/profile">🧑‍💻Profile</NavLink>
         </div>
       </div>
