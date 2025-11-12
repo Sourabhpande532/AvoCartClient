@@ -1,6 +1,7 @@
 import { useAppFeatures } from "../contexts/AppContext";
 
 export const Profile = () => {
+    // eslint-disable-next-line no-unused-vars
     const { orders,addAddress, loading } = useAppFeatures();
    
     const user = { name: 'John Doe', email: 'demo@example.com', phone: '9999999999' };
