@@ -6,10 +6,12 @@ const Header = () => {
   const { wishlist, cart } = useAppFeatures();
   const [q, setQ] = useState( '' );
   const navigate = useNavigate();
+
   const onSearch = ( e ) => {
     e.preventDefault();
     navigate( `/products?search=${ encodeURIComponent( q ) }` );
   };
+  
   return (
     <nav className=' container navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4 py-2'>
       <div className='container-fluid'>

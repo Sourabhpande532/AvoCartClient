@@ -175,7 +175,7 @@ const AppProvider = ( { children } ) => {
         fetchOrders();
     }, [] )
     return (
-        <AppContext.Provider value={ { products, setProducts, categories, loading, wishlist, setWishlist, addToWishlist, removeFromWishlist, cart, setCart, addToCart, updateCartQty, removeFromCart, alert, setAlert, addAddress, addresses, orders, placeOrders } }>
+        <AppContext.Provider value={ { products, setProducts, categories, loading, wishlist, setWishlist, addToWishlist, removeFromWishlist, cart, setCart, addToCart, updateCartQty, removeFromCart, alert, setAlert, addAddress, addresses, orders, placeOrders,updateAddress,deleteAddress } }>
             { children }
         </AppContext.Provider>
     )
