@@ -28,6 +28,11 @@ const AppProvider = ( { children } ) => {
         fetchData()
     }, [] )
 
+    const pushAlert = ( a ) => {
+        setAlert( prev => [...prev, a] )
+        setTimeout( () => setAlert( prev => prev.slice( 1 ) ), 3500 );
+    }
+
     const fetchCart = async () => {
         try {
             const res = await API.get( "/cart" );
@@ -41,9 +46,10 @@ const AppProvider = ( { children } ) => {
         try {
             const res = await API.post( "/cart", { productId } )
             setCart( res.data.data.cart || [] );
-            setAlert( prev => [...prev, { type: "Success", text: "Added to cart" }] )
+            pushAlert( { type: "Success", text: "Added to cart" } )
         } catch ( error ) {
             console.error( error );
+            pushAlert( { type: 'error', text: 'Failed to add to cart' } );
         }
     }
 
@@ -51,9 +57,10 @@ const AppProvider = ( { children } ) => {
         try {
             await API.put( `/cart/${ cartItemId }`, { qty } );
             await fetchCart();
-            setAlert( prev => [...prev, { type: 'info', text: 'Cart updated' }] );
+            pushAlert( { type: 'info', text: 'Cart updated' } );
         } catch ( error ) {
             console.error( error );
+            pushAlert( { type: 'error', text: 'Failed to update cart' } );
         }
     }
 
@@ -61,9 +68,10 @@ const AppProvider = ( { children } ) => {
         try {
             await API.delete( `/cart/${ cartItemId }` );
             await fetchCart();
-            setAlert( prev => [...prev, { type: 'warning', text: 'Removed from cart' }] );
+            pushAlert( { type: 'warning', text: 'Removed from cart' } );
         } catch ( error ) {
             console.error( error );
+            pushAlert( { type: 'error', text: 'Failed to remove from cart' } );
         }
     }
 
@@ -80,9 +88,10 @@ const AppProvider = ( { children } ) => {
         try {
             const res = await API.post( "/wishlist", { productId } );
             setWishlist( res.data.data.wishlist || [] );
-            setAlert( prev => [...prev, { type: "success", text: "Added to wishlist" }] )
+            pushAlert( { type: "success", text: "Added to wishlist" } )
         } catch ( error ) {
             console.error( error );
+            pushAlert( { type: 'error', text: 'Failed to add to wishlist' } );
         }
     }
 
@@ -90,9 +99,10 @@ const AppProvider = ( { children } ) => {
         try {
             await API.delete( `/wishlist/${ id }` );
             await fetchWishlist();
-            setAlert( prev => [...prev, { type: "warning", text: "Removed from wishlist" }] )
+            pushAlert( { type: "warning", text: "Removed from wishlist" } )
         } catch ( error ) {
             console.error( error );
+            pushAlert( { type: 'error', text: 'Failed to remove wishlist item' } );
         }
     }
 
@@ -109,18 +119,41 @@ const AppProvider = ( { children } ) => {
         try {
             const res = await API.post( "/addresses", address );
             setAddresses( res.data.data.addresses || [] );
+            pushAlert( { type: "success", text: "Address added" } );
         } catch ( error ) {
-            throw error
+            console.error( error );
+            pushAlert( { type: 'error', text: 'Failed to add address' } );
         }
     }
-    //PENDING>>
+
+    const updateAddress = async ( id, dataToUpdates ) => {
+        try {
+            const res = await API.put( `/addresses/${ id }`, dataToUpdates );
+            await fetchAddresses();
+            pushAlert( { type: 'info', text: 'Address updated' } );
+            return res.data.data.address;
+        } catch ( error ) {
+            console.error( error );
+            pushAlert( { type: "error", text: "Failed to update cart" } )
+        }
+    }
+
+    const deleteAddress = async ( id ) => {
+        try {
+            await API.delete( `/addresses/${ id }` );
+            await fetchAddresses();
+            pushAlert( { type: 'warning', text: 'Address deleted' } );
+        } catch ( error ) {
+            console.error( error ); pushAlert( { type: 'error', text: 'Failed to delete address' } );
+        }
+    }
 
     const fetchOrders = async () => {
         try {
             const res = await API.get( "/orders" );
             setOrders( res.data.data.orders || [] )
         } catch ( error ) {
-            throw error
+            console.error( error );
         }
     }
 
@@ -128,10 +161,11 @@ const AppProvider = ( { children } ) => {
         try {
             const res = await API.post( '/orders', order );
             setOrders( prev => [res.data.data.order, ...prev] )
-            setAlert( prev => [...prev, { type: "success", text: "Order placed successfully" }] );
+            pushAlert( { type: 'success', text: 'Order placed successfully' } );
             return res.data.data.order;
         } catch ( error ) {
-            throw error
+            console.error(error);
+            pushAlert({ type: 'error', text: 'Failed to place order' });
         }
     }
     useEffect( () => {
