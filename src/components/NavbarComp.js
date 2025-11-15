@@ -9,7 +9,8 @@ const Header = () => {
 
   const onSearch = (e) => {
     e.preventDefault();
-    navigate(`/products?search=${encodeURIComponent(q)}`);
+    const query = q.trim();
+    navigate(`/products?search=${encodeURIComponent(query)}`);
   };
 
   return (
