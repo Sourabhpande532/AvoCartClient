@@ -58,7 +58,7 @@ const AppProvider = ({ children }) => {
   };
 
   const updateCartQty = async (cartItemId, newQty, oldQty) => {
-    const diff = newQty - oldQty;
+    const diff = parseInt(newQty) - parseInt(oldQty);
     let trackSize = "";
     if (diff > 0) {
       trackSize = `Qty Increased by ${diff}`;
