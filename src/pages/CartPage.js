@@ -50,85 +50,135 @@ Move to next Cart item
 */
 
   return (
-    <div className=''>
-      <div className='row'>
-        <div className='col-md-8'>
-          <h4>My Cart</h4>
-          {filteredCart.length === 0 && <p>Your Cart is empty</p>}
-          {loading && <p className='text-center'>Loading....</p>}
-          {Array.isArray(filteredCart) &&
-            filteredCart.length > 0 &&
-            filteredCart.map((ci) => (
-              <div key={ci._id} className='card mb-2 p-2'>
-                {!ci.product ? (
-                  <p className='text-danger'>Product unavailable</p>
-                ) : (
-                  <div className='d-flex'>
-                    <img
-                      src={
-                        ci?.product?.images?.[0] ||
-                        "https://picsum.photos/id/1/200/300"
-                      }
-                      alt='imgCart'
-                      style={{ width: 100, height: 100, objectFit: "cover" }}
-                    />
-                    <div className='ms-3 flex-grow-1'>
-                      <h6>{ci.product?.title}</h6>
-                      <p>₹ {ci.product?.price}</p>
-                      <div className='d-flex align-items-center gap-2'>
+  <div className="container py-4">
+      <div className="row g-3">
+
+        {/* LEFT CART SECTION */}
+        <div className="col-lg-8">
+          <h4 className="mb-3 fw-bold">🛒 My Cart</h4>
+
+          {loading && <p className="text-center">Loading...</p>}
+          {filteredCart.length === 0 && (
+            <div className="alert alert-warning text-center">
+              Your cart is empty
+            </div>
+          )}
+
+          {filteredCart.map((ci) => (
+            <div
+              key={ci._id}
+              className="card shadow-sm mb-3 p-3 border-0 rounded-3"
+            >
+              {!ci.product ? (
+                <p className="text-danger">Product unavailable</p>
+              ) : (
+                <div className="d-flex align-items-center flex-wrap">
+
+                  {/* Product Image */}
+                  <img
+                    src={
+                      ci?.product?.images?.[0] || "https://picsum.photos/200"
+                    }
+                    alt="cart-product"
+                    className="rounded"
+                    style={{
+                      width: 100,
+                      height: 100,
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  {/* Details */}
+                  <div className="ms-3 flex-grow-1">
+                    <h6 className="fw-semibold">{ci.product?.title}</h6>
+                    <p className="text-muted mb-1">
+                      ₹{ci.product?.price}{" "}
+                      <span className="text-success small ms-1">
+                        {ci.product?.discount}% Off
+                      </span>
+                    </p>
+
+                    {/* Quantity & Actions */}
+                    <div className="d-flex align-items-center gap-2 mt-2">
+                      <div className="btn-group" role="group">
                         <button
-                          className='btn btn-sm btn-outline-secondary'
+                          className="btn btn-sm btn-outline-secondary"
                           onClick={() =>
-                            updateCartQty(ci?._id, Math.max(1, ci?.qty - 1))
-                          }>
+                            updateCartQty(ci._id, Math.max(1, ci.qty - 1), ci.qty)
+                          }
+                        >
                           -
                         </button>
-                        <span>{ci?.qty}</span>
+
+                        <button className="btn btn-sm btn-light px-3">
+                          {ci.qty}
+                        </button>
+
                         <button
-                          className='btn btn-sm btn-outline-secondary'
-                          onClick={() => updateCartQty(ci?._id, ci.qty + 1)}>
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() =>
+                            updateCartQty(ci._id, ci.qty + 1, ci.qty)
+                          }
+                        >
                           +
                         </button>
-                        <button
-                          className='btn btn-sm btn-outline-danger'
-                          onClick={() => removeFromCart(ci?._id)}>
-                          Remove
-                        </button>
-                        <button
-                          className='btn btn-sm btn-outline-secondary'
-                          onClick={() => addToWishlist(ci.product?._id)}>
-                          Move to wishlist
-                        </button>
                       </div>
+
+                      <button
+                        className="btn btn-sm btn-outline-danger ms-2"
+                        onClick={() => removeFromCart(ci._id)}
+                      >
+                        🗑 Remove
+                      </button>
+
+                      <button
+                        className="btn btn-sm btn-outline-primary ms-2"
+                        onClick={() => addToWishlist(ci.product?._id)}
+                      >
+                        ❤️ Wishlist
+                      </button>
                     </div>
                   </div>
-                )}
-              </div>
-            ))}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* 🧾 PRICE DETAILS CARD */}
-        <div className='col-md-4'>
-          <div className='card p-3'>
-            <h5>Price Details</h5>
-            <p>
-              Total MRP: <strong>₹ {totalMRP.toFixed(2)}</strong>
-            </p>
-            <p style={{ color: "green" }}>
-              You Saved: <strong>₹{totalDiscount.toFixed(2)}</strong> 🎉 on (
-              <strong>25% Off</strong>)
-            </p>
-            <p>
-              Delivery Charges(199Rs):{" "}
-              <strong> ₹{totalDelivery.toFixed(2)}</strong>
-            </p>
+        {/* PRICE DETAILS SECTION */}
+        <div className="col-lg-4">
+          <div className="card p-3 shadow-sm rounded-3">
+
+            <h5 className="fw-bold border-bottom pb-2">Price Details</h5>
+
+            <div className="d-flex justify-content-between my-2">
+              <span>Total MRP:</span>
+              <strong>₹ {totalMRP.toFixed(2)}</strong>
+            </div>
+
+            <div className="d-flex justify-content-between my-2 text-success">
+              <span>You Saved:</span>
+              <strong>₹ {totalDiscount.toFixed(2)}</strong>
+            </div>
+
+            <div className="d-flex justify-content-between my-2">
+              <span>Delivery Charges:</span>
+              <strong>₹ {totalDelivery.toFixed(2)}</strong>
+            </div>
+
             <hr />
-            <h5>
-              Final Amount: <strong>₹{finalAmount.toFixed(2)}</strong>
-            </h5>
-            <Checkout />
+
+            <div className="d-flex justify-content-between my-2 fs-5">
+              <span className="fw-bold">Final Amount:</span>
+              <strong>₹ {finalAmount.toFixed(2)}</strong>
+            </div>
+
+            <div className="mt-3">
+              <Checkout />
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );

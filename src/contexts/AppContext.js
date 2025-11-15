@@ -57,11 +57,20 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const updateCartQty = async (cartItemId, qty) => {
+  const updateCartQty = async (cartItemId, newQty, oldQty) => {
+    const diff = newQty - oldQty;
+    let trackSize = "";
+    if (diff > 0) {
+      trackSize = `Qty Increased by ${diff}`;
+    } else if (diff < 0) {
+      trackSize = `Qty Decreased by ${Math.abs(diff)}`;
+    } else {
+      trackSize = "Qty Quantity unchanged";
+    }
     try {
-      await API.put(`/cart/${cartItemId}`, { qty });
+      await API.put(`/cart/${cartItemId}`, { qty: newQty });
       await fetchCart();
-      pushAlert({ type: "info", text: "Cart updated" });
+      pushAlert({ type: "info", text: `${trackSize}` });
     } catch (error) {
       console.error(error);
       pushAlert({ type: "error", text: "Failed to update cart" });
@@ -190,6 +199,17 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const deleteOrder = async (id) => {
+    try {
+      await API.delete(`/orders/${id}`);
+      await fetchOrders();
+      pushAlert({ type: "danger", text: "Order deleted" });
+    } catch (error) {
+      console.log(error);
+      pushAlert({ type: "error", text: "Failed to delete order" });
+    }
+  };
+
   useEffect(() => {
     fetchCart();
     fetchWishlist();
@@ -222,6 +242,7 @@ const AppProvider = ({ children }) => {
         deleteAddress,
         globalSearch,
         setGlobalSearch,
+        deleteOrder,
       }}>
       {children}
     </AppContext.Provider>
