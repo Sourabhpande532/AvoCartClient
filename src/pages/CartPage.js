@@ -2,38 +2,51 @@ import { useAppFeatures } from "../contexts/AppContext";
 import { Checkout } from "./Checkout";
 
 export const CartPage = () => {
-  const { cart, loading, updateCartQty, removeFromCart, addToWishlist } =
-    useAppFeatures();
+  const {
+    cart,
+    loading,
+    updateCartQty,
+    removeFromCart,
+    addToWishlist,
+    globalSearch,
+  } = useAppFeatures();
+
+  const filteredCart = (cart || []).filter((ci) =>
+    (ci?.product?.title || "")
+      .toLowerCase()
+      .includes((globalSearch || "").toLowerCase())
+  );
 
   // 💰 Calculate totals
-  const { totalMRP, totalDiscount, totalDelivery, finalAmount } = cart.reduce(
-    (acc, curr) => {
-      if (!curr.product) return acc; // Skip if product is missing
+  const { totalMRP, totalDiscount, totalDelivery, finalAmount } =
+    filteredCart.reduce(
+      (acc, curr) => {
+        if (!curr.product) return acc; // Skip if product is missing
 
-      const price = (curr.product.price || 0) * curr.qty;
-      const discount = curr.product.discount || 0;
-      const discountAmount = (price * discount) / 100;
+        const price = (curr.product.price || 0) * curr.qty;
+        const discount = curr.product.discount || 0;
+        const discountAmount = (price * discount) / 100;
 
-      const delivery = curr.product.deliveryCharge || 0;
-      const discountedPrice = price - discountAmount;
+        const delivery = curr.product.deliveryCharge || 0;
+        const discountedPrice = price - discountAmount;
 
-      acc.totalMRP += price;
-      acc.totalDiscount += discountAmount;
-      acc.totalDelivery += delivery;
-      acc.finalAmount += discountedPrice + delivery;
+        acc.totalMRP += price;
+        acc.totalDiscount += discountAmount;
+        acc.totalDelivery += delivery;
+        acc.finalAmount += discountedPrice + delivery;
 
-      return acc;
-    },
-    { totalMRP: 0, totalDiscount: 0, totalDelivery: 0, finalAmount: 0 }
-  );
-/* 
+        return acc;
+      },
+      { totalMRP: 0, totalDiscount: 0, totalDelivery: 0, finalAmount: 0 }
+    );
+  /* 
 This means:
 return acc; !product 
 Do not add any price
 Do not add any discount
 Do not add delivery charge
 Keep the totals exactly same
-Move to next cart item
+Move to next Cart item
 */
 
   return (
@@ -41,11 +54,11 @@ Move to next cart item
       <div className='row'>
         <div className='col-md-8'>
           <h4>My Cart</h4>
-          {cart.length === 0 && <p>Your cart is empty</p>}
+          {filteredCart.length === 0 && <p>Your Cart is empty</p>}
           {loading && <p className='text-center'>Loading....</p>}
-          {Array.isArray(cart) &&
-            cart.length > 0 &&
-            cart.map((ci) => (
+          {Array.isArray(filteredCart) &&
+            filteredCart.length > 0 &&
+            filteredCart.map((ci) => (
               <div key={ci._id} className='card mb-2 p-2'>
                 {!ci.product ? (
                   <p className='text-danger'>Product unavailable</p>

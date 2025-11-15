@@ -1,87 +1,80 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Header = () => {
-  const { wishlist, cart } = useAppFeatures();
-  const [q, setQ] = useState("");
-  const navigate = useNavigate();
+  const { wishlist, cart, globalSearch, setGlobalSearch } = useAppFeatures();
+  // update setGlobalSearch search on each keyword
+  const [q, setQ] = useState(globalSearch || "");
 
-  const onSearch = (e) => {
-    e.preventDefault();
-    const query = q.trim();
-    navigate(`/products?search=${encodeURIComponent(query)}`);
+  useEffect(() => setQ(globalSearch || ""), [globalSearch]);
+
+  const onChange = (e) => {
+    const value = e.target.value;
+    setQ(value);
+    setGlobalSearch(value); //Live update
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container">
-
+    <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+      <div className='container'>
         {/* Brand */}
-        <Link className="navbar-brand" to="/">
+        <Link className='navbar-brand' to='/'>
           MyShoppingSite
         </Link>
 
         {/* Toggle Button for Mobile */}
         <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navContent"
-          aria-controls="navContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
+          className='navbar-toggler'
+          type='button'
+          data-bs-toggle='collapse'
+          data-bs-target='#navContent'
+          aria-controls='navContent'
+          aria-expanded='false'
+          aria-label='Toggle navigation'>
+          <span className='navbar-toggler-icon'></span>
         </button>
 
         {/* Collapsible Content */}
-        <div className="collapse navbar-collapse" id="navContent">
-
+        <div className='collapse navbar-collapse' id='navContent'>
           {/* Search Bar */}
-          <form className="d-flex ms-auto my-2 my-lg-0" onSubmit={onSearch}>
-            <input
-              className="form-control me-2"
-              placeholder="Search"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-
+          {/* Live search input _ no button */}
+          <input
+            className='form-control ms-auto me-3 w-50'
+            placeholder='Search Products...'
+            value={q}
+            onChange={onChange}
+          />
           {/* Menu Items */}
-          <ul className="navbar-nav ms-lg-3 mt-3 mt-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link text-dark" to="/wishlist">
-                <span className="position-relative">
-                  <span className="fs-5">♥️</span>
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <ul className='navbar-nav ms-lg-3 mt-3 mt-lg-0'>
+            <li className='nav-item'>
+              <Link className='nav-link text-dark' to='/wishlist'>
+                <span className='position-relative'>
+                  <span className='fs-5'>♥️</span>
+                  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                     {wishlist.length}
                   </span>
                 </span>
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link text-dark" to="/cart">
-                <span className="position-relative">
-                  <span className="fs-5">🛒</span>
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+            <li className='nav-item'>
+              <Link className='nav-link text-dark' to='/cart'>
+                <span className='position-relative'>
+                  <span className='fs-5'>🛒</span>
+                  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>
                     {cart.length}
                   </span>
                 </span>
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link text-dark" to="/profile">
+            <li className='nav-item'>
+              <Link className='nav-link text-dark' to='/profile'>
                 🧑Profile
               </Link>
             </li>
           </ul>
-
         </div>
       </div>
     </nav>

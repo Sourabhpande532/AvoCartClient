@@ -12,6 +12,7 @@ const AppProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [globalSearch, setGlobalSearch] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -45,9 +46,9 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const addToCart = async (productId) => {
+  const addToCart = async (productId, qty = 1) => {
     try {
-      const res = await API.post("/cart", { productId });
+      const res = await API.post("/cart", { productId, qty });
       setCart(res.data.data.cart || []);
       pushAlert({ type: "Success", text: "Added to cart" });
     } catch (error) {
@@ -219,6 +220,8 @@ const AppProvider = ({ children }) => {
         placeOrders,
         updateAddress,
         deleteAddress,
+        globalSearch,
+        setGlobalSearch,
       }}>
       {children}
     </AppContext.Provider>

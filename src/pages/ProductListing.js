@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import FiltersSidebar from "../components/FiltersSidebar";
 import ProductCart from "../components/ProductCard";
-import { useAppFeatures } from "../contexts/AppContext"
+import { useAppFeatures } from "../contexts/AppContext";
 import { useEffect, useState } from "react";
 
 //useQuery: This is a custom React Hook that helps you read query parameters (the ?key=value part of a URL).
@@ -19,66 +19,97 @@ console.log(location.search); i.e ?page=3&category=xyz
 */
 
 function useQuery() {
-    return new URLSearchParams( useLocation().search )
+  return new URLSearchParams(useLocation().search);
 }
+
 export const ProductListing = () => {
-    const { products, loading, categories } = useAppFeatures();
-    const [filtered, setFiltered] = useState( [] );
-    const [selectedCats, setSelectedCats] = useState( [] );
-    const [price, setPrice] = useState( 300 )
-    const [rating, setRating] = useState( 0 );
-    const [sort, setSort] = useState( '' )
-    const [search, setSearch] = useState( "" );
-    const [rat, setRat] = useState( "" )
-    const query = useQuery();
+  const { products, loading, categories, globalSearch } = useAppFeatures();
+  const [filtered, setFiltered] = useState([]);
+  const [selectedCats, setSelectedCats] = useState([]);
+  const [price, setPrice] = useState(300);
+  const [rating, setRating] = useState(0);
+  const [sort, setSort] = useState("");
+  //   const [search, setSearch] = useState("");
+  const [rat, setRat] = useState("");
+  const query = useQuery();
 
+  // PAGE LOAD ....FIRT TIME GET ID LOGIC ENSURE UI LOAD PROPERLY THEN RUN THIS WHRN REDIRECT FORM HOME TO HERE LISTING PAGE
+  useEffect(() => {
+    const qcat = query.get("categorysent"); //return ID: e.g 690c2841fb89580b5ca2f5d0
+    // const qsearch = query.get("search");
+    if (qcat) setSelectedCats([qcat]);
+    // if (qsearch) setSearch(qsearch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    // PAGE LOAD ....FIRT TIME GET ID LOGIC ENSURE UI LOAD PROPERLY THEN RUN THIS WHRN REDIRECT FORM HOME TO HERE LISTING PAGE 
-    useEffect( () => {
-        const qcat = query.get( "categorysent" ); //return ID: e.g 690c2841fb89580b5ca2f5d0
-        const qsearch = query.get( 'search' )
-        if ( qcat ) setSelectedCats( [qcat] )
-        if ( qsearch ) setSearch( qsearch )
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [] );
-    // UPADATE CATE HERE NO SEPARATE THIS setCategories[QCAT] TO [..here..] FROM STATE selectedCats
+  // UPADATE CATE HERE NO SEPARATE THIS setCategories[QCAT] TO [..here..] FROM STATE selectedCats
 
+  // FILTERED CATEGORY ON PAGE LOAD WHEN PRODUCT CHANGE AND SELECTED CAT CHANGE
+  useEffect(() => {
+    // Copy of all products nNum to Filter one into 3 or 4 ... product cart so product change i.w [products]
+    let res = [...products];
+    if (selectedCats.length)
+      res = res.filter((product) =>
+        selectedCats.includes(String(product.category?._id))
+      );
+    if (price) res = res.filter((product) => product.price > price);
+    if (rating) res = res.filter((product) => product.rating >= rating);
+    if (rat === 4) res = res.filter((product) => product.rating > rat);
+    if (globalSearch)
+      res = res.filter((p) =>
+        p.title.toLowerCase().includes(globalSearch.toLowerCase())
+      );
+    if (sort === "low") res.sort((a, b) => a.price - b.price);
+    if (sort === "high") res.sort((a, b) => b.price - a.price);
+    setFiltered(res);
+  }, [products, selectedCats, price, rating, rat, sort, globalSearch]);
 
-    // FILTERED CATEGORY ON PAGE LOAD WHEN PRODUCT CHANGE AND SELECTED CAT CHANGE 
-    useEffect( () => {
-        // Copy of all products nNum to Filter one into 3 or 4 ... product cart so product change i.w [products]
-        let res = [...products];
-        if ( selectedCats.length ) res = res.filter( ( product ) => selectedCats.includes( String( product.category?._id ) ) );
-        if ( price ) res = res.filter( ( product ) => product.price > price )
-        if ( rating ) res = res.filter( ( product ) => product.rating >= rating )
-        if ( rat === 4 ) res = res.filter( ( product ) => product.rating > rat )
-        if ( search ) res = res.filter( p => p.title.toLowerCase().includes( search.toLowerCase() ) )
-        if ( sort === "low" ) res.sort( ( a, b ) => a.price - b.price )
-        if ( sort === "high" ) res.sort( ( a, b ) => b.price - a.price )
-        setFiltered( res )
-    }, [products, selectedCats, price, rating, rat, sort, search] )
+  const clearAll = () => {
+    setSelectedCats([query.get("categorysent")]);
+    setRating(0);
+    setSort("");
+    setPrice(300);
+    setRat("");
+  };
+  if (loading) return <p className='text-center'>Loading...</p>;
 
-    const clearAll = () => { setSelectedCats( [query.get( "categorysent" )] ); setRating( 0 ); setSort( "" ); setPrice( 300 ); setRat( "" ) }
-    if ( loading ) return <p className="text-center">Loading...</p>
-
-    return (
-        <div className="row">
-            <div className="col-md-3">
-                <FiltersSidebar categories={ categories } selectedCats={ selectedCats } setSelectedCats={ setSelectedCats } price={ price } setPrice={ setPrice } rating={ rating } setRating={ setRating } rat={ rat } setRat={ setRat } sort={ sort } setSort={ setSort } clearAll={ clearAll } />
-            </div>
-            <div className="col-md-9">
-                <div className="mb-3 d-flex justify-content-between">
-                    <h4>Products ({ filtered.length })</h4>
-                    <input className="form-control w-50" placeholder="Search products" value={ search } onChange={ ( e ) => setSearch( e.target.value ) } />
-                </div>
-                <div className="row">
-                    { filtered.map( ( p ) => (
-                        <div key={ p._id } className="col-md-4 mb-3">
-                            <ProductCart product={ p } />
-                        </div>
-                    ) ) }
-                </div>
-            </div>
+  return (
+    <div className='row'>
+      <div className='col-md-3'>
+        <FiltersSidebar
+          categories={categories}
+          selectedCats={selectedCats}
+          setSelectedCats={setSelectedCats}
+          price={price}
+          setPrice={setPrice}
+          rating={rating}
+          setRating={setRating}
+          rat={rat}
+          setRat={setRat}
+          sort={sort}
+          setSort={setSort}
+          clearAll={clearAll}
+        />
+      </div>
+      <div className='col-md-9'>
+        <div className='mb-3 d-flex justify-content-between'>
+          <h4>Products ({filtered.length})</h4>
+          {/*If you want search from here...         
+           <input
+            className='form-control w-50'
+            placeholder='Search products'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          /> */}
         </div>
-    )
-}
+        <div className='row'>
+          {filtered.map((p) => (
+            <div key={p._id} className='col-md-4 mb-3'>
+              <ProductCart product={p} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
