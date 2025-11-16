@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const Header = () => {
   const { wishlist, cart, globalSearch, setGlobalSearch } = useAppFeatures();
-  // update setGlobalSearch search on each keyword
+  // On each key update globalSearch 
   const [q, setQ] = useState(globalSearch || "");
 
   useEffect(() => setQ(globalSearch || ""), [globalSearch]);
@@ -12,68 +12,74 @@ const Header = () => {
   const onChange = (e) => {
     const value = e.target.value;
     setQ(value);
-    setGlobalSearch(value); //Live update
+    setGlobalSearch(value);
   };
 
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-      <div className='container'>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+      <div className="container">
+
         {/* Brand */}
-        <Link className='navbar-brand' to='/'>
+        <Link className="navbar-brand fw-bold" to="/">
           MyShoppingSite
         </Link>
 
-        {/* Toggle Button for Mobile */}
+        {/* Toggle Button */}
         <button
-          className='navbar-toggler'
-          type='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#navContent'
-          aria-controls='navContent'
-          aria-expanded='false'
-          aria-label='Toggle navigation'>
-          <span className='navbar-toggler-icon'></span>
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navContent"
+          aria-controls="navContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
         </button>
 
         {/* Collapsible Content */}
-        <div className='collapse navbar-collapse' id='navContent'>
+        <div className="collapse navbar-collapse" id="navContent">
+
           {/* Search Bar */}
-          {/* Live search input _ no button */}
-          <input
-            className='form-control ms-auto me-3 w-50'
-            placeholder='Search Products...'
-            value={q}
-            onChange={onChange}
-          />
-          {/* Menu Items */}
-          <ul className='navbar-nav ms-lg-3 mt-3 mt-lg-0'>
-            <li className='nav-item'>
-              <Link className='nav-link text-dark' to='/wishlist'>
-                <span className='position-relative'>
-                  <span className='fs-5'>♥️</span>
-                  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                    {wishlist.length}
-                  </span>
+          <div className="w-100 my-3 my-lg-0 ms-lg-auto me-lg-3">
+            <input
+              className="form-control w-100"
+              placeholder="Search products..."
+              value={q}
+              onChange={onChange}
+            />
+          </div>
+
+          {/* Icons Menu */}
+          <ul className="navbar-nav ms-lg-3 d-flex flex-row justify-content-center gap-4">
+
+            {/* Wishlist */}
+            <li className="nav-item">
+              <Link className="nav-link text-dark position-relative" to="/wishlist">
+                <span className="fs-5">❤️</span>
+                <span className="badge bg-danger position-absolute start-100 translate-middle">
+                  {wishlist.length}
                 </span>
               </Link>
             </li>
 
-            <li className='nav-item'>
-              <Link className='nav-link text-dark' to='/cart'>
-                <span className='position-relative'>
-                  <span className='fs-5'>🛒</span>
-                  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>
-                    {cart.length}
-                  </span>
+            {/* Cart */}
+            <li className="nav-item">
+              <Link className="nav-link text-dark position-relative" to="/cart">
+                <span className="fs-5">🛒</span>
+                <span className="badge bg-primary position-absolute start-100 translate-middle">
+                  {cart.length}
                 </span>
               </Link>
             </li>
 
-            <li className='nav-item'>
-              <Link className='nav-link text-dark' to='/profile'>
-                🧑Profile
+            {/* Profile */}
+            <li className="nav-item">
+              <Link className="nav-link text-dark" to="/profile">
+                👤
               </Link>
             </li>
+
           </ul>
         </div>
       </div>
