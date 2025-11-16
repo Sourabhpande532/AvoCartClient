@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
 import { useEffect, useState } from "react";
-
-export const Checkout = () => {
+export const Checkout = ({showPopup}) => {
   const { cart, addresses, placeOrders } = useAppFeatures();
   const [selectedAddressId, setSelectedAddressId] = useState(
     addresses?.[0]?._id || null
@@ -37,7 +36,7 @@ export const Checkout = () => {
     const selectedAddress =
       addresses.find((a) => a._id === selectedAddressId) || null;
     if (!selectedAddress) {
-      alert("Please select an address");
+      showPopup("Please select an address");
       return;
     }
     const order = await placeOrders({

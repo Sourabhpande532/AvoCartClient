@@ -1,3 +1,5 @@
+import { useState } from "react";
+import PopupMessage from "../components/PopupMessage";
 import { useAppFeatures } from "../contexts/AppContext";
 import { Checkout } from "./Checkout";
 
@@ -10,6 +12,14 @@ export const CartPage = () => {
     addToWishlist,
     globalSearch,
   } = useAppFeatures();
+
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+  });
+
+  const showPopup = (msg) => setPopup({ show: true, message: msg });
+  const closePopup = () => setPopup({ show: false, message: "" });
 
   const filteredCart = (cart || []).filter((ci) =>
     (ci?.product?.title || "")
@@ -53,7 +63,7 @@ Move to next Cart item
     <div className='container py-4'>
       <div className='row g-3'>
         {/* LEFT CART SECTION */}
-        <div className='col-lg-8'>
+        <div className='col-lg-7'>
           <h4 className='mb-3 fw-bold'>🛒 My Cart</h4>
 
           {loading && <p className='text-center'>Loading...</p>}
@@ -148,7 +158,7 @@ Move to next Cart item
         </div>
 
         {/* PRICE DETAILS SECTION */}
-        <div className='col-lg-4'>
+        <div className='col-lg-5'>
           <div className='card p-3 shadow-sm rounded-3'>
             <h5 className='fw-bold border-bottom pb-2'>Price Details</h5>
 
@@ -175,7 +185,14 @@ Move to next Cart item
             </div>
 
             <div className='mt-3'>
-              <Checkout />
+              <Checkout showPopup={showPopup} />
+            </div>
+            <div className='mt-3'>
+              <PopupMessage
+              show={popup.show}
+              message={popup.message}
+              onClose={closePopup}
+              />
             </div>
           </div>
         </div>
