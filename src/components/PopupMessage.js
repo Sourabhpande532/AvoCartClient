@@ -1,5 +1,5 @@
-const PopupMessage = ({ show, message, onClose }) => {
-  if (!show) return null;
+const PopupMessage = ({ show:display, message, onClose }) => {
+  if (!display) return null;
 
   return (
     <div
