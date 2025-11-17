@@ -13,11 +13,12 @@ import { Profile } from "./pages/Profile";
 import { Checkout } from "./pages/Checkout";
 import Alerts from "./components/Alerts";
 import Loading from "./components/Loading";
+import Footer from "./components/Footer";
 
 function AppContent() {
     const { alert, setAlert, loading } = useAppFeatures();
     return (
-        <>
+        <div className="d-flex flex-column min-vh-100">
             <Header />
             <Alerts alert={ alert } onClear={ () => setAlert( [] ) } />
             <div className="container mt-4">
@@ -33,7 +34,8 @@ function AppContent() {
                     </Routes>
                 ) }
             </div>
-        </>
+            <Footer/>
+        </div>
     )
 }
 

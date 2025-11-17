@@ -21,7 +21,7 @@ const Header = () => {
 
         {/* Brand */}
         <Link className="navbar-brand fw-bold" to="/">
-          MyShoppingSite🛒
+          MyShoppingSite
         </Link>
 
         {/* Toggle Button */}
