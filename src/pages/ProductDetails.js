@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/api";
 import { AppContext } from "../contexts/AppContext";
+import PopupMessage from "../components/PopupMessage";
 
 export function ProductDetails() {
   const { id } = useParams();
@@ -12,6 +13,9 @@ export function ProductDetails() {
   const [related, setRelated] = useState([]);
   const [qty, setQty] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
+  const [popup, setPopup] = useState({ show: false, message: "" });
+  const showPopup = (msg) => setPopup({ show: true, message: msg });
+  const closePopup = () => setPopup({ show: false, message: "" });
 
   useEffect(() => {
     async function load() {
@@ -37,7 +41,7 @@ export function ProductDetails() {
 
   const handleAddToCart = async () => {
     if (!selectedSize) {
-      alert("Please select a size");
+      showPopup("Please select a size");
       return;
     }
     await addToCart(product._id, qty, selectedSize);
@@ -168,6 +172,11 @@ export function ProductDetails() {
               line.trim() ? <li key={idx}>{line.trim()}.</li> : null
             )}
         </ul>
+        <PopupMessage
+          show={popup.show}
+          message={popup.message}
+          onClose={closePopup}
+        />
       </div>
 
       <div className='mt-5'>
@@ -189,7 +198,7 @@ export function ProductDetails() {
                   <p className='fw-bold'>₹{item.price}</p>
                   <button
                     className='btn btn-sm btn-dark mt-auto'
-                    onClick={() => addToCart(item._id, 1,"S")}>
+                    onClick={() => addToCart(item._id, 1, "S")}>
                     Add to Cart
                   </button>
                 </div>
