@@ -189,7 +189,7 @@ export function ProductDetails() {
                   <p className='fw-bold'>₹{item.price}</p>
                   <button
                     className='btn btn-sm btn-dark mt-auto'
-                    onClick={() => addToCart(item._id, 1,"")}>
+                    onClick={() => addToCart(item._id, 1,"S")}>
                     Add to Cart
                   </button>
                 </div>
