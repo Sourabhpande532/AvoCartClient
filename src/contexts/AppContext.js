@@ -46,9 +46,9 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const addToCart = async (productId, qty = 1) => {
+  const addToCart = async (productId, qty = 1, size = "") => {
     try {
-      const res = await API.post("/cart", { productId, qty });
+      const res = await API.post("/cart", { productId, qty, size });
       setCart(res.data.data.cart || []);
       pushAlert({ type: "Success", text: "Added to cart" });
     } catch (error) {
