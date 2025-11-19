@@ -171,19 +171,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  /*Fix: order still there with card
-   const placeOrders = async ( order ) => {
-        try {
-            const res = await API.post( '/orders', order );
-            setOrders( prev => [res.data.data.order, ...prev] )
-            pushAlert( { type: 'success', text: 'Order placed successfully' } );
-            return res.data.data.order;
-        } catch ( error ) {
-            console.error(error);
-            pushAlert({ type: 'error', text: 'Failed to place order' });
-        }
-    } */
-
   const placeOrders = async (order) => {
     try {
       const res = await API.post("/orders", order);

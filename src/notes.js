@@ -312,7 +312,6 @@ const [pRes, cRes] = await Promise.all([
 ]);
 // both happen together — total ~2 seconds only
 
-
 That’s why developers use Promise.all — it’s faster and cleaner when multiple requests can run in parallel.
 
 5️⃣ setProducts(pRes.data.data.products || [])
@@ -360,3 +359,18 @@ const numbers = [100, 20, 5, 15]
 numbers.sort( ( a, b ) => b - a ) //dscenging 
 console.log( numbers );
 */
+
+// USE-LOCATION 
+/* useQuery: This is a custom React Hook that helps you read query parameters (the ?key=value part of a URL).
+/* 
+useLocation() → gives the full address of page e.g pathname,search.
+URLSearchParams → lets you easily read the details (page=2, category=shoes).
+e.g 
+const params = new URLSearchParams("?page=2&category=shoes");
+params.get("page");       // "2"
+params.get("category");   // "shoes"
+
+const location = useLocation(); return object with current page details; e.g search ...
+console.log(location.search); i.e ?page=3&category=xyz 
+
+*/ 

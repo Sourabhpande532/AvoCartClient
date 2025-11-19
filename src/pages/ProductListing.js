@@ -4,24 +4,9 @@ import ProductCart from "../components/ProductCard";
 import { useAppFeatures } from "../contexts/AppContext";
 import { useEffect, useState } from "react";
 
-//useQuery: This is a custom React Hook that helps you read query parameters (the ?key=value part of a URL).
-/* 
-useLocation() → gives the full address of page e.g pathname,search.
-URLSearchParams → lets you easily read the details (page=2, category=shoes).
-e.g 
-const params = new URLSearchParams("?page=2&category=shoes");
-params.get("page");       // "2"
-params.get("category");   // "shoes"
-
-const location = useLocation(); return object with current page details; e.g search ...
-console.log(location.search); i.e ?page=3&category=xyz 
-
-*/
-
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-
 export const ProductListing = () => {
   const { products, loading, categories, globalSearch } = useAppFeatures();
   const [filtered, setFiltered] = useState([]);
@@ -29,24 +14,16 @@ export const ProductListing = () => {
   const [price, setPrice] = useState(300);
   const [rating, setRating] = useState(0);
   const [sort, setSort] = useState("");
-  //   const [search, setSearch] = useState("");
   const [rat, setRat] = useState("");
   const query = useQuery();
 
-  // PAGE LOAD ....FIRT TIME GET ID LOGIC ENSURE UI LOAD PROPERLY THEN RUN THIS WHRN REDIRECT FORM HOME TO HERE LISTING PAGE
   useEffect(() => {
-    const qcat = query.get("categorysent"); //return ID: e.g 690c2841fb89580b5ca2f5d0
-    // const qsearch = query.get("search");
-    if (qcat) setSelectedCats([qcat]);
-    // if (qsearch) setSearch(qsearch);
+    const queryCategory = query.get("categorysent");
+    if (queryCategory) setSelectedCats([queryCategory]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // UPADATE CATE HERE NO SEPARATE THIS setCategories[QCAT] TO [..here..] FROM STATE selectedCats
-
-  // FILTERED CATEGORY ON PAGE LOAD WHEN PRODUCT CHANGE AND SELECTED CAT CHANGE
   useEffect(() => {
-    // Copy of all products nNum to Filter one into 3 or 4 ... product cart so product change i.w [products]
     let res = [...products];
     if (selectedCats.length)
       res = res.filter((product) =>
@@ -94,13 +71,6 @@ export const ProductListing = () => {
       <div className='col-md-9'>
         <div className='mb-3 d-flex justify-content-between'>
           <h4>Products ({filtered.length})</h4>
-          {/*If you want search from here...         
-           <input
-            className='form-control w-50'
-            placeholder='Search products'
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          /> */}
         </div>
         <div className='row'>
           {filtered.map((p) => (

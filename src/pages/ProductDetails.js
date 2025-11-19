@@ -7,7 +7,7 @@ import PopupMessage from "../components/PopupMessage";
 export function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart, addToWishlist } = useContext(AppContext);
+  const { addToCart, addToWishlist} = useContext(AppContext);
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);

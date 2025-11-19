@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-comment-textnodes */
-
 import { useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
 
