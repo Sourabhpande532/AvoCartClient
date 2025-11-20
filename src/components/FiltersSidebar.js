@@ -6,7 +6,7 @@ export default function( { categories, selectedCats, setSelectedCats, rating, se
     if ( alreadySelected ) {
       // remove it when unchecked
       const updateCatsWhenUnchecked = selectedCats.filter( category => category !== categoryId )
-      setSelectedCats( updateCatsWhenUnchecked ) //Now removed 
+      setSelectedCats( updateCatsWhenUnchecked )
     } else {
       // Add it when checked  
       const updatedCatsWhenChecked = [...selectedCats, categoryId];
