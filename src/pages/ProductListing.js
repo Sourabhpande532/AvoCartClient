@@ -14,7 +14,7 @@ export const ProductListing = () => {
   const [price, setPrice] = useState(300);
   const [rating, setRating] = useState(0);
   const [sort, setSort] = useState("");
-  const [rat, setRat] = useState("");
+  const [slide, setSlide] = useState("");
   const query = useQuery();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const ProductListing = () => {
       );
     if (price) res = res.filter((product) => product.price > price);
     if (rating) res = res.filter((product) => product.rating >= rating);
-    if (rat === 4) res = res.filter((product) => product.rating > rat);
+    if (slide === 4) res = res.filter((product) => product.rating > slide);
     if (globalSearch)
       res = res.filter((p) =>
         p.title.toLowerCase().includes(globalSearch.toLowerCase())
@@ -39,14 +39,14 @@ export const ProductListing = () => {
     if (sort === "low") res.sort((a, b) => a.price - b.price);
     if (sort === "high") res.sort((a, b) => b.price - a.price);
     setFiltered(res);
-  }, [products, selectedCats, price, rating, rat, sort, globalSearch]);
+  }, [products, selectedCats, price, rating, slide, sort, globalSearch]);
 
   const clearAll = () => {
     setSelectedCats([query.get("categorysent")]);
     setRating(0);
     setSort("");
     setPrice(300);
-    setRat("");
+    setSlide("");
   };
   if (loading) return <p className='text-center'>Loading...</p>;
 
@@ -61,8 +61,8 @@ export const ProductListing = () => {
           setPrice={setPrice}
           rating={rating}
           setRating={setRating}
-          rat={rat}
-          setRat={setRat}
+          slide={slide}
+          setSlide={setSlide}
           sort={sort}
           setSort={setSort}
           clearAll={clearAll}
