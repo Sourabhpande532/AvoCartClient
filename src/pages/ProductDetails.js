@@ -7,7 +7,7 @@ import PopupMessage from "../components/PopupMessage";
 export function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart, addToWishlist, globalSearch } = useContext(AppContext);
+  const { addToCart, addToWishlist} = useContext(AppContext);
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
@@ -18,48 +18,22 @@ export function ProductDetails() {
   const closePopup = () => setPopup({ show: false, message: "" });
 
   useEffect(() => {
-    async function fetchProductData() {
+    async function load() {
       try {
-        // if user typed something in search
-        if (globalSearch && globalSearch.trim().length > 0) {
-          const searchResponse = await API.get(
-            `/products?search=${globalSearch}`
-          );
-          const searchResult = searchResponse.data.data.products;
-
-          if (searchResult.length > 0) {
-            const first = searchResult[0]; // show first matched product
-            setProduct(first);
-            if (first?.category?._id) {
-              const relatedResponse = await API.get(
-                `/products?category=${first.category._id}`
-              );
-              const relatedProducts = relatedResponse.data.data.products || [];
-              setRelated(relatedProducts.filter((i) => i._id !== first._id));
-            }
-          } else {
-            setProduct(null);
-            setRelated([]);
-          }
-          return;
-        }
-        // Normal load using ID
-        const productResponse = await API.get(`/products/${id}`);
-        const currentProduct = productResponse.data.data.product;
-        setProduct(currentProduct);
-        if (currentProduct?.category?._id) {
-          const relatedResponse = await API.get(
-            `/products?category=${currentProduct.category._id}`
-          );
-          const searchResult = relatedResponse.data.data.products || [];
-          setRelated(searchResult.filter((i) => i._id !== id));
+        const res = await API.get(`/products/${id}`);
+        const p = res.data.data.product;
+        setProduct(p);
+        if (p?.category?._id) {
+          const r = await API.get(`/products?category=${p.category._id}`);
+          const items = r.data.data.products || [];
+          setRelated(items.filter((i) => i._id !== id));
         }
       } catch (err) {
         console.error(err);
       }
     }
-    fetchProductData();
-  }, [id, globalSearch]);
+    load();
+  }, [id]);
 
   if (!product) return <div className='text-center mt-5'>Loading...</div>;
 
@@ -73,14 +47,6 @@ export function ProductDetails() {
     await addToCart(product._id, qty, selectedSize);
   };
 
-  if (product === null) {
-    return (
-      <div className='container text-center py-5'>
-        <h3>No product found</h3>
-        <p>Try searching something else.</p>
-      </div>
-    );
-  }
   return (
     <div className='container py-4'>
       <div className='row'>

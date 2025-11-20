@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-anonymous-default-export
-export default function( { categories, selectedCats, setSelectedCats, rating, setRating, slide, setSlide, sort, setSort, clearAll, price, setPrice } ) {
+export default function( { categories, selectedCats, setSelectedCats, rating, setRating, rat, setRat, sort, setSort, clearAll, price, setPrice } ) {
   const toggleCategoryChange = ( categoryId ) => {
     const alreadySelected = selectedCats.includes( categoryId );
     // When uncheck it removed from here now exits remove it 
@@ -65,15 +65,15 @@ export default function( { categories, selectedCats, setSelectedCats, rating, se
         </div>
 
         <div className="mt-4">
-          <h4><strong>Rating +{ slide }</strong></h4>
+          <h4><strong>Rating +{ rat }</strong></h4>
           <div className="form-check">
             <input
               type="radio"
               name="rating"
               className="form-check-input"
               id="filterByFour"
-              checked={ slide === 4 }
-              onChange={ () => setSlide( 4 ) }
+              checked={ rat === 4 }
+              onChange={ () => setRat( 4 ) }
             />
             <label className="form-check-label" htmlFor="filterByFour">4 Star & above</label>
           </div>
@@ -83,8 +83,8 @@ export default function( { categories, selectedCats, setSelectedCats, rating, se
               name="rating"
               className="form-check-input"
               id="filterByThree"
-              checked={ slide === 3 }
-              onChange={ () => setSlide( 3 ) }
+              checked={ rat === 3 }
+              onChange={ () => setRat( 3 ) }
             />
             <label className="form-check-label" htmlFor="filterByThree">3- Star and above</label>
           </div>
