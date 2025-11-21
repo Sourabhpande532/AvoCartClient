@@ -1,14 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useLocation } from "react-router-dom";
 import FiltersSidebar from "../components/FiltersSidebar";
 import ProductCart from "../components/ProductCard";
 import { useAppFeatures } from "../contexts/AppContext";
 import { useEffect, useState } from "react";
-
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 export const ProductListing = () => {
-  const { products, loading, categories, globalSearch } = useAppFeatures();
+  const { products, loading, categories, globalSearch, setGlobalSearch } =
+    useAppFeatures();
   const [filtered, setFiltered] = useState([]);
   const [selectedCats, setSelectedCats] = useState([]);
   const [price, setPrice] = useState(300);
@@ -21,6 +22,10 @@ export const ProductListing = () => {
     const queryCategory = query.get("categorysent");
     if (queryCategory) setSelectedCats([queryCategory]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setGlobalSearch("");
   }, []);
 
   useEffect(() => {

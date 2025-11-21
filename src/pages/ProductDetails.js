@@ -7,7 +7,8 @@ import PopupMessage from "../components/PopupMessage";
 export function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart, addToWishlist} = useContext(AppContext);
+  const { addToCart, addToWishlist, globalSearch, setGlobalSearch } =
+    useContext(AppContext);
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
@@ -18,22 +19,61 @@ export function ProductDetails() {
   const closePopup = () => setPopup({ show: false, message: "" });
 
   useEffect(() => {
-    async function load() {
+    async function fetchProductData() {
       try {
-        const res = await API.get(`/products/${id}`);
-        const p = res.data.data.product;
-        setProduct(p);
-        if (p?.category?._id) {
-          const r = await API.get(`/products?category=${p.category._id}`);
-          const items = r.data.data.products || [];
-          setRelated(items.filter((i) => i._id !== id));
+        // 🔍 When user searches something
+        if (globalSearch && globalSearch.trim().length > 0) {
+          const searchResponse = await API.get(
+            `/products?search=${globalSearch}`
+          );
+          const searchResults = searchResponse.data.data.products;
+
+          if (searchResults.length > 0) {
+            const matchedProduct = searchResults[0]; // show first matched product
+            setProduct(matchedProduct);
+
+            if (matchedProduct?.category?._id) {
+              const relatedResponse = await API.get(
+                `/products?category=${matchedProduct.category._id}`
+              );
+              const relatedItems = relatedResponse.data.data.products || [];
+
+              setRelated(
+                relatedItems.filter((item) => item._id !== matchedProduct._id)
+              );
+            }
+          } else {
+            setProduct(null);
+            setRelated([]);
+          }
+          return;
         }
-      } catch (err) {
-        console.error(err);
+
+        // 👇 Normal load using ID
+        const productResponse = await API.get(`/products/${id}`);
+        const currentProduct = productResponse.data.data.product;
+        setProduct(currentProduct);
+
+        if (currentProduct?.category?._id) {
+          const relatedResponse = await API.get(
+            `/products?category=${currentProduct.category._id}`
+          );
+          const relatedProducts = relatedResponse.data.data.products || [];
+
+          setRelated(relatedProducts.filter((item) => item._id !== id));
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
-    load();
-  }, [id]);
+
+    fetchProductData();
+  }, [id, globalSearch]);
+
+  useEffect(() => {
+    setGlobalSearch("");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!product) return <div className='text-center mt-5'>Loading...</div>;
 
