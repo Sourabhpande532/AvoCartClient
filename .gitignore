@@ -5,11 +5,10 @@
 /.pnp
 .pnp.js
 
-/notes
 
 # testing
 /coverage
-/notes
+/notes.js
 # production
 /build
 

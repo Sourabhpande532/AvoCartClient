@@ -1,12 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useLocation } from "react-router-dom";
 import FiltersSidebar from "../components/FiltersSidebar";
 import ProductCart from "../components/ProductCard";
 import { useAppFeatures } from "../contexts/AppContext";
 import { useEffect, useState } from "react";
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import useQuery from "../hooks/useQuery";
+
 export const ProductListing = () => {
   const { products, loading, categories, globalSearch, setGlobalSearch } =
     useAppFeatures();
@@ -15,13 +12,12 @@ export const ProductListing = () => {
   const [price, setPrice] = useState(300);
   const [rating, setRating] = useState(0);
   const [sort, setSort] = useState("");
-  const [rat, setRat] = useState("");
+  const [sortByRating, setSortByRating] = useState("");
   const query = useQuery();
 
   useEffect(() => {
-    const queryCategory = query.get("categorysent");
+    const queryCategory = query.get("category");
     if (queryCategory) setSelectedCats([queryCategory]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -36,7 +32,7 @@ export const ProductListing = () => {
       );
     if (price) res = res.filter((product) => product.price > price);
     if (rating) res = res.filter((product) => product.rating >= rating);
-    if (rat === 4) res = res.filter((product) => product.rating > rat);
+    if (sortByRating === 4) res = res.filter((product) => product.rating > sortByRating);
     if (globalSearch)
       res = res.filter((p) =>
         p.title.toLowerCase().includes(globalSearch.toLowerCase())
@@ -44,14 +40,14 @@ export const ProductListing = () => {
     if (sort === "low") res.sort((a, b) => a.price - b.price);
     if (sort === "high") res.sort((a, b) => b.price - a.price);
     setFiltered(res);
-  }, [products, selectedCats, price, rating, rat, sort, globalSearch]);
+  }, [products, selectedCats, price, rating, sortByRating, sort, globalSearch]);
 
   const clearAll = () => {
-    setSelectedCats([query.get("categorysent")]);
+    setSelectedCats([query.get("category")]);
     setRating(0);
     setSort("");
     setPrice(300);
-    setRat("");
+    setSortByRating("");
   };
   if (loading) return <p className='text-center'>Loading...</p>;
 
@@ -66,8 +62,8 @@ export const ProductListing = () => {
           setPrice={setPrice}
           rating={rating}
           setRating={setRating}
-          rat={rat}
-          setRat={setRat}
+          sortByRating={sortByRating}
+          setSortByRating={setSortByRating}
           sort={sort}
           setSort={setSort}
           clearAll={clearAll}

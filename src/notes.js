@@ -1,52 +1,51 @@
-// Concept of Promise 
-const coffyMadePromise = new Promise( ( resolve, reject ) => {
-  setTimeout( () => {
+// Concept of Promise
+const coffyMadePromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
     const success = true;
-    if ( success ) resolve( "Pizza is ready" );
-    else reject( "Oven broke!" );
-  }, 2000 );
-} );
+    if (success) resolve("Pizza is ready");
+    else reject("Oven broke!");
+  }, 2000);
+});
 coffyMadePromise
-  .then( ( res ) => console.log( res ) )
-  .catch( ( error ) => console.log( error ) )
+  .then((res) => console.log(res))
+  .catch((error) => console.log(error));
 
-console.log( "Start" );
-fetch( "https://jsonplaceholder.typicode.com/users" )
-  .then( res => res.json() )
-  .then( data => console.log( data ) );
-console.log( "End" );
+console.log("Start");
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then((res) => res.json())
+  .then((data) => console.log(data));
+console.log("End");
 
 async function getData() {
   // console.log( "start-from funct" );
-  const res1 = await fetch( "https://jsonplaceholder.typicode.com/todos/1" );
-  const res2 = await fetch( "https://jsonplaceholder.typicode.com/todos/2" );
-  const [result1, result2] = await Promise.all( [res1, res2] )
+  const res1 = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+  const res2 = await fetch("https://jsonplaceholder.typicode.com/todos/2");
+  const [result1, result2] = await Promise.all([res1, res2]);
   // console.log( result1 );
   // console.log( result2 );
   // console.log("end-from funct");
 }
-getData()
+getData();
 
 async function getThenConcept() {
-  console.log( "Start" );
-  const res = await fetch( "https://jsonplaceholder.typicode.com/todos/5" ); // fetch -> response
-  console.log( "check:", res );
+  console.log("Start");
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos/5"); // fetch -> response
+  console.log("check:", res);
 
-  const data = await res.json();                            // response -> JSON
-  console.log( "Check data:", data );
-  console.log( "End" );
+  const data = await res.json(); // response -> JSON
+  console.log("Check data:", data);
+  console.log("End");
 }
 getThenConcept();
 
 async function demo() {
-  const [a, b] = await Promise.all( [
-    Promise.resolve( "Apple" ),
-    Promise.resolve( "Banana" )
-  ] )
-  console.log( a, b );
-
+  const [a, b] = await Promise.all([
+    Promise.resolve("Apple"),
+    Promise.resolve("Banana"),
+  ]);
+  console.log(a, b);
 }
-demo()
+demo();
 
 /* THEORY EXPlANATION 
 
@@ -360,7 +359,7 @@ numbers.sort( ( a, b ) => b - a ) //dscenging
 console.log( numbers );
 */
 
-// USE-LOCATION 
+// USE-LOCATION
 /* useQuery: This is a custom React Hook that helps you read query parameters (the ?key=value part of a URL).
 /* 
 useLocation() → gives the full address of page e.g pathname,search.
@@ -373,4 +372,8 @@ params.get("category");   // "shoes"
 const location = useLocation(); return object with current page details; e.g search ...
 console.log(location.search); i.e ?page=3&category=xyz 
 
-*/ 
+  console.log(useLocation());
+  const params = new URLSearchParams(useLocation().search)
+  console.log(params.get('categorysent'));
+
+*/

@@ -20,7 +20,7 @@ export const Home = () => {
           filteredCategory.map((cat) => (
             <div key={cat._id} className='col-md-4'>
               <Link
-                to={`/products?categorysent=${cat._id}`}
+                to={`/products?category=${cat._id}`}
                 className='text-decoration-none'>
                 <div
                   className='card shadow-sm h-100 border-0 category-card'
