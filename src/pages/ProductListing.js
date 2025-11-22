@@ -16,8 +16,8 @@ export const ProductListing = () => {
   const query = useQuery();
 
   useEffect(() => {
-    const queryCategory = query.get("category");
-    if (queryCategory) setSelectedCats([queryCategory]);
+    const queryCategoryId = query.get("category");
+    if (queryCategoryId) setSelectedCats([queryCategoryId]);
   }, []);
 
   useEffect(() => {
@@ -32,7 +32,8 @@ export const ProductListing = () => {
       );
     if (price) res = res.filter((product) => product.price > price);
     if (rating) res = res.filter((product) => product.rating >= rating);
-    if (sortByRating === 4) res = res.filter((product) => product.rating > sortByRating);
+    if (sortByRating === 4)
+      res = res.filter((product) => product.rating > sortByRating);
     if (globalSearch)
       res = res.filter((p) =>
         p.title.toLowerCase().includes(globalSearch.toLowerCase())
