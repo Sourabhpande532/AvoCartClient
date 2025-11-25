@@ -23,7 +23,7 @@ export default function ProductCart({ product }) {
         <div className='mt-auto d-flex gap-2'>
           <button
             className='btn btn-primary btn-sm'
-            onClick={() => addToCart(product._id, 1, "XXL")}>
+            onClick={() => addToCart(product._id, 1, "M")}>
             Add to Cart
           </button>
           <button

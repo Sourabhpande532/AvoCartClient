@@ -144,7 +144,7 @@ export const CartPage = () => {
                       <button
                         className='btn btn-sm btn-outline-primary'
                         onClick={() => addToWishlist(ci.product._id)}>
-                        ❤️ Wishlist
+                        ❤️ Move to Wishlist
                       </button>
                     </div>
                   </div>

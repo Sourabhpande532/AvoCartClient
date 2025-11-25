@@ -21,7 +21,7 @@ function AppContent() {
         <div className="d-flex flex-column min-vh-100">
             <Header />
             <Alerts alert={ alert } onClear={ () => setAlert( [] ) } />
-            <div className="container mt-4">
+            <div className="mt-4">
                 { loading ? <Loading /> : (
                     <Routes>
                         <Route path="/" element={ <Home /> } />

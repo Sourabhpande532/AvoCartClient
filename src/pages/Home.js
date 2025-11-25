@@ -10,7 +10,7 @@ export const Home = () => {
   );
   if (loading) return <p className='text-center'>Loading...</p>;
   return (
-    <div className='my-4'>
+    <div className='container my-4'>
       <h2 className='display-6 mb-4 fw-semibold text-center'>
         Featured Categories
       </h2>
