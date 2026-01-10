@@ -128,8 +128,6 @@ Sample Response:
 
 ### POST /api/cart
 
-POST /api/cart
-
 Add a product to the user’s cart (protected route).
 
 Sample Response:
@@ -279,7 +277,7 @@ Sample Response:
 ## Deployment & Links
 
 - Frontend GitHub: https://github.com/Sourabhpande532/AvoCartClient
-  Live (Vercel): https://avo-cart-client.vercel.app/
+
 - Backend GitHub: https://github.com/Sourabhpande532/AvoCartServer
 
 ---
