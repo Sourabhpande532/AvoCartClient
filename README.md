@@ -44,28 +44,37 @@ Watch a walkthrough (5-7 minutes) of all major features of this app:<br>
 
 ## Features
 
-**Home & Product Browsing**
+**Home & Product Page**
 
 - Home page with featured categories and smooth navigation to product listings.
-- Product listing page with filters(category,rating slider) & price sorting (low ↔ high)
+- Product listing page with filters(`category`,`rating` `slider`) & price sorting (**low ↔ high**)
 
-**Product Experience**
+**Product Details**
 
-- Product cards showing image, name, price, rating, and quick actions (Add to Cart / Wishlist)
+- Product cards showing `image`, `name`, `price`, `rating`, and quick actions (`Add to Cart` / `Wishlist`)
 - Detailed product page with full information and related products
 
 **Cart & Wishlist**
 
-- Cart and Wishlist pages to add/remove items, update quantity, and move items between them
+- Cart and Wishlist pages to `add/remove` items, `update` `quantity`, and move items between them
 
 **User Profile**
 
 - Profile page with address management and order history tracking
 
-**General Features**
+**Loading & Search**
 
 - Global search in navbar, loading states, and user alerts for actions
 - Fully responsive UI for desktop and mobile experience
+
+---
+
+## Reference
+![](./assets/home.png)
+---
+![](./assets/ProductList.png)
+---
+![](./assets/cart.png)
 
 ---
 
