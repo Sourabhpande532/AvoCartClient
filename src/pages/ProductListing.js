@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import FiltersSidebar from "../components/FiltersSidebar";
 import ProductCart from "../components/ProductCard";
 import { useAppFeatures } from "../contexts/AppContext";

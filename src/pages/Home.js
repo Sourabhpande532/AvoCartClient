@@ -1,12 +1,14 @@
+/* eslint-disable no-lone-blocks */
 import { Link } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
+import ChatBoat from "../components/ChatBoat";
 
 export const Home = () => {
   const { categories, loading, globalSearch } = useAppFeatures();
   const filteredCategory = (categories || []).filter((category) =>
     (category?.name || "")
       .toLowerCase()
-      .includes((globalSearch || "").toLowerCase())
+      .includes((globalSearch || "").toLowerCase()),
   );
   if (loading) return <p className='text-center'>Loading...</p>;
   return (
@@ -14,7 +16,9 @@ export const Home = () => {
       <h2 className='display-6 mb-4 fw-semibold text-center'>
         Featured Categories
       </h2>
-
+      {/* AI-CHAT */}
+      <ChatBoat />
+      {/* AI-CHAT */}
       <div className='row g-4'>
         {Array.isArray(filteredCategory) && filteredCategory.length > 0 ? (
           filteredCategory.map((cat) => (
