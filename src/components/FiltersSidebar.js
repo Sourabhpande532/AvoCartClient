@@ -28,21 +28,19 @@ export default function FiltersSidebar({
     }
   };
   return (
-    <div className=''>
-      <div className='border-end px-4'>
-        <div className='d-flex justify-content-between align-items-center'>
-          <h5 className='fw-bold'>Filters</h5>
+    <div className='card border-0 shadow-sm'>
+      <div className='card-body p-4'>
+        <div className='d-flex justify-content-between align-items-center mb-4'>
+          <h5 className='fw-bold mb-0'>Filters</h5>
           <button
-            className='btn btn-sm btn-outline-secondary mt-3 p-0'
+            className='btn btn-sm btn-link text-decoration-none p-0'
             onClick={clearAll}>
-            Clear
+            Clear All
           </button>
         </div>
 
-        <div className='mt-3'>
-          <h4>
-            <strong>Price</strong>
-          </h4>
+        <div className='mb-4'>
+          <h6 className="fw-bold mb-3 text-uppercase small tracking-wider opacity-75">Price Range</h6>
           <input
             type='range'
             min='300'
@@ -50,107 +48,110 @@ export default function FiltersSidebar({
             step='300'
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
-            className='form-range'
+            className='form-range accent-primary'
           />
-          <p>Up to ₹{price}</p>
+          <div className="d-flex justify-content-between small text-muted">
+            <span>₹300</span>
+            <span className="fw-bold text-primary">₹{price}</span>
+            <span>₹5000</span>
+          </div>
         </div>
 
-        <div className='mt-3'>
-          <h4>
-            <strong>Categories</strong>
-          </h4>
-          {categories.map((cat) => (
-            <div key={cat._id} className='form-check'>
-              <input
-                className='form-check-input'
-                type='checkbox'
-                id={cat._id}
-                checked={selectedCats.includes(cat._id)}
-                onChange={() => toggleCategoryChange(cat._id)}
-              />
-              <label className='form-check-label' htmlFor={cat._id}>
-                {cat.name}
-              </label>
-            </div>
-          ))}
+        <div className='mb-4'>
+          <h6 className="fw-bold mb-3 text-uppercase small tracking-wider opacity-75">Categories</h6>
+          <div className="d-flex flex-column gap-2">
+            {categories.map((cat) => (
+              <div key={cat._id} className='form-check'>
+                <input
+                  className='form-check-input'
+                  type='checkbox'
+                  id={cat._id}
+                  checked={selectedCats.includes(cat._id)}
+                  onChange={() => toggleCategoryChange(cat._id)}
+                />
+                <label className='form-check-label' htmlFor={cat._id}>
+                  {cat.name}
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className='mt-4'>
-          <h4>
-            <strong>Rating {rating}+</strong>
-          </h4>
+        <div className='mb-4'>
+          <h6 className="fw-bold mb-3 text-uppercase small tracking-wider opacity-75">Customer Rating</h6>
           <input
             type='range'
             min='0'
             max='5'
             step='0.5'
             value={rating}
-            className='form-range'
+            className='form-range accent-primary'
             onChange={(e) => setRating(Number(e.target.value))}
           />
+          <div className="text-center small text-primary fw-bold">{rating}+ Stars</div>
         </div>
 
-        <div className='mt-4'>
-          <h4>
-            <strong>Rating +{sortByRating}</strong>
-          </h4>
-          <div className='form-check'>
-            <input
-              type='radio'
-              name='rating'
-              className='form-check-input'
-              id='filterByFour'
-              checked={sortByRating === 4}
-              onChange={() => setSortByRating(4)}
-            />
-            <label className='form-check-label' htmlFor='filterByFour'>
-              4 Star & above
-            </label>
-          </div>
-          <div className='form-check'>
-            <input
-              type='radio'
-              name='rating'
-              className='form-check-input'
-              id='filterByThree'
-              checked={sortByRating === 3}
-              onChange={() => setSortByRating(3)}
-            />
-            <label className='form-check-label' htmlFor='filterByThree'>
-              3- Star and above
-            </label>
+        <div className='mb-4'>
+          <h6 className="fw-bold mb-3 text-uppercase small tracking-wider opacity-75">Star Filter</h6>
+          <div className="d-flex flex-column gap-2">
+            <div className='form-check'>
+              <input
+                type='radio'
+                name='rating'
+                className='form-check-input'
+                id='filterByFour'
+                checked={sortByRating === 4}
+                onChange={() => setSortByRating(4)}
+              />
+              <label className='form-check-label' htmlFor='filterByFour'>
+                4 ★ & above
+              </label>
+            </div>
+            <div className='form-check'>
+              <input
+                type='radio'
+                name='rating'
+                className='form-check-input'
+                id='filterByThree'
+                checked={sortByRating === 3}
+                onChange={() => setSortByRating(3)}
+              />
+              <label className='form-check-label' htmlFor='filterByThree'>
+                3 ★ & above
+              </label>
+            </div>
           </div>
         </div>
 
-        <div className='mt-4'>
-          <h4>
-            <strong>Sort by</strong>
-          </h4>
-          <div className='form-check'>
-            <input
-              type='radio'
-              name='sort'
-              className='form-check-input'
-              id='low'
-              checked={sort === "low"}
-              onChange={() => setSort("low")}
-            />
-            <label className='form-check-label' htmlFor='low'>
-              Price- Low to High
-            </label>
-          </div>
-          <div className='form-check'>
-            <input
-              type='radio'
-              name='sort'
-              className='form-check-input'
-              id='high'
-              checked={sort === "high"}
-              onChange={() => setSort("high")}
-            />
-            <label className='form-check-label' htmlFor='high'>
-              Price - High to Low
-            </label>
+        <div>
+          <h6 className="fw-bold mb-3 text-uppercase small tracking-wider opacity-75">Quick Sort</h6>
+          <div className="d-flex flex-column gap-2">
+            <div className='form-check'>
+              <input
+                type='radio'
+                name='sort'
+                className='form-check-input'
+                id='low'
+                checked={sort === "low"}
+                onChange={() => setSort("low")}
+              />
+              <label className='form-check-label' htmlFor='low'>
+                Price: Low to High
+              </label>
+            </div>
+            <div className='form-check'>
+              <input
+                type='radio'
+                name='sort'
+                className='form-check-input'
+                id='high'
+                checked={sort === "high"}
+                onChange={() => setSort("high")}
+              />
+              <label className='form-check-label' htmlFor='high'>
+                Price: High to Low
+              </label>
+            </div>
           </div>
         </div>
       </div>

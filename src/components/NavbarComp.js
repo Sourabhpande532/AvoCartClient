@@ -3,7 +3,7 @@ import { useAppFeatures } from "../contexts/AppContext";
 import { useEffect, useState } from "react";
 
 const Header = () => {
-  const { wishlist, cart, globalSearch, setGlobalSearch } = useAppFeatures();
+  const { wishlist, cart, globalSearch, setGlobalSearch, theme, toggleTheme } = useAppFeatures();
   // On each key update globalSearch 
   const [q, setQ] = useState(globalSearch || "");
 
@@ -16,17 +16,17 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav className="navbar navbar-expand-lg sticky-top">
       <div className="container">
 
         {/* Brand */}
-        <Link className="navbar-brand fw-bold" to="/">
-          MyShoppingSite
+        <Link className="navbar-brand fs-3" to="/">
+          MyStore
         </Link>
 
         {/* Toggle Button */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler border-0 shadow-none"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navContent"
@@ -41,23 +41,39 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navContent">
 
           {/* Search Bar */}
-          <div className="w-100 my-3 my-lg-0 ms-lg-auto me-lg-3">
-            <input
-              className="form-control w-100"
-              placeholder="Search products..."
-              value={q}
-              onChange={onChange}
-            />
+          <div className="mx-auto my-3 my-lg-0 w-100" style={{ maxWidth: '400px' }}>
+            <div className="input-group">
+              <span className="input-group-text bg-transparent border-end-0">
+                🔍
+              </span>
+              <input
+                className="form-control border-start-0"
+                placeholder="Search products..."
+                value={q}
+                onChange={onChange}
+              />
+            </div>
           </div>
 
           {/* Icons Menu */}
-          <ul className="navbar-nav ms-lg-3 d-flex flex-row justify-content-center gap-4">
+          <ul className="navbar-nav ms-auto d-flex flex-row align-items-center justify-content-center gap-3">
+
+            {/* Theme Toggle */}
+            <li className="nav-item">
+              <button 
+                onClick={toggleTheme}
+                className="btn btn-link nav-link text-decoration-none fs-5"
+                title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              >
+                {theme === 'light' ? '🌙' : '☀️'}
+              </button>
+            </li>
 
             {/* Wishlist */}
             <li className="nav-item">
-              <Link className="nav-link text-dark position-relative" to="/wishlist">
+              <Link className="nav-link position-relative" to="/wishlist">
                 <span className="fs-5">❤️</span>
-                <span className="badge bg-danger position-absolute start-100 translate-middle">
+                <span className="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle" style={{ fontSize: '10px' }}>
                   {wishlist.length}
                 </span>
               </Link>
@@ -65,9 +81,9 @@ const Header = () => {
 
             {/* Cart */}
             <li className="nav-item">
-              <Link className="nav-link text-dark position-relative" to="/cart">
+              <Link className="nav-link position-relative" to="/cart">
                 <span className="fs-5">🛒</span>
-                <span className="badge bg-primary position-absolute start-100 translate-middle">
+                <span className="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle" style={{ fontSize: '10px' }}>
                   {cart.length}
                 </span>
               </Link>
@@ -75,7 +91,7 @@ const Header = () => {
 
             {/* Profile */}
             <li className="nav-item">
-              <Link className="nav-link text-dark" to="/profile">
+              <Link className="nav-link fs-5" to="/profile">
                 👤
               </Link>
             </li>

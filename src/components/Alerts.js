@@ -12,54 +12,41 @@ export default function Alerts({ alert = [], onClear }) {
 
   return (
     <div
-      className="d-flex justify-content-center"
+      className="d-flex flex-column align-items-center"
       style={{
         position: "fixed",
-        top: 80,
-        left: 0,
+        top: 20,
+        left: '50%',
+        transform: 'translateX(-50%)',
         width: "100%",
         zIndex: 3000,
         pointerEvents: "none",
       }}
     >
-      <div style={{ maxWidth: "600px", width: "90%" }}>
+      <div className="d-flex flex-column gap-2" style={{ maxWidth: "400px", width: "90%" }}>
         {alert.map((a, i) => (
           <div
             key={i}
-            className={`alert alert-${
-              a.type === "error"
-                ? "danger"
-                : a.type === "success"
-                ? "success"
-                : "primary"
-            } shadow-lg border-0 fade show`}
+            className={`alert glass border-0 shadow-lg fade show d-flex align-items-center justify-content-between p-3 rounded-4 fade-in`}
             style={{
-              borderRadius: "12px",
-              padding: "14px 18px",
-              fontSize: "16px",
-              fontWeight: "500",
-              color: "white", // Always visible
-              backgroundColor:
-                a.type === "error"
-                  ? "#d9534f" // dark red
-                  : a.type === "success"
-                  ? "#28a745" // dark green
-                  : "#0d6efd", // strong blue
               pointerEvents: "auto",
+              borderLeft: `5px solid ${
+                a.type === "error" ? "#ef4444" : a.type === "success" ? "#10b981" : "#6366f1"
+              }`
             }}
           >
-            {a.type === "error"
-              ? "❌ "
-              : a.type === "success"
-              ? "✅ "
-              : "ℹ️ "}
-            {a.text}
+            <div className="d-flex align-items-center gap-3">
+              <span className="fs-4">
+                {a.type === "error" ? "🚫" : a.type === "success" ? "✨" : "💡"}
+              </span>
+              <span className="fw-semibold small">{a.text}</span>
+            </div>
 
             <button
               type="button"
-              className="btn-close btn-close-white ms-2"
+              className="btn-close shadow-none small"
               onClick={() => onClear && onClear()}
-              style={{ float: "right" }}
+              style={{ fontSize: '0.7rem' }}
             ></button>
           </div>
         ))}

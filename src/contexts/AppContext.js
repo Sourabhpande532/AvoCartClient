@@ -13,6 +13,13 @@ const AppProvider = ({ children }) => {
   const [addresses, setAddresses] = useState([]);
   const [orders, setOrders] = useState([]);
   const [globalSearch, setGlobalSearch] = useState("");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -230,6 +237,8 @@ const AppProvider = ({ children }) => {
         globalSearch,
         setGlobalSearch,
         deleteOrder,
+        theme,
+        toggleTheme,
       }}>
       {children}
     </AppContext.Provider>

@@ -1,18 +1,30 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const ChatBoat = () => {
   const [showModal, setShowModal] = useState(false);
   const [chatInput, setChatInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    { type: "ai", text: "Hello! 👋 I'm your AI shopping assistant. How can I help you today?" }
+  ]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const chatEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (showModal) {
+      scrollToBottom();
+    }
+  }, [messages, showModal]);
 
   const handleChat = async () => {
     if (!chatInput.trim()) return;
 
     const userMessage = { type: "user", text: chatInput };
-
     setMessages((prev) => [...prev, userMessage]);
     setChatInput("");
     setLoading(true);
@@ -21,9 +33,7 @@ const ChatBoat = () => {
     try {
       const res = await axios.post(
         "https://avo-cart-server.vercel.app/api/ai/chat",
-        {
-          message: chatInput,
-        },
+        { message: chatInput }
       );
 
       const aiMessage = {
@@ -33,7 +43,7 @@ const ChatBoat = () => {
 
       setMessages((prev) => [...prev, aiMessage]);
     } catch (err) {
-      setError("⚠️ Something went wrong. Please try again in a moment.");
+      setError("⚠️ Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -41,92 +51,99 @@ const ChatBoat = () => {
 
   return (
     <>
-      {/* 🔘 Floating Button */}
+      {/* 🔘 Attractive Floating Button */}
       <button
-        className='btn btn-dark position-fixed'
-        style={{ bottom: "20px", right: "20px", borderRadius: "50%" }}
+        className='ai-chat-btn pulse-animation position-fixed bottom-0 end-0 m-4'
         onClick={() => setShowModal(true)}>
-        💬
+        <span className="ai-badge">AI</span>
+        <span role="img" aria-label="bot">🤖</span>
       </button>
 
-      {/* 🧠 MODAL */}
+      {/* 🧠 MODAL / CHAT WINDOW */}
       {showModal && (
         <div
           className='modal fade show d-block'
           tabIndex='-1'
-          style={{ background: "rgba(0,0,0,0.5)" }}>
-          <div className='modal-dialog modal-dialog-centered'>
-            <div className='modal-content'>
+          style={{ background: "rgba(0,0,0,0.4)", backdropFilter: 'blur(4px)' }}>
+          <div className='modal-dialog modal-dialog-centered modal-sm' style={{ maxWidth: '400px' }}>
+            <div className='modal-content border-0 shadow-lg rounded-4 overflow-hidden'>
               {/* Header */}
-              <div className='modal-header'>
-                <h5 className='modal-title'>AI Assistant</h5>
+              <div className='modal-header bg-primary text-white border-0 py-3'>
+                <div className="d-flex align-items-center gap-2">
+                  <div className="bg-white bg-opacity-25 rounded-circle p-1">🤖</div>
+                  <div>
+                    <h6 className='modal-title fw-bold mb-0'>AI Assistant</h6>
+                    <small className="opacity-75">Online • Ready to help</small>
+                  </div>
+                </div>
                 <button
-                  className='btn-close'
+                  className='btn-close btn-close-white'
                   onClick={() => setShowModal(false)}></button>
               </div>
 
               {/* Body */}
               <div
-                className='modal-body'
+                className='modal-body bg-body-tertiary'
                 style={{
-                  maxHeight: "400px",
+                  height: "400px",
                   overflowY: "auto",
-                  padding: "10px",
+                  padding: "1.5rem",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem'
                 }}>
                 {messages.map((msg, i) => (
                   <div
                     key={i}
-                    className={`mb-2 ${
-                      msg.type === "user" ? "text-end" : "text-start"
-                    }`}>
-                    <span
-                      className={`p-2 rounded d-inline-block`}
+                    className={`d-flex ${msg.type === "user" ? "justify-content-end" : "justify-content-start"}`}>
+                    <div
+                      className={`p-3 rounded-4 shadow-sm ${
+                        msg.type === "user" 
+                          ? "bg-primary text-white rounded-bottom-end-0" 
+                          : "bg-card text-body rounded-bottom-start-0 border"
+                      }`}
                       style={{
-                        maxWidth: "75%",
-                        whiteSpace: "pre-wrap",
-                        wordWrap: "break-word",
+                        maxWidth: "85%",
+                        fontSize: '0.9rem',
                         lineHeight: "1.5",
                       }}>
-                      {msg.text.split("\n").map((line, i) => (
-                        <p key={i} style={{ marginBottom: "6px" }}>
-                          {line}
-                        </p>
-                      ))}
-                    </span>
+                      {msg.text}
+                    </div>
                   </div>
                 ))}
 
                 {/* ⏳ Typing Indicator */}
                 {loading && (
-                  <div className='text-start'>
-                    <span className='bg-light p-2 rounded'>
-                      <span className='typing-dots'>
-                        <span>.</span>
-                        <span>.</span>
-                        <span>.</span>
-                      </span>
-                    </span>
+                  <div className='d-flex justify-content-start'>
+                    <div className='bg-light p-2 rounded-4 border px-3'>
+                      <div className='typing-dots'>
+                        <span>•</span><span>•</span><span>•</span>
+                      </div>
+                    </div>
                   </div>
                 )}
 
                 {/* ❌ Error */}
                 {error && (
-                  <div className='alert alert-danger mt-2'>{error}</div>
+                  <div className='alert alert-danger py-2 small'>{error}</div>
                 )}
+                <div ref={chatEndRef} />
               </div>
 
               {/* Footer */}
-              <div className='modal-footer'>
-                <input
-                  className='form-control'
-                  placeholder='Ask something...'
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleChat()}
-                />
-                <button className='btn btn-dark' onClick={handleChat}>
-                  Send
-                </button>
+              <div className='modal-footer border-0 p-3 bg-white'>
+                <div className="input-group">
+                  <input
+                    className='form-control border-0 bg-light rounded-start-pill px-4'
+                    placeholder='Type your message...'
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleChat()}
+                  />
+                  <button className='btn btn-primary rounded-end-pill px-4' onClick={handleChat}>
+                    <span>🚀</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

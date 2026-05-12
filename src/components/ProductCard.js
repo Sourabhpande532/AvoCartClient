@@ -5,31 +5,55 @@ export default function ProductCart({ product }) {
   const { addToCart, addToWishlist } = useAppFeatures();
 
   return (
-    <div className='card h-100'>
-      <img
-        src={product.images[0] || "https://placehold.co/200"}
-        alt={product.title}
-        style={{ height: 200, objectFit: "cover" }}
-      />
-      <div className='card-body d-flex flex-column'>
-        <h6
-          className='card-title'
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate(`/products/${product._id}`)}>
-          {product.title}
-        </h6>
-        <p className='mb-1'>₹{product.price}</p>
-        <p className='mb-2'>Rating: {product.rating}</p>
-        <div className='mt-auto d-flex gap-2'>
-          <button
-            className='btn btn-primary btn-sm'
-            onClick={() => addToCart(product._id, 1, "M")}>
-            Add to Cart
+    <div className='card h-100 fade-in border-0 shadow-sm'>
+      <div 
+        className="position-relative overflow-hidden" 
+        style={{ cursor: 'pointer' }}
+        onClick={() => navigate(`/products/${product._id}`)}
+      >
+        <img
+          src={product.images && product.images[0] ? product.images[0] : `https://placehold.co/400x500/6366f1/ffffff?text=${encodeURIComponent(product.title)}`}
+          alt={product.title}
+          className="card-img-top transition-transform duration-300 hover-scale"
+          style={{ height: 260, objectFit: "cover" }}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = `https://placehold.co/400x500/6366f1/ffffff?text=${encodeURIComponent(product.title)}`;
+          }}
+        />
+        <div className="position-absolute top-0 end-0 p-2">
+          <button 
+            className="btn btn-light btn-sm rounded-circle shadow-sm"
+            onClick={(e) => { e.stopPropagation(); addToWishlist(product._id); }}
+            title="Add to Wishlist"
+          >
+            ❤️
           </button>
+        </div>
+      </div>
+      <div className='card-body d-flex flex-column p-3'>
+        <div className="d-flex justify-content-between align-items-start mb-2">
+          <h6
+            className='card-title mb-0 text-truncate'
+            style={{ cursor: "pointer", fontWeight: '700' }}
+            onClick={() => navigate(`/products/${product._id}`)}>
+            {product.title}
+          </h6>
+          <span className="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
+            ★ {product.rating}
+          </span>
+        </div>
+        <div className="d-flex align-items-center gap-2 mb-3">
+          <span className="fs-5 fw-bold text-primary">₹{product.price}</span>
+          {product.oldPrice && (
+            <span className="text-muted text-decoration-line-through small">₹{product.oldPrice}</span>
+          )}
+        </div>
+        <div className='mt-auto'>
           <button
-            className='btn btn-outline-secondary btn-sm'
-            onClick={() => addToWishlist(product._id)}>
-            Wishlist
+            className='btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2'
+            onClick={() => addToCart(product._id, 1, "M")}>
+            <span>🛒</span> Add to Cart
           </button>
         </div>
       </div>

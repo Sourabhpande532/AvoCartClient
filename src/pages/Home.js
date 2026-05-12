@@ -1,7 +1,6 @@
 /* eslint-disable no-lone-blocks */
 import { Link } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
-import ChatBoat from "../components/ChatBoat";
 
 export const Home = () => {
   const { categories, loading, globalSearch } = useAppFeatures();
@@ -12,49 +11,51 @@ export const Home = () => {
   );
   if (loading) return <p className='text-center'>Loading...</p>;
   return (
-    <div className='container my-4'>
-      <h2 className='display-6 mb-4 fw-semibold text-center'>
-        Featured Categories
-      </h2>
-      {/* AI-CHAT */}
-      <ChatBoat />
-      {/* AI-CHAT */}
+    <div className='container my-5 fade-in'>
+      {/* Hero Section */}
+      <div className="row align-items-center mb-5 py-5 bg-primary-subtle rounded-4 px-4 overflow-hidden position-relative">
+        <div className="col-lg-6 position-relative z-1">
+          <h1 className="display-3 fw-bold mb-3">Discover Your Next <span className="text-primary">Favorite</span> Piece</h1>
+          <p className="lead mb-4 opacity-75">Explore our curated collection of premium products designed for modern life. Quality meets style in every category.</p>
+          <Link to="/products" className="btn btn-primary btn-lg px-4 py-2">Shop Now</Link>
+        </div>
+        <div className="col-lg-6 d-none d-lg-block position-relative">
+           <div className="bg-primary rounded-circle position-absolute" style={{ width: '400px', height: '400px', top: '-100px', right: '-100px', opacity: '0.1' }}></div>
+           <img src="https://placehold.co/600x400/6366f1/ffffff?text=Modern+Shopping" alt="Hero" className="img-fluid rounded-4 shadow-lg position-relative z-1" />
+        </div>
+      </div>
+
+      <div className="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <h2 className='h2 mb-1 fw-bold'>Featured Categories</h2>
+          <p className="text-muted">Shop by your favorite style or department</p>
+        </div>
+        <Link to="/products" className="btn btn-link text-decoration-none fw-semibold">View All →</Link>
+      </div>
+
       <div className='row g-4'>
         {Array.isArray(filteredCategory) && filteredCategory.length > 0 ? (
           filteredCategory.map((cat) => (
             <div key={cat._id} className='col-md-4'>
               <Link
                 to={`/products?category=${cat._id}`}
-                className='text-decoration-none'>
-                <div
-                  className='card shadow-sm h-100 border-0 category-card'
-                  style={{ cursor: "pointer", borderRadius: "14px" }}>
-                  {/* Image */}
-                  <div
-                    style={{
-                      height: "220px",
-                      overflow: "hidden",
-                      borderTopLeftRadius: "14px",
-                      borderTopRightRadius: "14px",
-                    }}>
+                className='text-decoration-none text-dark'>
+                <div className='card h-100 border-0 shadow-sm overflow-hidden'>
+                  <div className="overflow-hidden" style={{ height: "240px" }}>
                     <img
-                      src={cat.image || "https://picsum.photos/id/21/400/300"}
-                      className='w-100'
+                      src={cat.image ? cat.image : `https://placehold.co/400x300/6366f1/ffffff?text=${encodeURIComponent(cat.name)}`}
+                      className='w-100 h-100 object-fit-cover hover-scale'
                       alt={cat.name}
-                      style={{
-                        height: "100%",
-                        width: "100%",
-                        objectFit: "cover",
-                        transition: "0.4s ease",
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://placehold.co/400x300/6366f1/ffffff?text=${encodeURIComponent(cat.name)}`;
                       }}
                     />
                   </div>
-
-                  {/* Body */}
-                  <div className='card-body'>
-                    <h5 className='fw-semibold'>{cat.name}</h5>
+                  <div className='card-body p-4'>
+                    <h5 className='fw-bold mb-2'>{cat.name}</h5>
                     <p className='text-muted small mb-0'>
-                      {cat.description?.substring(0, 60)}...
+                      {cat.description || "Explore our latest collection of premium " + cat.name}
                     </p>
                   </div>
                 </div>
@@ -62,7 +63,11 @@ export const Home = () => {
             </div>
           ))
         ) : (
-          <p className='text-center'>Categories not found</p>
+          <div className="col-12 text-center py-5">
+            <div className="fs-1 mb-3">🔍</div>
+            <h3 className="fw-bold">No categories found</h3>
+            <p className="text-muted">Try searching for something else</p>
+          </div>
         )}
       </div>
     </div>

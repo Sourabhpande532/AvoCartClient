@@ -54,33 +54,61 @@ export const ProductListing = () => {
   if (loading) return <p className='text-center'>Loading...</p>;
 
   return (
-    <div className='row'>
-      <div className='col-md-3'>
-        <FiltersSidebar
-          categories={categories}
-          selectedCats={selectedCats}
-          setSelectedCats={setSelectedCats}
-          price={price}
-          setPrice={setPrice}
-          rating={rating}
-          setRating={setRating}
-          sortByRating={sortByRating}
-          setSortByRating={setSortByRating}
-          sort={sort}
-          setSort={setSort}
-          clearAll={clearAll}
-        />
-      </div>
-      <div className='col-md-9'>
-        <div className='mb-3 d-flex justify-content-between'>
-          <h4>Products ({filtered.length})</h4>
+    <div className='container-fluid px-4 py-4 fade-in'>
+      <div className='row g-4'>
+        <div className='col-lg-3'>
+          <div className="sticky-top scrollable-sidebar" style={{ top: '100px' }}>
+            <FiltersSidebar
+              categories={categories}
+              selectedCats={selectedCats}
+              setSelectedCats={setSelectedCats}
+              price={price}
+              setPrice={setPrice}
+              rating={rating}
+              setRating={setRating}
+              sortByRating={sortByRating}
+              setSortByRating={setSortByRating}
+              sort={sort}
+              setSort={setSort}
+              clearAll={clearAll}
+            />
+          </div>
         </div>
-        <div className='row'>
-          {filtered.map((p) => (
-            <div key={p._id} className='col-md-4 mb-3'>
-              <ProductCart product={p} />
+        <div className='col-lg-9'>
+          <div className='mb-4 d-flex justify-content-between align-items-center'>
+            <div>
+              <h2 className="fw-bold mb-0">Products</h2>
+              <p className="text-muted mb-0">Showing {filtered.length} results</p>
             </div>
-          ))}
+            <div className="d-flex gap-2">
+              <select 
+                className="form-select form-select-sm border-0 shadow-sm" 
+                value={sort} 
+                onChange={(e) => setSort(e.target.value)}
+                style={{ width: 'auto' }}
+              >
+                <option value="">Sort by Price</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+          <div className='row g-4'>
+            {filtered.length > 0 ? (
+              filtered.map((p) => (
+                <div key={p._id} className='col-sm-6 col-md-4'>
+                  <ProductCart product={p} />
+                </div>
+              ))
+            ) : (
+              <div className="col-12 text-center py-5">
+                <div className="fs-1 mb-3">🛍️</div>
+                <h3 className="fw-bold">No products found</h3>
+                <p className="text-muted">Try adjusting your filters or search terms</p>
+                <button className="btn btn-outline-primary mt-3" onClick={clearAll}>Clear all filters</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
