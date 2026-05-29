@@ -70,10 +70,10 @@ Watch a walkthrough (5-7 minutes) of all major features of this app:<br>
 ---
 
 ## Reference
-![](./assets/home.png)
----
-![](./assets/category.png)
----
+
+## ![](./assets/home.png)
+
+## ![](./assets/category.png)
 
 ---
 
