@@ -16,11 +16,12 @@ export default function useProduct() {
   useEffect(() => {
     const queryCategoryId = query.get("category");
     if (queryCategoryId) setSelectedCats([queryCategoryId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setGlobalSearch("");
-  }, []);
+  }, [setGlobalSearch]);
 
   useEffect(() => {
     let res = [...products];
