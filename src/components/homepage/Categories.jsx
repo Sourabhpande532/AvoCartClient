@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { getFallbackImage } from "../../utils/fallbackImage";
 
 export const Categories = ({ filteredCategory }) => {
   return (
@@ -16,13 +17,13 @@ export const Categories = ({ filteredCategory }) => {
                       src={
                         cat.image
                           ? cat.image
-                          : `https://placehold.co/400x300/6366f1/ffffff?text=${encodeURIComponent(cat.name)}`
+                          : getFallbackImage(cat.name)
                       }
                       className='w-100 h-100 object-fit-cover hover-scale'
                       alt={cat.name}
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = `https://placehold.co/400x300/6366f1/ffffff?text=${encodeURIComponent(cat.name)}`;
+                        e.target.src = getFallbackImage(cat.name);
                       }}
                     />
                   </div>

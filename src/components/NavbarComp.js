@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
 
 const Header = () => {
   const { wishlist, cart, globalSearch, setGlobalSearch, theme, toggleTheme } = useAppFeatures();
-  // On each key update globalSearch 
+  const { user, isAuthenticated, logout, setShowAuthModal } = useAuth();
+  const navigate = useNavigate();
   const [q, setQ] = useState(globalSearch || "");
 
   useEffect(() => setQ(globalSearch || ""), [globalSearch]);
@@ -13,6 +15,11 @@ const Header = () => {
     const value = e.target.value;
     setQ(value);
     setGlobalSearch(value);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/", { replace: true });
   };
 
   return (
@@ -60,7 +67,7 @@ const Header = () => {
 
             {/* Theme Toggle */}
             <li className="nav-item">
-              <button 
+              <button
                 onClick={toggleTheme}
                 className="btn btn-link nav-link text-decoration-none fs-5"
                 title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
@@ -89,12 +96,45 @@ const Header = () => {
               </Link>
             </li>
 
-            {/* Profile */}
-            <li className="nav-item">
-              <Link className="nav-link fs-5" to="/profile">
-                👤
-              </Link>
-            </li>
+            {/* User Area */}
+            {isAuthenticated ? (
+              <>
+                {/* User avatar/name pill */}
+                <li className="nav-item d-flex align-items-center">
+                  <Link to="/profile" className="text-decoration-none">
+                    <span className="navbar-user-pill hover-scale" style={{ cursor: "pointer", transition: "transform 0.2s" }} title={user?.email || "View Profile"}>
+                      {user?.avatar
+                        ? <img src={user.avatar} alt={user.name} className="navbar-avatar" />
+                        : <span className="navbar-avatar-fallback">{user?.name?.[0]?.toUpperCase() || "U"}</span>
+                      }
+                      <span className="navbar-user-name d-none d-lg-inline">{user?.name?.split(" ")[0]}</span>
+                    </span>
+                  </Link>
+                </li>
+
+                {/* Logout */}
+                <li className="nav-item d-flex align-items-center">
+                  <button
+                    id="btn-logout"
+                    onClick={handleLogout}
+                    className="btn btn-link nav-link text-decoration-none fs-6 logout-btn d-flex align-items-center gap-1"
+                    title="Logout"
+                  >
+                    <span>🚪</span> <span className="d-none d-lg-inline">Logout</span>
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item d-flex align-items-center">
+                <button 
+                  id="btn-nav-signin" 
+                  className="btn btn-sm auth-nav-btn nav-link" 
+                  onClick={() => setShowAuthModal(true)}
+                >
+                  Sign In
+                </button>
+              </li>
+            )}
 
           </ul>
         </div>

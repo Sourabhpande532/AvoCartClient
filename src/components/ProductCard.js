@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
+import { getFallbackImage } from "../utils/fallbackImage";
 export default function ProductCart({ product }) {
   const navigate = useNavigate();
   const { addToCart, addToWishlist } = useAppFeatures();
@@ -12,13 +13,17 @@ export default function ProductCart({ product }) {
         onClick={() => navigate(`/products/${product._id}`)}
       >
         <img
-          src={product.images && product.images[0] ? product.images[0] : `https://placehold.co/400x500/6366f1/ffffff?text=${encodeURIComponent(product.title)}`}
+          src={product.images && product.images[0] ? product.images[0] : getFallbackImage(product.title)}
           alt={product.title}
           className="card-img-top transition-transform duration-300 hover-scale"
-          style={{ height: 260, objectFit: "cover" }}
+          style={{ 
+            height: 260, 
+            objectFit: "cover",
+            background: `url('${getFallbackImage(product.title)}') center/cover no-repeat`
+          }}
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = `https://placehold.co/400x500/6366f1/ffffff?text=${encodeURIComponent(product.title)}`;
+            e.target.src = getFallbackImage(product.title);
           }}
         />
         <div className="position-absolute top-0 end-0 p-2">

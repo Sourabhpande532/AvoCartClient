@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import API from "../api/api";
+import { useAuth } from "./AuthContext";
 
 const AppContext = createContext();
 
@@ -15,12 +16,15 @@ const AppProvider = ({ children }) => {
   const [globalSearch, setGlobalSearch] = useState("");
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
+  const { isAuthenticated } = useAuth();
+
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
   };
 
+  // Always fetch public data (products & categories)
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -67,13 +71,10 @@ const AppProvider = ({ children }) => {
   const updateCartQty = async (cartItemId, newQty, oldQty) => {
     const diff = parseInt(newQty) - parseInt(oldQty);
     let trackSize = "";
-    if (diff > 0) {
-      trackSize = `Qty Increased by ${diff}`;
-    } else if (diff < 0) {
-      trackSize = `Qty Decreased by ${Math.abs(diff)}`;
-    } else {
-      trackSize = "Qty Quantity unchanged";
-    }
+    if (diff > 0) trackSize = `Qty Increased by ${diff}`;
+    else if (diff < 0) trackSize = `Qty Decreased by ${Math.abs(diff)}`;
+    else trackSize = "Qty Quantity unchanged";
+
     try {
       await API.put(`/cart/${cartItemId}`, { qty: newQty });
       await fetchCart();
@@ -182,7 +183,6 @@ const AppProvider = ({ children }) => {
     try {
       const res = await API.post("/orders", order);
       const created = res.data.data.order;
-      // refresh orders and cart
       await fetchOrders();
       await fetchCart();
       pushAlert({ type: "success", text: "Order placed successfully" });
@@ -204,12 +204,21 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Fetch user-specific data only when authenticated
   useEffect(() => {
-    fetchCart();
-    fetchWishlist();
-    fetchAddresses();
-    fetchOrders();
-  }, []);
+    if (isAuthenticated) {
+      fetchCart();
+      fetchWishlist();
+      fetchAddresses();
+      fetchOrders();
+    } else {
+      setCart([]);
+      setWishlist([]);
+      setAddresses([]);
+      setOrders([]);
+    }
+  }, [isAuthenticated]);
+
   return (
     <AppContext.Provider
       value={{
@@ -239,10 +248,12 @@ const AppProvider = ({ children }) => {
         deleteOrder,
         theme,
         toggleTheme,
+        pushAlert,
       }}>
       {children}
     </AppContext.Provider>
   );
 };
+
 const useAppFeatures = () => useContext(AppContext);
 export { AppProvider, AppContext, useAppFeatures };

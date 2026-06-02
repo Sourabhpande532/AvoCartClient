@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppFeatures } from "../contexts/AppContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Profile = () => {
   const {
@@ -11,6 +12,7 @@ export const Profile = () => {
     loading,
     deleteOrder,
   } = useAppFeatures();
+  const { user } = useAuth();
 
   const [form, setForm] = useState({
     name: "",
@@ -56,12 +58,16 @@ export const Profile = () => {
         <div className='col-lg-6'>
           <div className='card border-0 shadow-sm p-4 mb-4 rounded-4 bg-primary text-white'>
             <div className="d-flex align-items-center gap-4">
-              <div className="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '80px', height: '80px' }}>
-                <span className="fs-1">👤</span>
+              <div className="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center overflow-hidden" style={{ width: '80px', height: '80px' }}>
+                {user?.avatar ? (
+                  <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <span className="fs-1 fw-bold">{user?.name?.[0]?.toUpperCase() || "U"}</span>
+                )}
               </div>
               <div>
-                <h3 className='fw-bold mb-1'>Demo User</h3>
-                <p className="mb-0 opacity-75">demo@example.com • 9999999999</p>
+                <h3 className='fw-bold mb-1'>{user?.name || "User"}</h3>
+                <p className="mb-0 opacity-75">{user?.email || "Guest User"}</p>
               </div>
             </div>
           </div>

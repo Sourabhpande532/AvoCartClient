@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
+import { getFallbackImage } from "../utils/fallbackImage";
 
 /* eslint-disable jsx-a11y/alt-text */
 export const Wishlist = () => {
@@ -38,12 +39,12 @@ export const Wishlist = () => {
                 {/* Product Image */}
                 <div className="position-relative overflow-hidden" style={{ height: "240px", cursor: 'pointer' }} onClick={() => navigate(`/products/${w?.product?._id}`)}>
                   <img
-                    src={w?.product?.images && w?.product?.images[0] ? w.product.images[0] : `https://placehold.co/400x500/6366f1/ffffff?text=${encodeURIComponent(w?.product?.title || "Product")}`}
-                    className='w-100 h-100 object-fit-cover hover-scale'
+                    src={w?.product?.images && w?.product?.images[0] ? w.product.images[0] : getFallbackImage(w?.product?.title || "Product")}
                     alt='wishlist'
+                    className='w-100 h-100 object-fit-cover hover-scale'
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = `https://placehold.co/400x500/6366f1/ffffff?text=${encodeURIComponent(w?.product?.title || "Product")}`;
+                      e.target.src = getFallbackImage(w?.product?.title || "Product");
                     }}
                   />
                   <button 
