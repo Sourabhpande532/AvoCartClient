@@ -36,8 +36,11 @@ const Footer = () => {
             <h6 className="fw-bold mb-3 text-uppercase small">Newsletter</h6>
             <p className="text-muted small">Stay updated with our latest collections and exclusive offers.</p>
             <div className="input-group mb-3">
-              <input type="text" className="form-control" placeholder="your@email.com" />
-              <button className="btn btn-primary" type="button">Join</button>
+              <input type="email" id="newsletter-email" className="form-control" placeholder="your@email.com" />
+              <button className="btn btn-primary" type="button" onClick={() => {
+                const email = document.getElementById('newsletter-email').value;
+                window.location.href = `mailto:admin@mystore.com?subject=Newsletter Subscription&body=Subscribe my email: ${email}`;
+              }}>Join</button>
             </div>
           </div>
         </div>

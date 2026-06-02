@@ -89,6 +89,7 @@ export function ProductDetails() {
   };
 
   return (
+    <>
     <div className='container py-5 fade-in'>
       <div className='row g-5'>
         <div className='col-lg-6'>
@@ -219,12 +220,6 @@ export function ProductDetails() {
         </div>
       </div>
 
-      <PopupMessage
-        show={popup.show}
-        message={popup.message}
-        onClose={closePopup}
-      />
-
       <div className='mt-5 pt-5'>
         <div className="d-flex justify-content-between align-items-end mb-4">
           <div>
@@ -264,5 +259,11 @@ export function ProductDetails() {
         </div>
       </div>
     </div>
+      <PopupMessage
+        show={popup.show}
+        message={popup.message}
+        onClose={closePopup}
+      />
+    </>
   );
 }
