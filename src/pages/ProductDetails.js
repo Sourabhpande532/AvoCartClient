@@ -3,6 +3,7 @@ import { useParams, useNavigate,Link } from "react-router-dom";
 import API from "../api/api";
 import { AppContext } from "../contexts/AppContext";
 import PopupMessage from "../components/PopupMessage";
+import { getFallbackImage } from "../utils/fallbackImage";
 
 export function ProductDetails() {
   const { id } = useParams();
@@ -93,13 +94,13 @@ export function ProductDetails() {
         <div className='col-lg-6'>
           <div className='card border-0 shadow-lg overflow-hidden' style={{ borderRadius: '20px' }}>
             <img
-              src={product.images && product.images[0] ? product.images[0] : `https://placehold.co/600x600/6366f1/ffffff?text=${encodeURIComponent(product.title)}`}
+              src={product.images && product.images[0] ? product.images[0] : getFallbackImage(product.title)}
               className='img-fluid w-100'
               alt={product.title}
               style={{ objectFit: "cover", minHeight: "500px" }}
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = `https://placehold.co/600x600/6366f1/ffffff?text=${encodeURIComponent(product.title)}`;
+                e.target.src = getFallbackImage(product.title);
               }}
             />
           </div>
@@ -203,10 +204,10 @@ export function ProductDetails() {
             ))}
           </div>
 
-          <div className="card bg-light border-0">
+          <div className="card border-0 shadow-sm rounded-4">
             <div className="card-body p-4">
-              <h6 className="fw-bold text-uppercase small mb-3">Product Description</h6>
-              <ul className="mb-0 text-muted small">
+              <h6 className="fw-bold text-uppercase small mb-3 text-primary">Product Description</h6>
+              <ul className="mb-0 text-body-secondary small" style={{ lineHeight: '1.8' }}>
                 {product.description
                   ?.split(".")
                   .map((line, idx) =>
@@ -237,12 +238,12 @@ export function ProductDetails() {
               <div className='card h-100 border-0 shadow-sm overflow-hidden'>
                 <div className="position-relative overflow-hidden" style={{ height: "200px", cursor: 'pointer' }} onClick={() => navigate(`/products/${item._id}`)}>
                   <img
-                    src={item.images && item.images[0] ? item.images[0] : `https://placehold.co/400x300/6366f1/ffffff?text=${encodeURIComponent(item.title)}`}
+                    src={item.images && item.images[0] ? item.images[0] : getFallbackImage(item.title)}
                     className='w-100 h-100 object-fit-cover hover-scale'
                     alt={item.title}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = `https://placehold.co/400x300/6366f1/ffffff?text=${encodeURIComponent(item.title)}`;
+                      e.target.src = getFallbackImage(item.title);
                     }}
                   />
                 </div>

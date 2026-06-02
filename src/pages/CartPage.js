@@ -2,6 +2,7 @@ import { useState } from "react";
 import PopupMessage from "../components/PopupMessage";
 import { useAppFeatures } from "../contexts/AppContext";
 import { Checkout } from "./Checkout";
+import { getFallbackImage } from "../utils/fallbackImage";
 
 export const CartPage = () => {
   const {
@@ -88,12 +89,12 @@ export const CartPage = () => {
                     <div className='col-12 col-sm-3'>
                       <div className="bg-body-secondary rounded-3 p-2 text-center overflow-hidden" style={{ height: '140px' }}>
                         <img
-                          src={ci?.product?.images && ci?.product?.images[0] ? ci.product.images[0] : `https://placehold.co/200x200/6366f1/ffffff?text=${encodeURIComponent(ci.product.title)}`}
+                          src={ci?.product?.images && ci?.product?.images[0] ? ci.product.images[0] : getFallbackImage(ci.product.title)}
                           alt='cart-img'
                           className='img-fluid h-100 w-100 object-fit-contain hover-scale'
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `https://placehold.co/200x200/6366f1/ffffff?text=${encodeURIComponent(ci.product.title)}`;
+                            e.target.src = getFallbackImage(ci.product.title);
                           }}
                         />
                       </div>

@@ -9,10 +9,10 @@ const PopupMessage = ({ show:display, message, onClose }) => {
         zIndex: 2000,
       }}
     >
-      <div className="card p-4 shadow-lg text-center" style={{ width: "300px" }}>
-        <h5 className="mb-3">Alert</h5>
+      <div className="bg-body border rounded-4 p-4 shadow-lg text-center" style={{ width: "300px" }}>
+        <h5 className="mb-3 fw-bold">Alert</h5>
         <p>{message}</p>
-        <button className="btn btn-primary mt-2" onClick={onClose}>
+        <button className="btn btn-primary mt-2 px-4" onClick={onClose}>
           OK
         </button>
       </div>

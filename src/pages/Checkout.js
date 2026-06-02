@@ -4,14 +4,26 @@ import { useEffect, useState } from "react";
 
 export const Checkout = ({ showPopup }) => {
   const { cart, addresses, placeOrders } = useAppFeatures();
+  const mockAddress = {
+    _id: "mock_address_default",
+    name: "John Doe (Default)",
+    phone: "9876543210",
+    street: "123 Default Street",
+    city: "Metropolis",
+    state: "NY",
+    zip: "10001"
+  };
+
+  const displayAddresses = addresses && addresses.length > 0 ? addresses : [mockAddress];
+
   const [selectedAddressId, setSelectedAddressId] = useState(
-    addresses?.[0]?._id || null
+    displayAddresses[0]._id
   );
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (addresses && addresses.length && !selectedAddressId) {
-      setSelectedAddressId(addresses[0]._id);
+    if (displayAddresses.length > 0 && !selectedAddressId) {
+      setSelectedAddressId(displayAddresses[0]._id);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addresses]);
@@ -34,7 +46,7 @@ export const Checkout = ({ showPopup }) => {
 
   const doCheckout = async () => {
     const selectedAddress =
-      addresses.find((a) => a._id === selectedAddressId) || null;
+      displayAddresses.find((a) => a._id === selectedAddressId) || null;
 
     if (!selectedAddress) return showPopup("Please select an address");
     if (cart.length === 0) return showPopup("Cart is empty");
@@ -53,13 +65,11 @@ export const Checkout = ({ showPopup }) => {
 
       <h5 className="fw-bold mb-3">Choose Delivery Address</h5>
 
-      {addresses.length === 0 && (
-        <p className="text-muted">No addresses found. Add one from profile.</p>
-      )}
+
 
       {/* ADDRESSES */}
       <div className="mb-3">
-        {addresses.map((a) => (
+        {displayAddresses.map((a) => (
           <div
             key={a._id}
             className={`card p-3 mb-2 address-card ${
