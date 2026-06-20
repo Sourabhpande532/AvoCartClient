@@ -11,6 +11,7 @@ export default function FiltersSidebar({
   clearAll,
   price,
   setPrice,
+  idPrefix = "",
 }) {
   const toggleCategoryChange = (categoryId) => {
     const alreadySelected = selectedCats.includes(categoryId);
@@ -65,11 +66,11 @@ export default function FiltersSidebar({
                 <input
                   className='form-check-input'
                   type='checkbox'
-                  id={cat._id}
+                  id={`${idPrefix}cat-${cat._id}`}
                   checked={selectedCats.includes(cat._id)}
                   onChange={() => toggleCategoryChange(cat._id)}
                 />
-                <label className='form-check-label' htmlFor={cat._id}>
+                <label className='form-check-label' htmlFor={`${idPrefix}cat-${cat._id}`}>
                   {cat.name}
                 </label>
               </div>
@@ -97,26 +98,26 @@ export default function FiltersSidebar({
             <div className='form-check'>
               <input
                 type='radio'
-                name='rating'
+                name={`${idPrefix}rating`}
                 className='form-check-input'
-                id='filterByFour'
+                id={`${idPrefix}filterByFour`}
                 checked={sortByRating === 4}
                 onChange={() => setSortByRating(4)}
               />
-              <label className='form-check-label' htmlFor='filterByFour'>
+              <label className='form-check-label' htmlFor={`${idPrefix}filterByFour`}>
                 4 ★ & above
               </label>
             </div>
             <div className='form-check'>
               <input
                 type='radio'
-                name='rating'
+                name={`${idPrefix}rating`}
                 className='form-check-input'
-                id='filterByThree'
+                id={`${idPrefix}filterByThree`}
                 checked={sortByRating === 3}
                 onChange={() => setSortByRating(3)}
               />
-              <label className='form-check-label' htmlFor='filterByThree'>
+              <label className='form-check-label' htmlFor={`${idPrefix}filterByThree`}>
                 3 ★ & above
               </label>
             </div>
@@ -129,26 +130,26 @@ export default function FiltersSidebar({
             <div className='form-check'>
               <input
                 type='radio'
-                name='sort'
+                name={`${idPrefix}sort`}
                 className='form-check-input'
-                id='low'
+                id={`${idPrefix}low`}
                 checked={sort === "low"}
                 onChange={() => setSort("low")}
               />
-              <label className='form-check-label' htmlFor='low'>
+              <label className='form-check-label' htmlFor={`${idPrefix}low`}>
                 Price: Low to High
               </label>
             </div>
             <div className='form-check'>
               <input
                 type='radio'
-                name='sort'
+                name={`${idPrefix}sort`}
                 className='form-check-input'
-                id='high'
+                id={`${idPrefix}high`}
                 checked={sort === "high"}
                 onChange={() => setSort("high")}
               />
-              <label className='form-check-label' htmlFor='high'>
+              <label className='form-check-label' htmlFor={`${idPrefix}high`}>
                 Price: High to Low
               </label>
             </div>

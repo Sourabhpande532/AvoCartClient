@@ -135,14 +135,14 @@ export const CartPage = () => {
                         <div className='d-flex align-items-center border rounded-pill p-1 bg-body-tertiary'>
                           <button
                             className='btn btn-sm btn-body-tertiary rounded-circle shadow-none px-3 border-0'
-                            onClick={() => updateCartQty(ci._id, Math.max(1, ci.qty - 1), ci.qty)}
+                            onClick={() => updateCartQty(ci._id, Math.max(1, ci.qty - 1))}
                           >
                             −
                           </button>
                           <span className='mx-3 fw-bold' style={{ minWidth: '20px', textAlign: 'center' }}>{ci.qty}</span>
                           <button
                             className='btn btn-sm btn-body-tertiary rounded-circle shadow-none px-3 border-0'
-                            onClick={() => updateCartQty(ci._id, ci.qty + 1, ci.qty)}
+                            onClick={() => updateCartQty(ci._id, ci.qty + 1)}
                           >
                             +
                           </button>

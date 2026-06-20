@@ -68,17 +68,11 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const updateCartQty = async (cartItemId, newQty, oldQty) => {
-    const diff = parseInt(newQty) - parseInt(oldQty);
-    let trackSize = "";
-    if (diff > 0) trackSize = `Qty Increased by ${diff}`;
-    else if (diff < 0) trackSize = `Qty Decreased by ${Math.abs(diff)}`;
-    else trackSize = "Qty Quantity unchanged";
-
+  const updateCartQty = async (cartItemId, newQty) => {
     try {
       await API.put(`/cart/${cartItemId}`, { qty: newQty });
       await fetchCart();
-      pushAlert({ type: "info", text: `${trackSize}` });
+      // Toast message removed to prevent spam when rapidly clicking
     } catch (error) {
       console.error(error);
       pushAlert({ type: "error", text: "Failed to update cart" });

@@ -115,7 +115,7 @@ const ChatBoat = () => {
                 {/* ⏳ Typing Indicator */}
                 {loading && (
                   <div className='d-flex justify-content-start'>
-                    <div className='bg-light p-2 rounded-4 border px-3'>
+                    <div className='bg-body-secondary text-body p-2 rounded-4 border px-3'>
                       <div className='typing-dots'>
                         <span>•</span><span>•</span><span>•</span>
                       </div>
@@ -131,10 +131,10 @@ const ChatBoat = () => {
               </div>
 
               {/* Footer */}
-              <div className='modal-footer border-0 p-3 bg-white'>
-                <div className="input-group">
+              <div className='modal-footer border-0 p-3 bg-body'>
+                <div className="input-group shadow-sm">
                   <input
-                    className='form-control border-0 bg-light rounded-start-pill px-4'
+                    className='form-control border-0 bg-body-secondary text-body rounded-start-pill px-4'
                     placeholder='Type your message...'
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
