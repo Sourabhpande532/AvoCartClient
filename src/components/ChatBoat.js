@@ -43,7 +43,7 @@ const ChatBoat = () => {
 
       setMessages((prev) => [...prev, aiMessage]);
     } catch (err) {
-      setError("⚠️ Something went wrong. Please try again.");
+      setError("⚠️ Please try again after some time. Unable to generate response.");
     } finally {
       setLoading(false);
     }
