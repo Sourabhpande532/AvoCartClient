@@ -28,7 +28,7 @@ const Header = () => {
 
         {/* Brand */}
         <Link className="navbar-brand fs-3" to="/">
-          MyStore
+          AvoCart
         </Link>
 
         {/* Toggle Button */}
