@@ -1,8 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const Footer = () => {
   const { pushAlert } = useAppFeatures();
+  const { isAuthenticated, setShowAuthModal } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSupportAction = (e) => {
+    e.preventDefault();
+    if (isAuthenticated) {
+      navigate("/profile");
+    } else {
+      setShowAuthModal(true);
+    }
+  };
+
   return (
     <footer className="footer py-5 mt-auto border-top">
       <div className="container">
@@ -30,10 +43,22 @@ const Footer = () => {
           <div className="col-6 col-lg-2">
             <h6 className="fw-bold mb-3 text-uppercase small">Support</h6>
             <ul className="list-unstyled small d-flex flex-column gap-2 text-muted">
-              <li><Link to="/" className="text-decoration-none text-muted">Help Center</Link></li>
-              <li><Link to="/" className="text-decoration-none text-muted">Contact Us</Link></li>
-              <li><Link to="/" className="text-decoration-none text-muted">Returns</Link></li>
-              <li><Link to="/" className="text-decoration-none text-muted">Shipping</Link></li>
+              <li>
+                <button 
+                  onClick={handleSupportAction} 
+                  className="btn btn-link p-0 text-decoration-none text-muted"
+                >
+                  Returns
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={handleSupportAction} 
+                  className="btn btn-link p-0 text-decoration-none text-muted"
+                >
+                  Shipping
+                </button>
+              </li>
             </ul>
           </div>
           <div className="col-lg-4">
