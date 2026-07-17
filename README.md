@@ -1,8 +1,8 @@
-# E-Commerce App
+# AvoCart App
 
 ---
 
-Build a complete e-commerce application with a React frontend and Node/Express + MongoDB backend that supports product browsing, filtering/sorting, cart & wishlist flows, address/checkout, and order history.
+Build a complete avocart application with a React frontend and Node/Express + MongoDB backend that supports product browsing, filtering/sorting, cart & wishlist flows, address/checkout, and order history.
 
 ---
 
@@ -32,6 +32,8 @@ npm run dev  # or 'npm start' / 'yarn dev'
 - Express Js
 - Mongo DB
 - RESTful APIs
+- Google/GitHub OAuth
+- JWT 
 
 ---
 
@@ -71,9 +73,9 @@ Watch a walkthrough (5-7 minutes) of all major features of this app:<br>
 
 ## Reference
 
-## ![](./assets/home.png)
+## ![](./assets/avoCart.png)
 
-## ![](./assets/category.png)
+## ![](./assets/auth.png)
 
 ---
 
