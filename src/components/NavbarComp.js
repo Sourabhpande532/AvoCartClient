@@ -15,6 +15,9 @@ const Header = () => {
     const value = e.target.value;
     setQ(value);
     setGlobalSearch(value);
+    if (value.trim().length > 0 && window.location.pathname !== "/products") {
+      navigate("/products");
+    }
   };
 
   const handleLogout = () => {

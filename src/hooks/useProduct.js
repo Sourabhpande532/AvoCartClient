@@ -7,7 +7,7 @@ export default function useProduct() {
     useAppFeatures();
   const [filtered, setFiltered] = useState([]);
   const [selectedCats, setSelectedCats] = useState([]);
-  const [price, setPrice] = useState(300);
+  const [price, setPrice] = useState(5000);
   const [rating, setRating] = useState(0);
   const [sort, setSort] = useState("");
   const [sortByRating, setSortByRating] = useState("");
@@ -29,7 +29,7 @@ export default function useProduct() {
       res = res.filter((product) =>
         selectedCats.includes(String(product.category?._id)),
       );
-    if (price) res = res.filter((product) => product.price > price);
+    if (price) res = res.filter((product) => product.price <= price);
     if (rating) res = res.filter((product) => product.rating >= rating);
     if (sortByRating === 4)
       res = res.filter((product) => product.rating > sortByRating);
@@ -46,7 +46,7 @@ export default function useProduct() {
     setSelectedCats([query.get("category")]);
     setRating(0);
     setSort("");
-    setPrice(300);
+    setPrice(5000);
     setSortByRating("");
   };
   return {

@@ -1,10 +1,14 @@
+import { Link } from "react-router-dom";
+import { useAppFeatures } from "../contexts/AppContext";
+
 const Footer = () => {
+  const { pushAlert } = useAppFeatures();
   return (
     <footer className="footer py-5 mt-auto border-top">
       <div className="container">
         <div className="row g-4">
           <div className="col-lg-4">
-            <h5 className="fw-bold mb-3 text-primary">MyStore</h5>
+            <h5 className="fw-bold mb-3 text-primary">AvoCart</h5>
             <p className="text-muted small">
               Elevating your lifestyle with curated premium products. Quality meets style in every piece we offer.
             </p>
@@ -17,19 +21,19 @@ const Footer = () => {
           <div className="col-6 col-lg-2">
             <h6 className="fw-bold mb-3 text-uppercase small">Shop</h6>
             <ul className="list-unstyled small d-flex flex-column gap-2 text-muted">
-              <li>All Products</li>
-              <li>Featured</li>
-              <li>New Arrivals</li>
-              <li>Offers</li>
+              <li><Link to="/products" className="text-decoration-none text-muted">All Products</Link></li>
+              <li><Link to="/products" className="text-decoration-none text-muted">Featured</Link></li>
+              <li><Link to="/products" className="text-decoration-none text-muted">New Arrivals</Link></li>
+              <li><Link to="/products" className="text-decoration-none text-muted">Offers</Link></li>
             </ul>
           </div>
           <div className="col-6 col-lg-2">
             <h6 className="fw-bold mb-3 text-uppercase small">Support</h6>
             <ul className="list-unstyled small d-flex flex-column gap-2 text-muted">
-              <li>Help Center</li>
-              <li>Contact Us</li>
-              <li>Returns</li>
-              <li>Shipping</li>
+              <li><Link to="/" className="text-decoration-none text-muted">Help Center</Link></li>
+              <li><Link to="/" className="text-decoration-none text-muted">Contact Us</Link></li>
+              <li><Link to="/" className="text-decoration-none text-muted">Returns</Link></li>
+              <li><Link to="/" className="text-decoration-none text-muted">Shipping</Link></li>
             </ul>
           </div>
           <div className="col-lg-4">
@@ -39,14 +43,19 @@ const Footer = () => {
               <input type="email" id="newsletter-email" className="form-control" placeholder="your@email.com" />
               <button className="btn btn-primary" type="button" onClick={() => {
                 const email = document.getElementById('newsletter-email').value;
-                window.location.href = `mailto:admin@mystore.com?subject=Newsletter Subscription&body=Subscribe my email: ${email}`;
+                if(email) {
+                  pushAlert({ type: "success", text: `Thank you for subscribing, ${email}!` });
+                  document.getElementById('newsletter-email').value = "";
+                } else {
+                  pushAlert({ type: "error", text: "Please enter a valid email." });
+                }
               }}>Join</button>
             </div>
           </div>
         </div>
         <hr className="my-4 opacity-25" />
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-          <p className="mb-0 text-muted small">© 2026 MyStore. All Rights Reserved.</p>
+          <p className="mb-0 text-muted small">© 2026 AvoCart. All Rights Reserved.</p>
           <div className="d-flex gap-4 small text-muted">
             <span>Privacy Policy</span>
             <span>Terms of Service</span>

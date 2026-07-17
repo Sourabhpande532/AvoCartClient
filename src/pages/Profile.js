@@ -28,6 +28,14 @@ export const Profile = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (!/^\d{6}$/.test(form.zip)) {
+      alert("Pincode must be exactly 6 digits.");
+      return;
+    }
+    if (!/^\d{10}$/.test(form.phone)) {
+      alert("Phone number must be exactly 10 digits.");
+      return;
+    }
     if (editingId) {
       await updateAddress(editingId, form);
       setEditingId(null);
@@ -267,7 +275,10 @@ export const Profile = () => {
                     ))}
                   </div>
 
-                  <button className='btn btn-outline-primary btn-sm w-100 rounded-pill'>
+                  <button 
+                    className='btn btn-outline-primary btn-sm w-100 rounded-pill'
+                    onClick={() => alert('Tracking details will be emailed shortly.')}
+                  >
                     Track / View Details
                   </button>
                 </div>

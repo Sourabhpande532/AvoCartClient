@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate,Link } from "react-router-dom";
 import API from "../api/api";
 import { AppContext } from "../contexts/AppContext";
+import { useAuth } from "../contexts/AuthContext";
 import PopupMessage from "../components/PopupMessage";
 import { getFallbackImage } from "../utils/fallbackImage";
 
@@ -10,6 +11,7 @@ export function ProductDetails() {
   const navigate = useNavigate();
   const { addToCart, addToWishlist, globalSearch, setGlobalSearch } =
     useContext(AppContext);
+  const { isAuthenticated, setShowAuthModal } = useAuth();
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
@@ -81,6 +83,10 @@ export function ProductDetails() {
   const originalPrice = product.price + Math.floor(product.price * 0.4);
 
   const handleAddToCart = async () => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
     if (!selectedSize) {
       showPopup("Please select a size");
       return;
@@ -182,7 +188,11 @@ export function ProductDetails() {
                   className='btn btn-outline-danger btn-lg rounded-circle p-0 d-flex align-items-center justify-content-center'
                   style={{ width: '56px', height: '56px' }}
                   onClick={() => {
-                    addToWishlist(product._id);
+                    if (isAuthenticated) {
+                      addToWishlist(product._id);
+                    } else {
+                      setShowAuthModal(true);
+                    }
                   }}>
                   ❤
                 </button>
@@ -248,7 +258,13 @@ export function ProductDetails() {
                     <span className="fw-bold text-primary">₹{item.price}</span>
                     <button
                       className='btn btn-sm btn-primary rounded-pill'
-                      onClick={() => addToCart(item._id, 1, "S")}>
+                      onClick={() => {
+                        if (isAuthenticated) {
+                          addToCart(item._id, 1, "S");
+                        } else {
+                          setShowAuthModal(true);
+                        }
+                      }}>
                       + Cart
                     </button>
                   </div>

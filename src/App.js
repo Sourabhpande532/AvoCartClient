@@ -38,10 +38,10 @@ function AppContent() {
                         {/* Public routes */}
                         <Route path="/" element={<Home />} />
                         <Route path="/auth/callback" element={<OAuthCallback />} />
+                        <Route path="/products" element={<ProductListing />} />
+                        <Route path="/products/:id" element={<ProductDetails />} />
 
                         {/* Protected routes */}
-                        <Route path="/products" element={<ProtectedRoute><ProductListing /></ProtectedRoute>} />
-                        <Route path="/products/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
                         <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
                         <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
                         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />

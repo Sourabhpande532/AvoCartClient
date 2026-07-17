@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import PopupMessage from "../components/PopupMessage";
 import { useAppFeatures } from "../contexts/AppContext";
-import { Checkout } from "./Checkout";
 import { getFallbackImage } from "../utils/fallbackImage";
 
 export const CartPage = () => {
@@ -15,8 +14,6 @@ export const CartPage = () => {
   } = useAppFeatures();
 
   const [popup, setPopup] = useState({ show: false, message: "" });
-
-  const showPopup = (msg) => setPopup({ show: true, message: msg });
   const closePopup = () => setPopup({ show: false, message: "" });
 
   // 🔍 Apply global search
@@ -27,8 +24,8 @@ export const CartPage = () => {
   );
 
   // 💰 Totals calculation
-  const { totalMRP, totalDiscount, totalDelivery, finalAmount } =
-    filteredCart.reduce(
+  const { totalMRP, totalDiscount, totalDelivery, finalAmount } = useMemo(() => {
+    return filteredCart.reduce(
       (acc, curr) => {
         if (!curr.product) return acc;
 
@@ -48,6 +45,7 @@ export const CartPage = () => {
       },
       { totalMRP: 0, totalDiscount: 0, totalDelivery: 0, finalAmount: 0 }
     );
+  }, [filteredCart]);
 
   return (
     <div className='container py-5 fade-in'>
@@ -194,7 +192,12 @@ export const CartPage = () => {
             </div>
 
             <div className='d-grid'>
-              <Checkout showPopup={showPopup} />
+              <button 
+                className="btn btn-success w-100 py-2" 
+                onClick={() => window.location.href = '/checkout'}
+              >
+                Proceed to Checkout
+              </button>
             </div>
 
             <div className="mt-4 p-3 bg-primary-subtle rounded-3">

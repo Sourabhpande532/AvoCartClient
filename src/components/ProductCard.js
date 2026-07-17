@@ -1,9 +1,22 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
+import { useAuth } from "../contexts/AuthContext";
 import { getFallbackImage } from "../utils/fallbackImage";
-export default function ProductCart({ product }) {
+
+const ProductCart = ({ product }) => {
   const navigate = useNavigate();
   const { addToCart, addToWishlist } = useAppFeatures();
+  const { isAuthenticated, setShowAuthModal } = useAuth();
+
+  const handleAction = (e, actionCallback) => {
+    e.stopPropagation();
+    if (isAuthenticated) {
+      actionCallback();
+    } else {
+      setShowAuthModal(true);
+    }
+  };
 
   return (
     <div className='card h-100 fade-in border-0 shadow-sm'>
@@ -29,7 +42,7 @@ export default function ProductCart({ product }) {
         <div className="position-absolute top-0 end-0 p-2">
           <button 
             className="btn btn-light btn-sm rounded-circle shadow-sm"
-            onClick={(e) => { e.stopPropagation(); addToWishlist(product._id); }}
+            onClick={(e) => handleAction(e, () => addToWishlist(product._id))}
             title="Add to Wishlist"
           >
             ❤️
@@ -54,10 +67,15 @@ export default function ProductCart({ product }) {
             <span className="text-muted text-decoration-line-through small">₹{product.oldPrice}</span>
           )}
         </div>
-        <div className='mt-auto'>
+        <div className='mt-auto d-flex gap-2 flex-column'>
+          <button
+            className='btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2'
+            onClick={(e) => { e.stopPropagation(); navigate(`/products/${product._id}`); }}>
+            <span>👁️</span> View Details
+          </button>
           <button
             className='btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2'
-            onClick={() => addToCart(product._id, 1, "M")}>
+            onClick={(e) => handleAction(e, () => addToCart(product._id, 1, "M"))}>
             <span>🛒</span> Add to Cart
           </button>
         </div>
@@ -65,3 +83,5 @@ export default function ProductCart({ product }) {
     </div>
   );
 }
+
+export default React.memo(ProductCart);
