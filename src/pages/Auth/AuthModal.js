@@ -117,7 +117,7 @@ const AuthModal = () => {
         {/* Header */}
         <div className="auth-header">
           <div className="auth-logo">🛍️</div>
-          <h2 className="auth-title">MyStore</h2>
+          <h2 className="auth-title">AvoCart</h2>
           <p className="auth-subtitle">Sign in to continue</p>
         </div>
 
