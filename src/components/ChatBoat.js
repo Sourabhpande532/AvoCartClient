@@ -1,6 +1,55 @@
 import { useState, useRef, useEffect } from "react";
 import API from "../api/api";
 
+const renderFormattedMessage = (text) => {
+  if (!text) return null;
+
+  const lines = text.split("\n");
+  return lines.map((line, lineIdx) => {
+    const trimmed = line.trim();
+    if (!trimmed) return <div key={lineIdx} style={{ height: "0.4rem" }} />;
+
+    const isBullet = trimmed.startsWith("- ") || trimmed.startsWith("* ");
+    const isNumber = /^\d+\.\s/.test(trimmed);
+    const content = isBullet ? trimmed.substring(2) : isNumber ? trimmed.replace(/^\d+\.\s/, "") : line;
+
+    // Parse **bold** text blocks
+    const parts = content.split(/(\*\*.*?\*\*)/g);
+    const parsedElements = parts.map((part, partIdx) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={partIdx} className="fw-bold">{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+
+    if (isBullet) {
+      return (
+        <div key={lineIdx} className="d-flex align-items-start gap-2 my-1 ps-1">
+          <span className="text-primary fw-bold" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>•</span>
+          <div>{parsedElements}</div>
+        </div>
+      );
+    }
+
+    if (isNumber) {
+      const match = trimmed.match(/^(\d+\.)/);
+      const numStr = match ? match[1] : "";
+      return (
+        <div key={lineIdx} className="d-flex align-items-start gap-2 my-1 ps-1">
+          <span className="text-primary fw-bold" style={{ fontSize: '0.85rem', lineHeight: '1.4' }}>{numStr}</span>
+          <div>{parsedElements}</div>
+        </div>
+      );
+    }
+
+    return (
+      <div key={lineIdx} className="my-1">
+        {parsedElements}
+      </div>
+    );
+  });
+};
+
 const ChatBoat = () => {
   const [showModal, setShowModal] = useState(false);
   const [chatInput, setChatInput] = useState("");
@@ -63,7 +112,7 @@ const ChatBoat = () => {
           className='modal fade show d-block'
           tabIndex='-1'
           style={{ background: "rgba(15, 23, 42, 0.6)", backdropFilter: 'blur(6px)' }}>
-          <div className='modal-dialog modal-dialog-centered modal-sm' style={{ maxWidth: '400px' }}>
+          <div className='modal-dialog modal-dialog-centered modal-sm' style={{ maxWidth: '420px' }}>
             <div className='modal-content border-0 shadow-lg rounded-4 overflow-hidden'>
               {/* Header */}
               <div className='modal-header bg-slate-900 text-white border-0 py-3' style={{ background: '#0f172a' }}>
@@ -83,7 +132,7 @@ const ChatBoat = () => {
               <div
                 className='modal-body bg-body-tertiary'
                 style={{
-                  height: "380px",
+                  height: "390px",
                   overflowY: "auto",
                   padding: "1.25rem",
                   display: 'flex',
@@ -101,11 +150,11 @@ const ChatBoat = () => {
                           : "bg-body text-body rounded-bottom-start-0 border shadow-sm"
                       }`}
                       style={{
-                        maxWidth: "85%",
+                        maxWidth: "88%",
                         fontSize: '0.875rem',
                         lineHeight: "1.5",
                       }}>
-                      {msg.text}
+                      {renderFormattedMessage(msg.text)}
                     </div>
                   </div>
                 ))}
