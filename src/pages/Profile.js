@@ -57,58 +57,59 @@ export const Profile = () => {
     });
   };
 
-  if (loading) return <p className='text-center mt-5'>Loading...</p>;
+  if (loading) return <p className='text-center py-5 text-muted'>Loading profile...</p>;
 
   return (
     <div className='container py-5 fade-in'>
       <div className='row g-5'>
-        {/* LEFT SIDE */}
+        {/* LEFT SIDE: User Profile & Addresses */}
         <div className='col-lg-6'>
-          <div className='card border-0 shadow-sm p-4 mb-4 rounded-4 bg-primary text-white'>
+          {/* User Banner */}
+          <div className='card border shadow-sm p-4 mb-4 rounded-4 bg-body-tertiary'>
             <div className="d-flex align-items-center gap-4">
-              <div className="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center overflow-hidden" style={{ width: '80px', height: '80px' }}>
+              <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center overflow-hidden shadow-sm" style={{ width: '72px', height: '72px' }}>
                 {user?.avatar ? (
                   <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
-                  <span className="fs-1 fw-bold">{user?.name?.[0]?.toUpperCase() || "U"}</span>
+                  <span className="fs-2 fw-bold">{user?.name?.[0]?.toUpperCase() || "U"}</span>
                 )}
               </div>
               <div>
-                <h3 className='fw-bold mb-1'>{user?.name || "User"}</h3>
-                <p className="mb-0 opacity-75">{user?.email || "Guest User"}</p>
+                <h3 className='fw-bold mb-1 text-body'>{user?.name || "User"}</h3>
+                <p className="mb-0 text-muted small">{user?.email || "Guest User"}</p>
               </div>
             </div>
           </div>
 
-          {/* Address Section */}
+          {/* Saved Addresses */}
           <div className='mb-5'>
-            <div className="d-flex justify-content-between align-items-center mb-4">
-              <h4 className='fw-bold mb-0'>Saved Addresses</h4>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h4 className='fw-bold mb-0 text-body'>Saved Addresses</h4>
               <span className="badge bg-primary rounded-pill px-3">{addresses.length}</span>
             </div>
 
             {addresses.length === 0 && (
-              <div className="card border-0 shadow-sm p-4 text-center rounded-4">
-                <p className='text-muted mb-0'>No addresses yet. Add one below.</p>
+              <div className="card border p-4 text-center rounded-3 bg-body-tertiary">
+                <p className='text-muted small mb-0'>No addresses saved yet. Add one below.</p>
               </div>
             )}
 
             <div className="row g-3">
               {addresses.map((a) => (
                 <div key={a._id} className='col-md-6'>
-                  <div className='card h-100 border-0 shadow-sm p-3 rounded-4'>
+                  <div className='card h-100 border shadow-sm p-3 rounded-3'>
                     <div className="d-flex justify-content-between mb-2">
-                      <span className="badge bg-body-secondary text-body border">Home</span>
-                      <div className='d-flex gap-2'>
+                      <span className="badge bg-body-secondary text-body border small">Home</span>
+                      <div className='d-flex gap-1'>
                         <button
-                          className='btn btn-sm btn-body-tertiary rounded-circle border-0'
+                          className='btn btn-sm btn-link text-muted p-0 text-decoration-none me-2'
                           onClick={() => onEdit(a)}
                           title="Edit"
                         >
                           ✏️
                         </button>
                         <button
-                          className='btn btn-sm btn-body-tertiary rounded-circle border-0 text-danger'
+                          className='btn btn-sm btn-link text-danger p-0 text-decoration-none'
                           onClick={() => deleteAddress(a._id)}
                           title="Delete"
                         >
@@ -116,7 +117,7 @@ export const Profile = () => {
                         </button>
                       </div>
                     </div>
-                    <p className='fw-bold mb-1'>{a.name}</p>
+                    <p className='fw-bold mb-1 small text-body'>{a.name}</p>
                     <p className='text-muted small mb-1'>{a.phone}</p>
                     <p className='small text-muted mb-0'>
                       {a.street}, {a.city}, {a.state} - {a.zip}
@@ -128,15 +129,15 @@ export const Profile = () => {
           </div>
 
           {/* Add/Edit Form */}
-          <div className='card border-0 shadow-lg p-4 rounded-4'>
-            <h5 className='fw-bold mb-4'>
+          <div className='card border shadow-sm p-4 rounded-4'>
+            <h5 className='fw-bold mb-4 text-body'>
               {editingId ? "Edit Address" : "Add New Address"}
             </h5>
 
             <form onSubmit={onSubmit}>
               <div className='row g-3'>
                 <div className='col-12'>
-                  <label className="form-label small fw-bold">Full Name</label>
+                  <label className="form-label small fw-semibold text-muted">Full Name</label>
                   <input
                     className='form-control'
                     placeholder='John Doe'
@@ -146,7 +147,7 @@ export const Profile = () => {
                   />
                 </div>
                 <div className='col-12'>
-                  <label className="form-label small fw-bold">Street Address</label>
+                  <label className="form-label small fw-semibold text-muted">Street Address</label>
                   <input
                     className='form-control'
                     placeholder='123 Main St'
@@ -156,7 +157,7 @@ export const Profile = () => {
                   />
                 </div>
                 <div className='col-md-6'>
-                  <label className="form-label small fw-bold">City</label>
+                  <label className="form-label small fw-semibold text-muted">City</label>
                   <input
                     className='form-control'
                     placeholder='City'
@@ -166,7 +167,7 @@ export const Profile = () => {
                   />
                 </div>
                 <div className='col-md-6'>
-                  <label className="form-label small fw-bold">State</label>
+                  <label className="form-label small fw-semibold text-muted">State</label>
                   <input
                     className='form-control'
                     placeholder='State'
@@ -176,7 +177,7 @@ export const Profile = () => {
                   />
                 </div>
                 <div className='col-md-6'>
-                  <label className="form-label small fw-bold">ZIP Code</label>
+                  <label className="form-label small fw-semibold text-muted">ZIP Code</label>
                   <input
                     className='form-control'
                     placeholder='123456'
@@ -186,7 +187,7 @@ export const Profile = () => {
                   />
                 </div>
                 <div className='col-md-6'>
-                  <label className="form-label small fw-bold">Phone Number</label>
+                  <label className="form-label small fw-semibold text-muted">Phone Number</label>
                   <input
                     className='form-control'
                     placeholder='10-digit number'
@@ -197,13 +198,13 @@ export const Profile = () => {
                 </div>
               </div>
 
-              <button className='btn btn-primary w-100 mt-4 py-2 rounded-pill fw-bold'>
+              <button className='btn btn-primary w-100 mt-4 py-2 rounded-3 fw-semibold'>
                 {editingId ? "Update Address" : "Save Address"}
               </button>
               {editingId && (
                 <button 
                   type="button" 
-                  className="btn btn-link w-100 text-muted text-decoration-none mt-2"
+                  className="btn btn-link w-100 text-muted text-decoration-none mt-2 small"
                   onClick={() => { setEditingId(null); setForm({ name: "", street: "", city: "", state: "", zip: "", phone: "" }); }}
                 >
                   Cancel Edit
@@ -213,37 +214,37 @@ export const Profile = () => {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* RIGHT SIDE: Order History */}
         <div className='col-lg-6'>
           <div className="d-flex justify-content-between align-items-center mb-4">
-            <h4 className='fw-bold mb-0'>Order History</h4>
+            <h4 className='fw-bold mb-0 text-body'>Order History</h4>
             <span className="text-muted small">{orders.length} Orders</span>
           </div>
 
           {orders.length === 0 && (
-            <div className='card border-0 shadow-sm p-5 text-center rounded-4'>
-              <div className="fs-1 mb-3">📦</div>
-              <h5 className="fw-bold">No orders found</h5>
-              <p className='text-muted mb-0'>You haven't placed any orders yet.</p>
+            <div className='card border shadow-sm p-5 text-center rounded-4'>
+              <div className="fs-1 mb-3 text-muted">📦</div>
+              <h5 className="fw-bold mb-1">No orders found</h5>
+              <p className='text-muted small mb-0'>Your previous purchases will appear here.</p>
             </div>
           )}
 
           <div className="d-flex flex-column gap-4">
             {orders.map((o) => (
-              <div key={o._id} className='card border-0 shadow-sm rounded-4 overflow-hidden'>
-                <div className="card-header bg-body-tertiary border-0 p-3 d-flex justify-content-between align-items-center">
+              <div key={o._id} className='card border shadow-sm rounded-3 overflow-hidden'>
+                <div className="card-header bg-body-tertiary border-bottom p-3 d-flex justify-content-between align-items-center">
                   <div>
                     <span className="text-muted small">Order </span>
-                    <span className='fw-bold'>#{o._id.slice(-6)}</span>
+                    <span className='fw-bold text-body'>#{o._id.slice(-6)}</span>
                   </div>
                   <div className="d-flex align-items-center gap-3">
-                    <span className='badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill'>
+                    <span className='badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill small'>
                       Delivered
                     </span>
                     <button
                       className='btn btn-sm btn-link text-danger p-0 text-decoration-none'
                       onClick={() => deleteOrder(o._id)}
-                      title="Delete order from history"
+                      title="Delete order record"
                     >
                       ✕
                     </button>
@@ -258,16 +259,16 @@ export const Profile = () => {
 
                   <div className="d-flex flex-column gap-2 mb-3">
                     {o.items.map((it, index) => (
-                      <div key={index} className='d-flex align-items-center gap-3 p-2 bg-body-tertiary rounded-3'>
+                      <div key={index} className='d-flex align-items-center gap-3 p-2 bg-body-tertiary rounded-2 border'>
                         <img
-                          src={it.product?.images?.[0] || "https://picsum.photos/80"}
+                          src={it.product?.images?.[0] || "https://placehold.co/80?text=Product"}
                           alt='product'
                           className="rounded-2"
-                          style={{ width: 50, height: 50, objectFit: "cover" }}
+                          style={{ width: 44, height: 44, objectFit: "cover" }}
                         />
                         <div className='flex-grow-1 min-w-0'>
-                          <p className='mb-0 fw-semibold text-truncate small'>
-                            {it.product?.title || "Product removed"}
+                          <p className='mb-0 fw-semibold text-truncate small text-body'>
+                            {it.product?.title || "Product"}
                           </p>
                           <p className='text-muted small mb-0'>Qty: {it.qty}</p>
                         </div>
@@ -276,10 +277,10 @@ export const Profile = () => {
                   </div>
 
                   <button 
-                    className='btn btn-outline-primary btn-sm w-100 rounded-pill'
-                    onClick={() => alert('Tracking details will be emailed shortly.')}
+                    className='btn btn-outline-primary btn-sm w-100 rounded-2 fw-medium'
+                    onClick={() => alert('Tracking details sent to your registered email.')}
                   >
-                    Track / View Details
+                    View Shipment Details
                   </button>
                 </div>
               </div>

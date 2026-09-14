@@ -23,30 +23,30 @@ export default function Alerts({ alert = [], onClear }) {
         pointerEvents: "none",
       }}
     >
-      <div className="d-flex flex-column gap-2" style={{ maxWidth: "400px", width: "90%" }}>
+      <div className="d-flex flex-column gap-2" style={{ maxWidth: "420px", width: "90%" }}>
         {alert.map((a, i) => (
           <div
             key={i}
-            className={`alert glass border-0 shadow-lg fade show d-flex align-items-center justify-content-between p-3 rounded-4 fade-in`}
+            className="alert glass border shadow-sm fade show d-flex align-items-center justify-content-between p-3 rounded-3 fade-in"
             style={{
               pointerEvents: "auto",
-              borderLeft: `5px solid ${
-                a.type === "error" ? "#ef4444" : a.type === "success" ? "#10b981" : "#6366f1"
+              borderLeft: `4px solid ${
+                a.type === "error" || a.type === "danger" ? "#ef4444" : a.type === "success" ? "#10b981" : "#2563eb"
               }`
             }}
           >
             <div className="d-flex align-items-center gap-3">
-              <span className="fs-4">
-                {a.type === "error" ? "🚫" : a.type === "success" ? "✨" : "💡"}
+              <span className="fs-5">
+                {a.type === "error" || a.type === "danger" ? "🚫" : a.type === "success" ? "✨" : "ℹ️"}
               </span>
               <span className="fw-semibold small">{a.text}</span>
             </div>
 
             <button
               type="button"
-              className="btn-close shadow-none small"
+              className="btn-close shadow-none small ms-2"
               onClick={() => onClear && onClear()}
-              style={{ fontSize: '0.7rem' }}
+              style={{ fontSize: '0.75rem' }}
             ></button>
           </div>
         ))}
@@ -54,4 +54,3 @@ export default function Alerts({ alert = [], onClear }) {
     </div>
   );
 }
-

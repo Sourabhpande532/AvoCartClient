@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import FiltersSidebar from "../components/FiltersSidebar";
 import { FilteredProduct, ProductStatus } from "../components/product-list";
 import useProduct from "../hooks/useProduct";
@@ -21,15 +20,15 @@ export const ProductListing = () => {
     filtered,
   } = useProduct();
 
-  if (loading) return <p className='text-center'>Loading...</p>;
+  if (loading) return <p className='text-center py-5 text-muted'>Loading products...</p>;
 
   return (
     <>
-      <div className='container-fluid px-4 py-4 fade-in'>
+      <div className='container-fluid px-4 py-4 fade-in' style={{ maxWidth: '1400px' }}>
         {/* Mobile Filter Toggle */}
         <div className="d-lg-none mb-4 d-flex align-items-center">
           <button 
-            className="btn btn-primary d-flex align-items-center gap-2 rounded-pill px-4 shadow-sm" 
+            className="btn btn-outline-primary d-flex align-items-center gap-2 rounded-pill px-4 shadow-sm" 
             type="button" 
             data-bs-toggle="offcanvas" 
             data-bs-target="#mobileFiltersOffcanvas"
@@ -48,26 +47,26 @@ export const ProductListing = () => {
               <FiltersSidebar
                 idPrefix="desktop-"
                 categories={categories}
-              selectedCats={selectedCats}
-              setSelectedCats={setSelectedCats}
-              price={price}
-              setPrice={setPrice}
-              rating={rating}
-              setRating={setRating}
-              sortByRating={sortByRating}
-              setSortByRating={setSortByRating}
-              sort={sort}
-              setSort={setSort}
-              clearAll={clearAll}
-            />
+                selectedCats={selectedCats}
+                setSelectedCats={setSelectedCats}
+                price={price}
+                setPrice={setPrice}
+                rating={rating}
+                setRating={setRating}
+                sortByRating={sortByRating}
+                setSortByRating={setSortByRating}
+                sort={sort}
+                setSort={setSort}
+                clearAll={clearAll}
+              />
+            </div>
+          </div>
+          <div className='col-lg-9'>
+            <ProductStatus filtered={filtered} sort={sort} setSort={setSort} />
+            <FilteredProduct filtered={filtered} clearAll={clearAll} />
           </div>
         </div>
-        <div className='col-lg-9'>
-          <ProductStatus filtered={filtered} sort={sort} setSort={setSort} />
-          <FilteredProduct filtered={filtered} clearAll={clearAll} />
-        </div>
       </div>
-    </div>
 
       {/* Mobile Offcanvas Filters */}
       <div className="offcanvas offcanvas-start border-0 shadow" tabIndex="-1" id="mobileFiltersOffcanvas" style={{ maxWidth: '85vw' }}>

@@ -35,7 +35,6 @@ export const Checkout = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addresses]);
 
-  // ---------------- TOTAL ------------------
   const { finalTotal, totalMRP, totalDiscount, totalDelivery } = useMemo(() => {
     return cart.reduce(
       (acc, item) => {
@@ -82,12 +81,13 @@ export const Checkout = () => {
   if (orderPlaced) {
     return (
       <div className="container py-5 text-center fade-in">
-        <div className="card border-0 shadow-sm rounded-4 p-5 mx-auto" style={{ maxWidth: '600px' }}>
+        <div className="card border shadow-sm rounded-4 p-5 mx-auto" style={{ maxWidth: '560px' }}>
           <div className="fs-1 text-success mb-3">✅</div>
-          <h2 className="fw-bold mb-3">Order Placed Successfully!</h2>
-          <p className="text-muted">Thank you for shopping with AvoCart. Your order has been placed and is being processed.</p>
-          <p className="small text-muted mb-4">You will be redirected to your profile in a few seconds...</p>
-          <Link to="/profile" className="btn btn-primary px-4">View Orders</Link>
+          <h2 className="fw-bold mb-3">Order Confirmed!</h2>
+          <p className="text-muted small mb-4">Thank you for your order with AvoCart. We are processing your delivery details now.</p>
+          <div className="d-flex justify-content-center">
+            <Link to="/profile" className="btn btn-primary px-4 py-2 rounded-3 fw-semibold">View Order History</Link>
+          </div>
         </div>
       </div>
     );
@@ -100,21 +100,21 @@ export const Checkout = () => {
       <div className="row g-5">
         {/* LEFT COLUMN: Addresses */}
         <div className="col-lg-7">
-          <div className="card border-0 shadow-sm rounded-4 p-4 mb-4">
+          <div className="card border shadow-sm rounded-4 p-4 mb-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
-              <h5 className="fw-bold mb-0">Delivery Address</h5>
-              <Link to="/profile" className="btn btn-sm btn-outline-primary rounded-pill">Add New Address</Link>
+              <h5 className="fw-bold mb-0 text-body">Select Delivery Address</h5>
+              <Link to="/profile" className="btn btn-sm btn-outline-primary rounded-2 fw-semibold">Add New Address</Link>
             </div>
 
             <div className="d-flex flex-column gap-3">
               {displayAddresses.map((a) => (
                 <div
                   key={a._id}
-                  className={`card p-3 address-card rounded-3 ${
-                    selectedAddressId === a._id ? "border-primary bg-primary-subtle shadow-sm" : "border-opacity-25"
+                  className={`card p-3 address-card rounded-3 transition-all ${
+                    selectedAddressId === a._id ? "border-primary bg-primary-subtle shadow-sm" : "border"
                   }`}
                   onClick={() => setSelectedAddressId(a._id)}
-                  style={{ cursor: "pointer", transition: "all 0.2s ease" }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="d-flex align-items-start gap-3">
                     <div className="mt-1">
@@ -127,8 +127,8 @@ export const Checkout = () => {
                       />
                     </div>
                     <div>
-                      <p className="mb-1 fw-bold">
-                        {a.name} <span className="text-muted fw-normal ms-2">{a.phone}</span>
+                      <p className="mb-1 fw-bold text-body">
+                        {a.name} <span className="text-muted fw-normal small ms-2">{a.phone}</span>
                       </p>
                       <p className="mb-0 text-muted small">
                         {a.street}, {a.city}, {a.state} - {a.zip}
@@ -143,33 +143,33 @@ export const Checkout = () => {
 
         {/* RIGHT COLUMN: Order Summary */}
         <div className="col-lg-5">
-          <div className="card border-0 shadow-lg rounded-4 p-4 sticky-top" style={{ top: '100px' }}>
-            <h5 className="fw-bold mb-4">Order Summary</h5>
+          <div className="card border shadow-sm rounded-4 p-4 sticky-top" style={{ top: '100px' }}>
+            <h5 className="fw-bold mb-4 text-body">Summary Breakdown</h5>
 
-            <div className="d-flex justify-content-between mb-3 text-muted">
+            <div className="d-flex justify-content-between mb-3 text-muted small">
               <span>Items ({cart.length})</span>
               <span>₹{totalMRP.toFixed(2)}</span>
             </div>
             
-            <div className="d-flex justify-content-between mb-3 text-success">
+            <div className="d-flex justify-content-between mb-3 text-success small">
               <span>Discount</span>
               <span>- ₹{totalDiscount.toFixed(2)}</span>
             </div>
             
-            <div className="d-flex justify-content-between mb-3 text-muted">
-              <span>Delivery</span>
-              <span>{totalDelivery > 0 ? `₹${totalDelivery.toFixed(2)}` : <span className="text-success">FREE</span>}</span>
+            <div className="d-flex justify-content-between mb-3 text-muted small">
+              <span>Shipping</span>
+              <span>{totalDelivery > 0 ? `₹${totalDelivery.toFixed(2)}` : <span className="text-success fw-bold">FREE</span>}</span>
             </div>
 
-            <hr className="my-4 opacity-50" />
+            <hr className="my-4 opacity-25" />
 
             <div className="d-flex justify-content-between align-items-center mb-4">
-              <span className="fs-5 fw-bold">Total Amount</span>
-              <span className="fs-4 fw-bold text-primary">₹{finalTotal.toFixed(2)}</span>
+              <span className="fs-5 fw-bold text-body">Total Amount</span>
+              <span className="fs-4 fw-extrabold text-primary">₹{finalTotal.toFixed(2)}</span>
             </div>
 
             <button 
-              className="btn btn-success btn-lg w-100 rounded-pill fw-bold shadow-sm" 
+              className="btn btn-primary btn-lg w-100 rounded-3 fw-bold shadow-sm" 
               onClick={doCheckout}
               disabled={cart.length === 0}
             >

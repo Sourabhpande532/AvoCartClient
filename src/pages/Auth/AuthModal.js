@@ -42,7 +42,7 @@ const AuthModal = () => {
         setShowAuthModal(false);
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Sign in failed. Please try again.");
+      setError(err.response?.data?.message || "Sign in failed. Please check your credentials.");
     } finally {
       setSubmitting(false);
     }
@@ -90,8 +90,6 @@ const AuthModal = () => {
   };
 
   const handleGoogle = () => {
-    // Note: OAuth causes a full page redirect.
-    // The redirect callback will land on /auth/callback and handle login
     sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
     window.location.href = `${BASE_URL}/auth/google`;
   };
@@ -103,7 +101,6 @@ const AuthModal = () => {
 
   const closeModal = () => setShowAuthModal(false);
 
-  // Stop click propagation when clicking inside the modal
   const stopPropagation = (e) => e.stopPropagation();
 
   return (
@@ -116,9 +113,9 @@ const AuthModal = () => {
 
         {/* Header */}
         <div className="auth-header">
-          <div className="auth-logo">🛍️</div>
+          <div className="auth-logo">🥑</div>
           <h2 className="auth-title">AvoCart</h2>
-          <p className="auth-subtitle">Sign in to continue</p>
+          <p className="auth-subtitle">Sign in to your account</p>
         </div>
 
         {/* Tabs */}
@@ -146,12 +143,12 @@ const AuthModal = () => {
         {tab === "signin" && (
           <form onSubmit={handleSignIn} className="auth-form" id="form-signin">
             <div className="auth-field">
-              <label htmlFor="signin-email">Email</label>
+              <label htmlFor="signin-email">Email Address</label>
               <input
                 id="signin-email"
                 type="email"
                 name="email"
-                placeholder="you@example.com"
+                placeholder="name@example.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -164,7 +161,7 @@ const AuthModal = () => {
                 id="signin-password"
                 type="password"
                 name="password"
-                placeholder="Your password"
+                placeholder="Enter password"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -193,12 +190,12 @@ const AuthModal = () => {
               />
             </div>
             <div className="auth-field">
-              <label htmlFor="signup-email">Email</label>
+              <label htmlFor="signup-email">Email Address</label>
               <input
                 id="signup-email"
                 type="email"
                 name="email"
-                placeholder="you@example.com"
+                placeholder="name@example.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -211,7 +208,7 @@ const AuthModal = () => {
                 id="signup-password"
                 type="password"
                 name="password"
-                placeholder="Min. 6 characters"
+                placeholder="Minimum 6 characters"
                 value={formData.password}
                 onChange={handleChange}
                 required

@@ -20,10 +20,6 @@ export default function useProduct() {
   }, []);
 
   useEffect(() => {
-    setGlobalSearch("");
-  }, [setGlobalSearch]);
-
-  useEffect(() => {
     let res = [...products];
     if (selectedCats.length)
       res = res.filter((product) =>
@@ -43,12 +39,15 @@ export default function useProduct() {
   }, [products, selectedCats, price, rating, sortByRating, sort, globalSearch]);
 
   const clearAll = () => {
-    setSelectedCats([query.get("category")]);
+    const categoryParam = query.get("category");
+    setSelectedCats(categoryParam ? [categoryParam] : []);
     setRating(0);
     setSort("");
     setPrice(5000);
     setSortByRating("");
+    if (setGlobalSearch) setGlobalSearch("");
   };
+
   return {
     loading,
     categories,
