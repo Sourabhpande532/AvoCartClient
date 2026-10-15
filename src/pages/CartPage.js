@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import PopupMessage from "../components/PopupMessage";
 import { useAppFeatures } from "../contexts/AppContext";
-import { getFallbackImage } from "../utils/fallbackImage";
+import { getFallbackImage, getProductImage } from "../utils/fallbackImage";
 
 export const CartPage = () => {
   const navigate = useNavigate();
@@ -89,12 +89,12 @@ export const CartPage = () => {
                     <div className='col-12 col-sm-3'>
                       <div className="bg-body-secondary rounded-3 p-2 text-center overflow-hidden" style={{ height: '130px' }}>
                         <img
-                          src={ci?.product?.images && ci?.product?.images[0] ? ci.product.images[0] : getFallbackImage(ci.product.title)}
+                          src={getProductImage(ci?.product)}
                           alt='cart-img'
                           className='img-fluid h-100 w-100 object-fit-contain hover-scale'
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = getFallbackImage(ci.product.title);
+                            e.target.src = getFallbackImage(ci?.product?.title);
                           }}
                         />
                       </div>
@@ -117,7 +117,7 @@ export const CartPage = () => {
                       </div>
 
                       <div className="d-flex align-items-center gap-3 mb-3">
-                        <span className="fs-5 fw-bold text-primary">₹{ci.product.price}</span>
+                        <span className="fs-5 fw-bold text-primary">₹{(ci.product.price || 0) * (ci.qty || 1)}</span>
                         {ci.product.discount > 0 && (
                           <span className='badge bg-success-subtle text-success border border-success-subtle small'>
                             {ci.product.discount}% OFF

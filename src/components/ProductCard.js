@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
 import { useAuth } from "../contexts/AuthContext";
-import { getFallbackImage } from "../utils/fallbackImage";
+import { getFallbackImage, getProductImage } from "../utils/fallbackImage";
 
 const ProductCart = ({ product }) => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const ProductCart = ({ product }) => {
         onClick={() => navigate(`/products/${product._id}`)}
       >
         <img
-          src={product.images && product.images[0] ? product.images[0] : getFallbackImage(product.title)}
+          src={getProductImage(product)}
           alt={product.title}
           className="w-100 h-100 object-fit-cover hover-scale"
           onError={(e) => {

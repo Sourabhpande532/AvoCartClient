@@ -1,89 +1,116 @@
 /* eslint-disable no-unused-vars */
 const titleToImageMap = {
   "Men Premium Jacket.":
-    "https://loremflickr.com/500/600/men,jacket/all?lock=1",
+    "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop&q=80",
   "Premium Jacket.":
-    "https://loremflickr.com/500/600/jacket,fashion/all?lock=2",
+    "https://images.unsplash.com/photo-1544441893-675973e31985?w=600&auto=format&fit=crop&q=80",
   "Kids Premium Jacket.":
-    "https://loremflickr.com/500/600/kids,jacket/all?lock=3",
+    "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=600&auto=format&fit=crop&q=80",
   "Home Premium Cloths.":
-    "https://loremflickr.com/500/600/clothing,home/all?lock=4",
+    "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80",
   "Weeding Premium Cloths.":
-    "https://loremflickr.com/500/600/wedding,clothing/all?lock=5",
+    "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&auto=format&fit=crop&q=80",
   "Travelling Premium Cloths.":
-    "https://loremflickr.com/500/600/travel,clothing/all?lock=6",
+    "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop&q=80",
   "Men Premium Trending t-sharts.":
-    "https://loremflickr.com/500/600/men,tshirt/all?lock=7",
+    "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80",
   "Men Premium Trending sleeves t-shart.":
-    "https://loremflickr.com/500/600/men,tshirt,sleeves/all?lock=8",
+    "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&auto=format&fit=crop&q=80",
   "Women Premium Saree.":
-    "https://loremflickr.com/500/600/women,saree/all?lock=9",
+    "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop&q=80",
   "Women Premium Dress.":
-    "https://loremflickr.com/500/600/women,dress/all?lock=10",
+    "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=80",
   "Men Premium Trending jens t-shart.":
-    "https://loremflickr.com/500/600/men,jeans,tshirt/all?lock=11",
+    "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop&q=80",
   "Men Trending Safari.":
-    "https://loremflickr.com/500/600/men,safari,suit/all?lock=12",
+    "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop&q=80",
   "Men Trending Safari pant.":
-    "https://loremflickr.com/500/600/men,safari,pants/all?lock=13",
-  "Women.": "https://loremflickr.com/500/600/women,fashion/all?lock=14",
+    "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&auto=format&fit=crop&q=80",
+  "Women.":
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80",
   "Women party dress.":
-    "https://loremflickr.com/500/600/women,party,dress/all?lock=15",
-  "Girls frokes.": "https://loremflickr.com/500/600/girl,frock/all?lock=16",
-  "Kids Premium coat.": "https://loremflickr.com/500/600/kids,coat/all?lock=17",
+    "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&auto=format&fit=crop&q=80",
+  "Girls frokes.":
+    "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=600&auto=format&fit=crop&q=80",
+  "Kids Premium coat.":
+    "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=600&auto=format&fit=crop&q=80",
   "Kids Premium coat+pant.":
-    "https://loremflickr.com/500/600/kids,coat,pant/all?lock=18",
-  "Kids t-shart.": "https://loremflickr.com/500/600/kids,tshirt/all?lock=19",
+    "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&auto=format&fit=crop&q=80",
+  "Kids t-shart.":
+    "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=600&auto=format&fit=crop&q=80",
   "Electronics primium jocket":
-    "https://loremflickr.com/500/600/jacket,tech/all?lock=20",
+    "https://images.unsplash.com/photo-1548883354-7622d03aca27?w=600&auto=format&fit=crop&q=80",
   "Electronics primium jocket+pant":
-    "https://loremflickr.com/500/600/jacket,pants/all?lock=21",
+    "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?w=600&auto=format&fit=crop&q=80",
   "Home primium t-shart":
-    "https://loremflickr.com/500/600/tshirt,home/all?lock=22",
+    "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop&q=80",
   "Home primium lower":
-    "https://loremflickr.com/500/600/sweatpants/all?lock=23",
-  "Home primium Jens": "https://loremflickr.com/500/600/jeans,home/all?lock=24",
-  "Weeding dress": "https://loremflickr.com/500/600/wedding,dress/all?lock=25",
+    "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop&q=80",
+  "Home primium Jens":
+    "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80",
+  "Weeding dress":
+    "https://images.unsplash.com/photo-1594552072238-b8a33785b261?w=600&auto=format&fit=crop&q=80",
   "Weeding party dress":
-    "https://loremflickr.com/500/600/wedding,dress/all?lock=26",
+    "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&auto=format&fit=crop&q=80",
   "Weeding Ceremoney saree":
-    "https://loremflickr.com/500/600/wedding,saree/all?lock=27",
-  "Jens little baby": "https://loremflickr.com/500/600/baby,jeans/all?lock=28",
+    "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&auto=format&fit=crop&q=80",
+  "Jens little baby":
+    "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=600&auto=format&fit=crop&q=80",
 };
 
 const defaultImage =
-  "http://res.cloudinary.com/dptfwcnro/image/upload/v1683911125/E-comm%20ATTIREX/Womens-Category_iscqhs.jpg";
+  "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop&q=80";
 
 export const getFallbackImage = (seed = "") => {
-  if (titleToImageMap[seed]) {
-    return titleToImageMap[seed];
+  const trimmed = (seed || "").trim();
+  if (titleToImageMap[trimmed]) {
+    return titleToImageMap[trimmed];
   }
 
-  const lSeed = seed.toLowerCase();
+  const lSeed = trimmed.toLowerCase();
+  for (const [key, url] of Object.entries(titleToImageMap)) {
+    if (key.toLowerCase() === lSeed) {
+      return url;
+    }
+  }
 
-  let keyword = "clothing";
   if (lSeed.includes("kid") || lSeed.includes("baby") || lSeed.includes("girl"))
-    keyword = "kids,clothing";
-  else if (lSeed.includes("men")) keyword = "men,clothing";
-  else if (
-    lSeed.includes("women") ||
-    lSeed.includes("saree") ||
-    lSeed.includes("dress")
-  )
-    keyword = "women,clothing";
-
-  if (lSeed.includes("jacket")) keyword += ",jacket";
+    return titleToImageMap["Kids Premium Jacket."];
+  if (lSeed.includes("saree"))
+    return titleToImageMap["Women Premium Saree."];
+  if (lSeed.includes("dress"))
+    return titleToImageMap["Women Premium Dress."];
+  if (lSeed.includes("jacket") || lSeed.includes("jocket") || lSeed.includes("coat"))
+    return titleToImageMap["Premium Jacket."];
   if (
     lSeed.includes("pant") ||
     lSeed.includes("jeans") ||
-    lSeed.includes("jens")
+    lSeed.includes("jens") ||
+    lSeed.includes("lower")
   )
-    keyword += ",pants";
+    return titleToImageMap["Home primium Jens"];
+  if (
+    lSeed.includes("t-shirt") ||
+    lSeed.includes("tshirt") ||
+    lSeed.includes("t-shart") ||
+    lSeed.includes("shirt")
+  )
+    return titleToImageMap["Men Premium Trending t-sharts."];
+  if (lSeed.includes("wedding") || lSeed.includes("weeding"))
+    return titleToImageMap["Weeding dress"];
+  if (lSeed.includes("women"))
+    return titleToImageMap["Women."];
+  if (lSeed.includes("men"))
+    return titleToImageMap["Men Premium Trending t-sharts."];
 
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) {
-    hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+  return defaultImage;
+};
+
+export const getProductImage = (product) => {
+  if (!product) return defaultImage;
+  const img = product.images && product.images[0];
+  if (img && typeof img === "string" && !img.includes("pollinations.ai")) {
+    return img;
   }
-
-  return `https://loremflickr.com/500/600/${keyword}/all?lock=${Math.abs(hash) % 1000}`;
+  return getFallbackImage(product.title);
 };

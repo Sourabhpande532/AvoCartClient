@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
-import { getFallbackImage } from "../utils/fallbackImage";
+import { getFallbackImage, getProductImage } from "../utils/fallbackImage";
 
 export const Wishlist = () => {
   const { wishlist, addToCart, removeFromWishlist, globalSearch } =
@@ -45,7 +45,7 @@ export const Wishlist = () => {
                 onClick={() => navigate(`/products/${w?.product?._id}`)}
               >
                 <img
-                  src={w?.product?.images && w?.product?.images[0] ? w.product.images[0] : getFallbackImage(w?.product?.title || "Product")}
+                  src={getProductImage(w?.product)}
                   alt='wishlist'
                   className='w-100 h-100 object-fit-cover hover-scale'
                   onError={(e) => {

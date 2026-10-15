@@ -4,7 +4,7 @@ import API from "../api/api";
 import { AppContext } from "../contexts/AppContext";
 import { useAuth } from "../contexts/AuthContext";
 import PopupMessage from "../components/PopupMessage";
-import { getFallbackImage } from "../utils/fallbackImage";
+import { getFallbackImage, getProductImage } from "../utils/fallbackImage";
 
 export function ProductDetails() {
   const { id } = useParams();
@@ -100,7 +100,7 @@ export function ProductDetails() {
           <div className='col-lg-6'>
             <div className='card border shadow-sm overflow-hidden rounded-4'>
               <img
-                src={product.images && product.images[0] ? product.images[0] : getFallbackImage(product.title)}
+                src={getProductImage(product)}
                 className='img-fluid w-100 object-fit-cover'
                 alt={product.title}
                 style={{ minHeight: "480px", maxHeight: "560px" }}
@@ -133,9 +133,9 @@ export function ProductDetails() {
 
             <div className="mb-4 p-3 bg-body-tertiary rounded-3 border">
               <div className="d-flex align-items-baseline gap-3 mb-1">
-                <h2 className='fw-extrabold text-primary mb-0'>₹{product.price}</h2>
+                <h2 className='fw-extrabold text-primary mb-0'>₹{(product.price || 0) * (qty || 1)}</h2>
                 <span className='text-decoration-line-through text-muted fs-5'>
-                  ₹{originalPrice}
+                  ₹{originalPrice * (qty || 1)}
                 </span>
                 <span className='badge bg-danger text-white px-2 py-1 small'>
                   {Math.round(((originalPrice - product.price) / originalPrice) * 100)}% OFF
@@ -247,7 +247,7 @@ export function ProductDetails() {
                   <div className='card h-100 border shadow-sm overflow-hidden hover-scale'>
                     <div className="position-relative overflow-hidden bg-body-secondary" style={{ height: "180px", cursor: 'pointer' }} onClick={() => navigate(`/products/${item._id}`)}>
                       <img
-                        src={item.images && item.images[0] ? item.images[0] : getFallbackImage(item.title)}
+                        src={getProductImage(item)}
                         className='w-100 h-100 object-fit-cover'
                         alt={item.title}
                         onError={(e) => {
