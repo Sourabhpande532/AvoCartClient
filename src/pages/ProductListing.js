@@ -71,12 +71,6 @@ export const ProductListing = () => {
       {/* Mobile Offcanvas Filters */}
       <div className="offcanvas offcanvas-start border-0 shadow" tabIndex="-1" id="mobileFiltersOffcanvas" style={{ maxWidth: '85vw' }}>
         <div className="offcanvas-body p-0 position-relative">
-          <button 
-            type="button" 
-            className="btn-close position-absolute top-0 end-0 m-4 z-3" 
-            data-bs-dismiss="offcanvas" 
-            aria-label="Close"
-          ></button>
           <div className="h-100 overflow-y-auto">
             <FiltersSidebar
               idPrefix="mobile-"

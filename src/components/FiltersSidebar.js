@@ -31,11 +31,21 @@ export default function FiltersSidebar({
       <div className='card-body p-4'>
         <div className='d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom'>
           <h5 className='fw-bold mb-0 text-body'>Filters</h5>
-          <button
-            className='btn btn-sm btn-link text-decoration-none p-0 fw-semibold text-primary'
-            onClick={clearAll}>
-            Reset All
-          </button>
+          <div className="d-flex align-items-center gap-3">
+            <button
+              className='btn btn-sm btn-link text-decoration-none p-0 fw-semibold text-primary'
+              onClick={clearAll}>
+              Reset All
+            </button>
+            {idPrefix === "mobile-" && (
+              <button 
+                type="button" 
+                className="btn-close shadow-none" 
+                data-bs-dismiss="offcanvas" 
+                aria-label="Close"
+              ></button>
+            )}
+          </div>
         </div>
 
         <div className='mb-4'>
