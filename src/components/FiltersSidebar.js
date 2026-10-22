@@ -102,7 +102,7 @@ export default function FiltersSidebar({
                 checked={sortByRating === 4}
                 onChange={() => setSortByRating(4)}
               />
-              <label className='form-check-label small fw-medium' htmlFor={`${idPrefix}filterByFour`}>
+              <label className='form-check-label text-body small fw-medium' htmlFor={`${idPrefix}filterByFour`}>
                 4 ★ & above
               </label>
             </div>
@@ -115,7 +115,7 @@ export default function FiltersSidebar({
                 checked={sortByRating === 3}
                 onChange={() => setSortByRating(3)}
               />
-              <label className='form-check-label small fw-medium' htmlFor={`${idPrefix}filterByThree`}>
+              <label className='form-check-label text-body small fw-medium' htmlFor={`${idPrefix}filterByThree`}>
                 3 ★ & above
               </label>
             </div>
@@ -134,7 +134,7 @@ export default function FiltersSidebar({
                 checked={sort === "low"}
                 onChange={() => setSort("low")}
               />
-              <label className='form-check-label small fw-medium' htmlFor={`${idPrefix}low`}>
+              <label className='form-check-label text-body small fw-medium' htmlFor={`${idPrefix}low`}>
                 Price: Low to High
               </label>
             </div>
@@ -147,7 +147,7 @@ export default function FiltersSidebar({
                 checked={sort === "high"}
                 onChange={() => setSort("high")}
               />
-              <label className='form-check-label small fw-medium' htmlFor={`${idPrefix}high`}>
+              <label className='form-check-label text-body small fw-medium' htmlFor={`${idPrefix}high`}>
                 Price: High to Low
               </label>
             </div>

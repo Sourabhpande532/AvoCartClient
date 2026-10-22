@@ -757,3 +757,22 @@ body {
 }
 
 .app-container.light .auth-terms { color: #94a3b8; }
+
+/* Rating Badge visibility in both Light & Dark modes */
+.rating-badge {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+[data-bs-theme="dark"] .rating-badge,
+.dark .rating-badge {
+  background-color: rgba(245, 158, 11, 0.2) !important;
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.45) !important;
+}

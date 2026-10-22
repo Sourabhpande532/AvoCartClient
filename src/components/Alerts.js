@@ -24,32 +24,39 @@ export default function Alerts({ alert = [], onClear }) {
       }}
     >
       <div className="d-flex flex-column gap-2" style={{ maxWidth: "420px", width: "90%" }}>
-        {alert.map((a, i) => (
-          <div
-            key={i}
-            className="alert glass border shadow-sm fade show d-flex align-items-center justify-content-between p-3 rounded-3 fade-in"
-            style={{
-              pointerEvents: "auto",
-              borderLeft: `4px solid ${
-                a.type === "error" || a.type === "danger" ? "#ef4444" : a.type === "success" ? "#10b981" : "#2563eb"
-              }`
-            }}
-          >
-            <div className="d-flex align-items-center gap-3">
-              <span className="fs-5">
-                {a.type === "error" || a.type === "danger" ? "🚫" : a.type === "success" ? "✨" : "ℹ️"}
-              </span>
-              <span className="fw-semibold small">{a.text}</span>
-            </div>
+        {alert.map((a, i) => {
+          const type = (a.type || "").toLowerCase();
+          const isError = type === "error" || type === "danger";
+          const isSuccess = type === "success";
+          const isWarning = type === "warning";
 
-            <button
-              type="button"
-              className="btn-close shadow-none small ms-2"
-              onClick={() => onClear && onClear()}
-              style={{ fontSize: '0.75rem' }}
-            ></button>
-          </div>
-        ))}
+          return (
+            <div
+              key={i}
+              className="alert glass border shadow-sm fade show d-flex align-items-center justify-content-between p-3 rounded-3 fade-in"
+              style={{
+                pointerEvents: "auto",
+                borderLeft: `4px solid ${
+                  isError ? "#ef4444" : isSuccess ? "#10b981" : isWarning ? "#f59e0b" : "#2563eb"
+                }`
+              }}
+            >
+              <div className="d-flex align-items-center gap-3">
+                <span className="fs-5">
+                  {isError ? "🚫" : isSuccess ? "✓" : isWarning ? "⚠️" : ""}
+                </span>
+                <span className="fw-semibold small">{a.text}</span>
+              </div>
+
+              <button
+                type="button"
+                className="btn-close shadow-none small ms-2"
+                onClick={() => onClear && onClear()}
+                style={{ fontSize: '0.75rem' }}
+              ></button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

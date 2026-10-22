@@ -62,7 +62,7 @@ const ProductCart = ({ product }) => {
             onClick={() => navigate(`/products/${product._id}`)}>
             {product.title}
           </h6>
-          <span className="badge bg-amber-subtle text-warning-emphasis border border-amber-subtle rounded-pill small px-2 py-1 d-flex align-items-center gap-1" style={{ background: '#fef3c7', color: '#92400e', fontSize: '0.75rem' }}>
+          <span className="badge rating-badge rounded-pill px-2 py-1">
             ★ {product.rating}
           </span>
         </div>

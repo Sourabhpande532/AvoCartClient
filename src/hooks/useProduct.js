@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useAppFeatures } from "../contexts/AppContext";
-import useQuery from "../hooks/useQuery";
 
 export default function useProduct() {
   const { products, loading, categories, globalSearch, setGlobalSearch } =
@@ -11,13 +11,21 @@ export default function useProduct() {
   const [rating, setRating] = useState(0);
   const [sort, setSort] = useState("");
   const [sortByRating, setSortByRating] = useState("");
-  const query = useQuery();
+  const location = useLocation();
 
   useEffect(() => {
-    const queryCategoryId = query.get("category");
-    if (queryCategoryId) setSelectedCats([queryCategoryId]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const searchParams = new URLSearchParams(location.search);
+    const queryCategoryId = searchParams.get("category");
+    if (queryCategoryId) {
+      setSelectedCats([queryCategoryId]);
+    } else {
+      setSelectedCats([]);
+    }
+    const sortParam = searchParams.get("sort");
+    if (sortParam) setSort(sortParam);
+    const minRating = searchParams.get("rating");
+    if (minRating) setRating(Number(minRating));
+  }, [location.search]);
 
   useEffect(() => {
     let res = [...products];
@@ -39,7 +47,7 @@ export default function useProduct() {
   }, [products, selectedCats, price, rating, sortByRating, sort, globalSearch]);
 
   const clearAll = () => {
-    const categoryParam = query.get("category");
+    const categoryParam = new URLSearchParams(location.search).get("category");
     setSelectedCats(categoryParam ? [categoryParam] : []);
     setRating(0);
     setSort("");

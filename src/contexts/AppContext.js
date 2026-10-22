@@ -61,7 +61,7 @@ const AppProvider = ({ children }) => {
     try {
       const res = await API.post("/cart", { productId, qty, size });
       setCart(res.data.data.cart || []);
-      pushAlert({ type: "Success", text: "Added to cart" });
+      pushAlert({ type: "success", text: "Added to cart" });
     } catch (error) {
       console.error(error);
       pushAlert({ type: "error", text: "Failed to add to cart" });

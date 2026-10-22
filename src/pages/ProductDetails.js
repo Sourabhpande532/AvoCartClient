@@ -125,7 +125,7 @@ export function ProductDetails() {
             <h1 className='display-6 fw-extrabold mb-2 text-body'>{product.title}</h1>
             
             <div className='mb-4 d-flex align-items-center gap-3'>
-              <span className='badge rounded-pill px-3 py-2 fw-semibold' style={{ background: '#fef3c7', color: '#92400e' }}>
+              <span className='badge rating-badge rounded-pill px-3 py-2 fw-semibold'>
                 ★ {product.rating}
               </span>
               <span className="text-muted small">2.5k customer reviews</span>
