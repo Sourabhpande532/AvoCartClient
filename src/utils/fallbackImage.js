@@ -47,6 +47,8 @@ const titleToImageMap = {
     "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=80",
   "Women Premium Dress.":
     "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=80",
+  "Women Designer Floral Dress":
+    "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=80",
   "Women Classic Casual Wear":
     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80",
   "Women.":
@@ -104,6 +106,8 @@ const titleToImageMap = {
   "Wedding Premium Clothes":
     "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&auto=format&fit=crop&q=80",
   "Weeding Premium Cloths.":
+    "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&auto=format&fit=crop&q=80",
+  "Men Royal Wedding Sherwani":
     "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&auto=format&fit=crop&q=80",
   "Travelling Premium Clothes":
     "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop&q=80",
