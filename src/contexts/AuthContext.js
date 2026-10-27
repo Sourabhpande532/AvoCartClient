@@ -20,9 +20,9 @@ export const AuthProvider = ({ children }) => {
         })
         .then((res) => {
           if (res.data.success) setUser(res.data.data.user);
-          else logout();
+          else logout(true);
         })
-        .catch(() => logout())
+        .catch(() => logout(true))
         .finally(() => setAuthLoading(false));
     } else {
       setAuthLoading(false);
@@ -30,13 +30,18 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (token, userData) => {
+    sessionStorage.removeItem("avocart_logged_out");
     localStorage.setItem("authToken", token);
     setUser(userData);
   };
 
-  const logout = () => {
+  const logout = (silent = false) => {
+    if (!silent) {
+      sessionStorage.setItem("avocart_logged_out", "1");
+    }
     localStorage.removeItem("authToken");
     setUser(null);
+    setShowAuthModal(false);
   };
 
   const isAuthenticated = !!user;

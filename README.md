@@ -2,7 +2,7 @@
 
 ---
 
-Build a complete avocart application with a React frontend and Node/Express + MongoDB backend that supports product browsing, filtering/sorting, cart & wishlist flows, address/checkout, and order history.
+A full-stack e-commerce web application built with a React frontend and Node.js/Express + MongoDB backend supporting product discovery, multi-criteria filtering & sorting, cart & wishlist management, coupon discounts, address CRUD, checkout, OAuth/JWT authentication, and order history.
 
 ---
 
@@ -14,26 +14,24 @@ Build a complete avocart application with a React frontend and Node/Express + Mo
 
 ## Quick Start
 
-```
+```bash
 git clone https://github.com/Sourabhpande532/AvoCartClient.git
 cd AvoCartClient
 npm install
-npm run dev  # or 'npm start' / 'yarn dev'
-
+npm start
 ```
 
 ---
 
 ## Technologies
 
-- React JS
-- React Router
-- Node Js
-- Express Js
-- Mongo DB
+- React JS (React 19, Context API, Custom Hooks)
+- React Router v7
+- Bootstrap 5 & Custom CSS Design Tokens (Light & Dark Theme)
+- Node.js & Express.js
+- MongoDB & Mongoose
 - RESTful APIs
-- Google/GitHub OAuth
-- JWT 
+- Google / GitHub OAuth 2.0 & JWT Authentication
 
 ---
 
@@ -46,28 +44,29 @@ Watch a walkthrough (5-7 minutes) of all major features of this app:<br>
 
 ## Features
 
-**Home & Product Page**
+**Home & Product Listing Page**
 
-- Home page with featured categories and smooth navigation to product listings.
-- Product listing page with filters(`category`,`rating` `slider`) & price sorting (**low ↔ high**)
+- Hero slideshow carousel, asymmetric Bento category grid, promotional sale banners, and hover-reveal lifestyle collection mosaic.
+- Product listing page with combinable filters (`category` checkboxes, `rating` slider & radio options, `price` range slider) & sorting (`price low ↔ high`, `name A ↔ Z`) with a one-click `CLEAR` reset.
 
 **Product Details**
 
-- Product cards showing `image`, `name`, `price`, `rating`, and quick actions (`Add to Cart` / `Wishlist`)
-- Detailed product page with full information and related products
+- Product cards showing `image`, `title`, `price`, `discount`, `rating` pill, wishlist heart toggle, and quick actions (`Add to Cart` / `Add to Wishlist`).
+- Detailed product page with quantity-reactive pricing, size selector, delivery trust badges, and related product recommendations.
 
 **Cart & Wishlist**
 
-- Cart and Wishlist pages to `add/remove` items, `update` `quantity`, and move items between them
+- Cart and Wishlist pages to `add/remove` items, `update` `quantity`, apply seasonal/festive coupons, and seamlessly move items between Cart and Wishlist.
 
-**User Profile**
+**User Profile & Checkout**
 
-- Profile page with address management and order history tracking
+- Profile page displaying user details (`name`, `email`, `phone`, `address`), full address CRUD (`add`, `edit`, `delete`), and order history tracking.
+- Checkout flow with address selection, itemized order breakdown, price summary, and `"Order Placed Successfully."` confirmation.
 
-**Loading & Search**
+**Loading, Alerts & Search**
 
-- Global search in navbar, loading states, and user alerts for actions
-- Fully responsive UI for desktop and mobile experience
+- Global search in the navbar, spinner loading states, and toast notifications for all user actions.
+- Fully responsive UI across mobile, tablet, and desktop viewports.
 
 ---
 
@@ -83,29 +82,26 @@ Watch a walkthrough (5-7 minutes) of all major features of this app:<br>
 
 ### GET /api/products
 
-Retrieve all product with support for filtering,sorting.
+Retrieve all products with populated category details.
 
 Sample Response:
 
-```
+```json
 [
-  { _id, title, price, category, rating, stockInCount, images,sizes,discount,deliveryCharge },
-  ...
+  { "_id": "...", "title": "...", "price": 1999, "category": { "_id": "...", "name": "Men" }, "rating": 4.5, "countInStock": 15, "images": ["..."], "sizes": ["S", "M", "L"], "discount": 20, "deliveryCharge": 0 }
 ]
-
 ```
 
 ### GET /api/products/:productId
 
-Fetch Detailed information for a single product.
+Fetch detailed information for a single product.
 
 Sample Response:
 
-```
+```json
 {
-  _id, title, description, price, category, rating, stockInCount, images,sizes, discount,deliveryCharge
+  "_id": "...", "title": "...", "description": "...", "price": 1999, "category": { "_id": "...", "name": "Men" }, "rating": 4.5, "countInStock": 15, "images": ["..."], "sizes": ["S", "M", "L"], "discount": 20, "deliveryCharge": 0
 }
-
 ```
 
 ### GET /api/categories
@@ -114,84 +110,75 @@ Retrieve all product categories.
 
 Sample Response:
 
-```
+```json
 [
-  { _id, image, description }
+  { "_id": "...", "name": "Men", "image": "...", "description": "..." }
 ]
-
 ```
 
-### GET /api/categores/:categoryId
+### GET /api/categories/:categoryId
 
-Get all products under a specific category.
+Get category details and products under a specific category.
 
 Sample Response:
 
-```
+```json
 {
-  _id,
-  name,
-  products: [{ _id, title, price }]
+  "category": { "_id": "...", "name": "Men" },
+  "products": [{ "_id": "...", "title": "...", "price": 1999 }]
 }
-
 ```
 
 ### POST /api/cart
 
-Add a product to the user’s cart (protected route).
+Add a product to the user's cart (protected route).
 
 Sample Response:
 
-```
-
-{ _id, userId, productId, qty,size }
-
+```json
+{ "_id": "...", "userId": "...", "product": { "_id": "...", "title": "..." }, "qty": 1, "size": "M" }
 ```
 
 ### GET /api/cart
 
-Fetch all items in user’s cart by model-referencing.
+Fetch all items in the user's cart.
 
 Sample Response:
 
-```
+```json
 [
-  { _id, product, qty, size }
+  { "_id": "...", "product": { "_id": "...", "title": "..." }, "qty": 1, "size": "M" }
 ]
-
 ```
 
-## PUT /api/cart/:id
+### PUT /api/cart/:id
 
-Update quantity of a cart item.
+Update quantity or size of a cart item.
 
 Sample Response:
 
+```json
+{ "_id": "...", "product": { "_id": "...", "title": "..." }, "qty": 2, "size": "M" }
 ```
-{ _id, productId, qty }
 
-```
-
-## DELETE /api/cart/:id
+### DELETE /api/cart/:id
 
 Remove an item from the cart.
 
 Sample Response:
 
+```json
+{ "success": true }
 ```
-{ success: true }
 
-```
-
-## POST /api/wishlist
+### POST /api/wishlist
 
 Add a product to the wishlist.
 
 Sample Response:
 
-```
-{ _id, userId, productId }
-
+```json
+{ "_id": "...", "userId": "...", "product": { "_id": "...", "title": "..." } }
 ```
 
 ### GET /api/wishlist
@@ -200,11 +187,10 @@ Retrieve all wishlist items.
 
 Sample Response:
 
-```
+```json
 [
-  { _id, product },...
+  { "_id": "...", "product": { "_id": "...", "title": "..." } }
 ]
-
 ```
 
 ### DELETE /api/wishlist/:id
@@ -213,50 +199,50 @@ Remove a product from the wishlist.
 
 Sample Response:
 
-```
-{ success: true }
+```json
+{ "success": true }
 ```
 
-### POST /api/address
+### POST /api/addresses
 
 Add a new delivery address.
 
 Sample Response:
 
-```
-{ _id, name, street, city, state, zip }
+```json
+{ "_id": "...", "name": "...", "street": "...", "city": "...", "state": "...", "zip": "110001", "phone": "9876543210" }
 ```
 
-### GET /api/address
+### GET /api/addresses
 
 Retrieve all saved addresses for the user.
 
 Sample Response:
 
-```
+```json
 [
-  { _id, name, street, city, state, zip }
+  { "_id": "...", "name": "...", "street": "...", "city": "...", "state": "...", "zip": "110001", "phone": "9876543210" }
 ]
 ```
 
-### PUT /api/address/:id
+### PUT /api/addresses/:id
 
 Update an existing address.
 
 Sample Response:
 
-```
-{ _id, name, street, city, state, zip }
+```json
+{ "_id": "...", "name": "...", "street": "...", "city": "...", "state": "...", "zip": "110001", "phone": "9876543210" }
 ```
 
-### DELETE /api/address/:id
+### DELETE /api/addresses/:id
 
 Delete an address.
 
 Sample Response:
 
-```
-{ success: true }
+```json
+{ "success": true }
 ```
 
 ### POST /api/orders
@@ -265,8 +251,8 @@ Create a new order from cart items.
 
 Sample Response:
 
-```
-{ _id, userId, items, totalAmount, status }
+```json
+{ "_id": "...", "userId": "...", "items": [], "total": 1599, "address": {} }
 ```
 
 ### GET /api/orders
@@ -275,11 +261,10 @@ Fetch all orders for the logged-in user.
 
 Sample Response:
 
-```
+```json
 [
-  { _id, items, totalAmount, status, createdAt }
+  { "_id": "...", "items": [], "total": 1599, "address": {}, "createdAt": "..." }
 ]
-
 ```
 
 ---
@@ -287,34 +272,30 @@ Sample Response:
 ## Deployment & Links
 
 - Frontend GitHub: https://github.com/Sourabhpande532/AvoCartClient
-
 - Backend GitHub: https://github.com/Sourabhpande532/AvoCartServer
 
 ---
 
 ## Environment Setup
 
-**Backend(/server/.env)**
+**Backend (`/server/.env`)**
 
+```env
+PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/avocart
+JWT_SECRET=your_jwt_secret
+FRONTEND_URL=http://localhost:3000
+BACKEND_URL=http://localhost:5000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
-# Server
-PORT=4000
-NODE_ENV=development
 
-# Database
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/anvaya
+**Frontend (`/client/.env`)**
 
-# CORS
-CLIENT_URL=http://localhost:3000
-
-```
-
-**Frontend**
-
-```
-# API Base URL
-REACT_APP_BASE_URL=http://localhost:5000/api
-
+```env
+REACT_APP_API_URL=http://localhost:5000
 ```
 
 ## Contact

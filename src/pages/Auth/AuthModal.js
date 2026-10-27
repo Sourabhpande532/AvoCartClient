@@ -2,17 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 
-const BASE_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
+const BASE_URL = process.env.REACT_APP_SERVER_URL || "https://avo-cart-server.vercel.app";
 
 const AuthModal = () => {
-  const [tab, setTab] = useState("signin"); // 'signin' | 'signup'
+  const [tab, setTab] = useState("signin");
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const { login, showAuthModal, setShowAuthModal } = useAuth();
 
-  // Close on Escape key
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") setShowAuthModal(false);
@@ -106,19 +105,16 @@ const AuthModal = () => {
   return (
     <div className="auth-modal-overlay" onClick={closeModal}>
       <div className="auth-card modal-scale-in" onClick={stopPropagation}>
-        {/* Close Button */}
         <button className="auth-close-btn" onClick={closeModal} title="Close">
           ✕
         </button>
 
-        {/* Header */}
         <div className="auth-header">
           <div className="auth-logo">🥑</div>
           <h2 className="auth-title">AvoCart</h2>
           <p className="auth-subtitle">Sign in to your account</p>
         </div>
 
-        {/* Tabs */}
         <div className="auth-tabs">
           <button
             id="tab-signin"
@@ -136,10 +132,8 @@ const AuthModal = () => {
           </button>
         </div>
 
-        {/* Error */}
         {error && <div className="auth-error">{error}</div>}
 
-        {/* Sign In Form */}
         {tab === "signin" && (
           <form onSubmit={handleSignIn} className="auth-form" id="form-signin">
             <div className="auth-field">
@@ -174,7 +168,6 @@ const AuthModal = () => {
           </form>
         )}
 
-        {/* Sign Up Form */}
         {tab === "signup" && (
           <form onSubmit={handleSignUp} className="auth-form" id="form-signup">
             <div className="auth-field">
@@ -221,10 +214,8 @@ const AuthModal = () => {
           </form>
         )}
 
-        {/* Divider */}
         <div className="auth-divider"><span>or continue with</span></div>
 
-        {/* Social + Guest buttons */}
         <div className="auth-social-grid">
           <button id="btn-google" className="auth-social-btn google" onClick={handleGoogle} disabled={submitting}>
             <svg width="18" height="18" viewBox="0 0 48 48">

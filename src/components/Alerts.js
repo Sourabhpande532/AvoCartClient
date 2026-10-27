@@ -1,13 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function Alerts({ alert = [], onClear }) {
-  useEffect(() => {
-    if (alert.length) {
-      const t = setTimeout(() => onClear && onClear(), 3000);
-      return () => clearTimeout(t);
-    }
-  }, [alert, onClear]);
-
   if (!alert || alert.length === 0) return null;
 
   return (
@@ -16,8 +9,8 @@ export default function Alerts({ alert = [], onClear }) {
       style={{
         position: "fixed",
         top: 20,
-        left: '50%',
-        transform: 'translateX(-50%)',
+        left: "50%",
+        transform: "translateX(-50%)",
         width: "100%",
         zIndex: 3000,
         pointerEvents: "none",
@@ -29,30 +22,30 @@ export default function Alerts({ alert = [], onClear }) {
           const isError = type === "error" || type === "danger";
           const isSuccess = type === "success";
           const isWarning = type === "warning";
+          const icon = isError ? "🚫" : isSuccess ? "✓" : isWarning ? "⚠️" : "";
 
           return (
             <div
-              key={i}
-              className="alert glass border shadow-sm fade show d-flex align-items-center justify-content-between p-3 rounded-3 fade-in"
+              key={a.id || i}
+              className="alert glass text-body border shadow-sm fade show d-flex align-items-center justify-content-between p-3 rounded-3 fade-in mb-0"
               style={{
                 pointerEvents: "auto",
                 borderLeft: `4px solid ${
                   isError ? "#ef4444" : isSuccess ? "#10b981" : isWarning ? "#f59e0b" : "#2563eb"
-                }`
+                }`,
               }}
             >
-              <div className="d-flex align-items-center gap-3">
-                <span className="fs-5">
-                  {isError ? "🚫" : isSuccess ? "✓" : isWarning ? "⚠️" : ""}
-                </span>
+              <div className="d-flex align-items-center gap-2">
+                {icon && <span className="fs-6">{icon}</span>}
                 <span className="fw-semibold small">{a.text}</span>
               </div>
 
               <button
                 type="button"
                 className="btn-close shadow-none small ms-2"
-                onClick={() => onClear && onClear()}
-                style={{ fontSize: '0.75rem' }}
+                onClick={() => onClear && onClear(a.id)}
+                aria-label="Close alert"
+                style={{ fontSize: "0.75rem" }}
               ></button>
             </div>
           );

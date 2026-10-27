@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import Loading from "../../components/Loading";
 
-const BASE_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
+const BASE_URL = process.env.REACT_APP_SERVER_URL || "https://avo-cart-server.vercel.app";
 
 const OAuthCallback = () => {
   const [searchParams] = useSearchParams();
@@ -28,7 +28,6 @@ const OAuthCallback = () => {
         .then((res) => {
           if (res.data.success) {
             login(token, res.data.data.user);
-            // Redirect to saved location or home
             const savedPath = sessionStorage.getItem("redirectAfterLogin") || "/";
             sessionStorage.removeItem("redirectAfterLogin");
             navigate(savedPath, { replace: true });

@@ -137,8 +137,8 @@ const ChatBoat = () => {
             backdropFilter: "blur(6px)",
           }}>
           <div
-            className='modal-dialog modal-dialog-centered modal-sm'
-            style={{ maxWidth: "420px" }}>
+            className='modal-dialog modal-dialog-centered'
+            style={{ maxWidth: "420px", margin: "0.75rem auto", width: "calc(100% - 1.5rem)" }}>
             <div className='modal-content border-0 shadow-lg rounded-4 overflow-hidden'>
               {/* Header */}
               <div className='modal-header bg-body-tertiary border-0 py-3'>

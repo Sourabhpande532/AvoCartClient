@@ -1,8 +1,14 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import API from "../api/api";
 import { useAuth } from "./AuthContext";
+import { normalizeProduct, normalizeProductList } from "../utils/fallbackImage";
 
 const AppContext = createContext();
+
+const normalizeItemsProduct = (items = []) =>
+  (items || []).map((item) =>
+    item?.product ? { ...item, product: normalizeProduct(item.product) } : item
+  );
 
 const AppProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
@@ -14,17 +20,20 @@ const AppProvider = ({ children }) => {
   const [addresses, setAddresses] = useState([]);
   const [orders, setOrders] = useState([]);
   const [globalSearch, setGlobalSearch] = useState("");
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const [theme, setTheme] = useState(
+    localStorage.getItem("avocart_theme") || "light"
+  );
+  const [coupon, setCoupon] = useState(0);
+  const [isCouponApplied, setIsCouponApplied] = useState(false);
 
   const { isAuthenticated } = useAuth();
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
+    localStorage.setItem("avocart_theme", newTheme);
   };
 
-  // Always fetch public data (products & categories)
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -33,7 +42,7 @@ const AppProvider = ({ children }) => {
           API.get("/products"),
           API.get("/categories"),
         ]);
-        setProducts(pRes.data.data.products || []);
+        setProducts(normalizeProductList(pRes.data.data.products || []));
         setCategories(cRes.data.data.categories || []);
       } catch (error) {
         console.error(error);
@@ -43,81 +52,130 @@ const AppProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  const pushAlert = (a) => {
-    setAlert((prev) => [...prev, a]);
-    setTimeout(() => setAlert((prev) => prev.slice(1)), 3500);
-  };
+  const pushAlert = useCallback((a) => {
+    const alertId = `${Date.now()}-${Math.random()}`;
+    const entry = { ...a, id: alertId };
+    setAlert((prev) => [...prev.slice(-2), entry]);
+    setTimeout(() => {
+      setAlert((prev) => prev.filter((item) => item.id !== alertId));
+    }, 3000);
+  }, []);
 
   const fetchCart = async () => {
     try {
       const res = await API.get("/cart");
-      setCart(res.data.data.cart || []);
+      setCart(normalizeItemsProduct(res.data.data.cart || []));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const addToCart = async (productId, qty = 1, size = "") => {
+  const addToCart = async (productId, qty = 1, size = "", silent = false) => {
     try {
       const res = await API.post("/cart", { productId, qty, size });
-      setCart(res.data.data.cart || []);
-      pushAlert({ type: "success", text: "Added to cart" });
+      setCart(normalizeItemsProduct(res.data.data.cart || []));
+      if (!silent) {
+        pushAlert({ type: "success", text: "Added to cart" });
+      }
     } catch (error) {
       console.error(error);
-      pushAlert({ type: "error", text: "Failed to add to cart" });
+      if (!silent) {
+        pushAlert({ type: "error", text: "Failed to add to cart" });
+      }
     }
   };
 
   const updateCartQty = async (cartItemId, newQty) => {
     try {
+      const currentItem = cart.find((item) => item._id === cartItemId);
+      const isIncreasing = currentItem ? newQty > currentItem.qty : true;
       await API.put(`/cart/${cartItemId}`, { qty: newQty });
       await fetchCart();
-      // Toast message removed to prevent spam when rapidly clicking
+      pushAlert({
+        type: "info",
+        text: isIncreasing ? "Quantity increased in cart" : "Quantity decreased in cart",
+      });
     } catch (error) {
       console.error(error);
       pushAlert({ type: "error", text: "Failed to update cart" });
     }
   };
 
-  const removeFromCart = async (cartItemId) => {
+  const removeFromCart = async (cartItemId, silent = false) => {
     try {
       await API.delete(`/cart/${cartItemId}`);
       await fetchCart();
-      pushAlert({ type: "warning", text: "Removed from cart" });
+      if (!silent) {
+        pushAlert({ type: "warning", text: "Removed from cart" });
+      }
     } catch (error) {
       console.error(error);
-      pushAlert({ type: "error", text: "Failed to remove from cart" });
+      if (!silent) {
+        pushAlert({ type: "error", text: "Failed to remove from cart" });
+      }
     }
   };
 
   const fetchWishlist = async () => {
     try {
       const res = await API.get("/wishlist");
-      setWishlist(res.data.data.wishlist || []);
+      setWishlist(normalizeItemsProduct(res.data.data.wishlist || []));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const addToWishlist = async (productId) => {
+  const addToWishlist = async (productId, silent = false) => {
     try {
       const res = await API.post("/wishlist", { productId });
-      setWishlist(res.data.data.wishlist || []);
-      pushAlert({ type: "success", text: "Added to wishlist" });
+      setWishlist(normalizeItemsProduct(res.data.data.wishlist || []));
+      if (!silent) {
+        pushAlert({ type: "success", text: "Added to wishlist" });
+      }
     } catch (error) {
       console.error(error);
-      pushAlert({ type: "error", text: "Failed to add to wishlist" });
+      if (!silent) {
+        pushAlert({ type: "error", text: "Failed to add to wishlist" });
+      }
     }
   };
 
-  const removeFromWishlist = async (id) => {
+  const removeFromWishlist = async (id, silent = false) => {
     try {
       await API.delete(`/wishlist/${id}`);
       await fetchWishlist();
-      pushAlert({ type: "warning", text: "Removed from wishlist" });
+      if (!silent) {
+        pushAlert({ type: "warning", text: "Removed from wishlist" });
+      }
     } catch (error) {
       console.error(error);
-      pushAlert({ type: "error", text: "Failed to remove wishlist item" });
+      if (!silent) {
+        pushAlert({ type: "error", text: "Failed to remove wishlist item" });
+      }
+    }
+  };
+
+  const moveFromCartToWishlist = async (cartItem) => {
+    if (!cartItem?.product?._id) return;
+    try {
+      await addToWishlist(cartItem.product._id, true);
+      await removeFromCart(cartItem._id, true);
+      pushAlert({ type: "success", text: "Moved to wishlist" });
+    } catch (error) {
+      console.error(error);
+      pushAlert({ type: "error", text: "Failed to move item to wishlist" });
+    }
+  };
+
+  const moveFromWishlistToCart = async (wishlistItem) => {
+    if (!wishlistItem?.product?._id) return;
+    try {
+      await addToCart(wishlistItem.product._id, 1, wishlistItem.size || "M", true);
+      await removeFromWishlist(wishlistItem._id, true);
+      pushAlert({ type: "success", text: "Moved to cart" });
+    } catch (error) {
+      console.error(error);
+      pushAlert({ type: "error", text: "Failed to move item to cart" });
     }
   };
 
@@ -126,7 +184,7 @@ const AppProvider = ({ children }) => {
       const res = await API.get("/addresses");
       setAddresses(res.data.data.addresses || []);
     } catch (error) {
-      throw error;
+      console.error(error);
     }
   };
 
@@ -149,7 +207,7 @@ const AppProvider = ({ children }) => {
       return res.data.data.address;
     } catch (error) {
       console.error(error);
-      pushAlert({ type: "error", text: "Failed to update cart" });
+      pushAlert({ type: "error", text: "Failed to update address" });
     }
   };
 
@@ -167,7 +225,13 @@ const AppProvider = ({ children }) => {
   const fetchOrders = async () => {
     try {
       const res = await API.get("/orders");
-      setOrders(res.data.data.orders || []);
+      const rawOrders = res.data.data.orders || [];
+      setOrders(
+        rawOrders.map((o) => ({
+          ...o,
+          items: normalizeItemsProduct(o.items || []),
+        }))
+      );
     } catch (error) {
       console.error(error);
     }
@@ -179,7 +243,9 @@ const AppProvider = ({ children }) => {
       const created = res.data.data.order;
       await fetchOrders();
       await fetchCart();
-      pushAlert({ type: "success", text: "Order placed successfully" });
+      setCoupon(0);
+      setIsCouponApplied(false);
+      pushAlert({ type: "success", text: "Order Placed Successfully." });
       return created;
     } catch (err) {
       console.error(err);
@@ -193,12 +259,11 @@ const AppProvider = ({ children }) => {
       await fetchOrders();
       pushAlert({ type: "danger", text: "Order deleted" });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       pushAlert({ type: "error", text: "Failed to delete order" });
     }
   };
 
-  // Fetch user-specific data only when authenticated
   useEffect(() => {
     if (isAuthenticated) {
       fetchCart();
@@ -224,6 +289,8 @@ const AppProvider = ({ children }) => {
         setWishlist,
         addToWishlist,
         removeFromWishlist,
+        moveFromCartToWishlist,
+        moveFromWishlistToCart,
         cart,
         setCart,
         addToCart,
@@ -243,6 +310,10 @@ const AppProvider = ({ children }) => {
         theme,
         toggleTheme,
         pushAlert,
+        coupon,
+        setCoupon,
+        isCouponApplied,
+        setIsCouponApplied,
       }}>
       {children}
     </AppContext.Provider>

@@ -28,71 +28,116 @@ const Footer = () => {
   };
 
   return (
-    <footer className="footer py-5 mt-auto border-top bg-body-tertiary">
+    <footer className="attirex-footer py-5 mt-auto">
       <div className="container">
         <div className="row g-4">
-          <div className="col-lg-4">
-            <h5 className="fw-bold mb-3 d-flex align-items-center gap-2">
-              <span>🥑</span> AvoCart
+          {/* Brand & About */}
+          <div className="col-lg-3 col-md-6">
+            <h5 className="attirex-footer-heading d-flex align-items-center gap-2">
+              <span>🥑</span> AVOCART
             </h5>
-            <p className="text-muted small pe-lg-4">
-              Curated premium products designed for modern living. Uncompromising quality and timeless style delivered to your doorstep.
+            <p
+              className="small mb-3"
+              style={{ color: "rgba(255, 255, 255, 0.78)", lineHeight: 1.7 }}
+            >
+              Specializes in providing high-quality, stylish fashion and curated
+              lifestyle essentials for your wardrobe.
             </p>
+            <div className="d-flex gap-2">
+              <a
+                href="https://github.com/Sourabhpande532"
+                target="_blank"
+                rel="noreferrer"
+                className="attirex-social-icon"
+                title="GitHub"
+              >
+                GH
+              </a>
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                className="attirex-social-icon"
+                title="LinkedIn"
+              >
+                IN
+              </a>
+              <a
+                href="mailto:sourabhpande43@gmail.com"
+                className="attirex-social-icon"
+                title="Email"
+              >
+                @
+              </a>
+            </div>
           </div>
-          <div className="col-6 col-lg-2">
-            <h6 className="fw-bold mb-3 text-uppercase small tracking-wider text-muted">Catalog</h6>
+
+          {/* Catalog Links */}
+          <div className="col-6 col-lg-2 col-md-6">
+            <h6 className="attirex-footer-heading">COMPANY</h6>
             <ul className="list-unstyled d-flex flex-column gap-2 mb-0">
               <li>
                 <Link
                   to="/products"
                   onClick={scrollToTop}
-                  className="text-decoration-none text-muted"
-                  style={{ fontSize: "0.875rem" }}
+                  className="attirex-footer-link"
                 >
                   All Products
                 </Link>
               </li>
               <li>
                 <Link
-                  to={getCatId("Electronics") ? `/products?category=${getCatId("Electronics")}` : "/products"}
+                  to={
+                    getCatId("Men")
+                      ? `/products?category=${getCatId("Men")}`
+                      : "/products"
+                  }
                   onClick={scrollToTop}
-                  className="text-decoration-none text-muted"
-                  style={{ fontSize: "0.875rem" }}
-                >
-                  Electronics
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={getCatId("Men") ? `/products?category=${getCatId("Men")}` : "/products"}
-                  onClick={scrollToTop}
-                  className="text-decoration-none text-muted"
-                  style={{ fontSize: "0.875rem" }}
+                  className="attirex-footer-link"
                 >
                   Men's Fashion
                 </Link>
               </li>
               <li>
                 <Link
-                  to={getCatId("Women") ? `/products?category=${getCatId("Women")}` : "/products"}
+                  to={
+                    getCatId("Women")
+                      ? `/products?category=${getCatId("Women")}`
+                      : "/products"
+                  }
                   onClick={scrollToTop}
-                  className="text-decoration-none text-muted"
-                  style={{ fontSize: "0.875rem" }}
+                  className="attirex-footer-link"
                 >
                   Women's Fashion
                 </Link>
               </li>
+              <li>
+                <Link
+                  to={
+                    getCatId("Electronics")
+                      ? `/products?category=${getCatId("Electronics")}`
+                      : "/products"
+                  }
+                  onClick={scrollToTop}
+                  className="attirex-footer-link"
+                >
+                  Electronics
+                </Link>
+              </li>
             </ul>
           </div>
-          <div className="col-6 col-lg-2">
-            <h6 className="fw-bold mb-3 text-uppercase small tracking-wider text-muted">Account & Support</h6>
+
+          {/* Account & Support */}
+          <div className="col-6 col-lg-3 col-md-6">
+            <h6 className="attirex-footer-heading">ACCOUNT & SUPPORT</h6>
             <ul className="list-unstyled d-flex flex-column gap-2 mb-0">
               <li>
                 <button
                   type="button"
-                  onClick={() => handleSupportAction("View and manage your orders below.")}
-                  className="btn btn-link p-0 text-decoration-none text-muted text-start shadow-none"
-                  style={{ fontSize: "0.875rem" }}
+                  onClick={() =>
+                    handleSupportAction("View and manage your orders below.")
+                  }
+                  className="attirex-footer-link"
                 >
                   My Orders
                 </button>
@@ -100,9 +145,12 @@ const Footer = () => {
               <li>
                 <button
                   type="button"
-                  onClick={() => handleSupportAction("Select an order to initiate return or replacement.")}
-                  className="btn btn-link p-0 text-decoration-none text-muted text-start shadow-none"
-                  style={{ fontSize: "0.875rem" }}
+                  onClick={() =>
+                    handleSupportAction(
+                      "Select an order to initiate return or replacement."
+                    )
+                  }
+                  className="attirex-footer-link"
                 >
                   Order Returns
                 </button>
@@ -110,9 +158,12 @@ const Footer = () => {
               <li>
                 <button
                   type="button"
-                  onClick={() => handleSupportAction("Real-time order delivery updates in your profile.")}
-                  className="btn btn-link p-0 text-decoration-none text-muted text-start shadow-none"
-                  style={{ fontSize: "0.875rem" }}
+                  onClick={() =>
+                    handleSupportAction(
+                      "Real-time order delivery updates in your profile."
+                    )
+                  }
+                  className="attirex-footer-link"
                 >
                   Track Order
                 </button>
@@ -121,53 +172,106 @@ const Footer = () => {
                 <button
                   type="button"
                   onClick={() => handleSupportAction()}
-                  className="btn btn-link p-0 text-decoration-none text-muted text-start shadow-none"
-                  style={{ fontSize: "0.875rem" }}
+                  className="attirex-footer-link"
                 >
                   Saved Addresses
                 </button>
               </li>
             </ul>
           </div>
-          <div className="col-lg-4">
-            <h6 className="fw-bold mb-3 text-uppercase small tracking-wider text-muted">Newsletter</h6>
-            <p className="text-muted small">Subscribe for early access to releases and member-only promotions.</p>
-            <div className="input-group mb-3">
-              <input type="email" id="newsletter-email" className="form-control" placeholder="enter your email..." />
-              <button className="btn btn-primary px-3" type="button" onClick={() => {
-                const email = document.getElementById('newsletter-email').value;
-                if(email && email.includes("@")) {
-                  pushAlert({ type: "success", text: `Thank you for subscribing, ${email}!` });
-                  document.getElementById('newsletter-email').value = "";
-                } else {
-                  pushAlert({ type: "error", text: "Please enter a valid email." });
-                }
-              }}>Subscribe</button>
+
+          {/* Contact & Newsletter */}
+          <div className="col-lg-4 col-md-6">
+            <h6 className="attirex-footer-heading">CONTACT US & NEWSLETTER</h6>
+            <p
+              className="small mb-2"
+              style={{ color: "rgba(255, 255, 255, 0.78)" }}
+            >
+              📍 211303 Look Book Street, New Delhi, India
+              <br />
+              📞 +91 123-456-7890 | ✉️ support@avocart.com
+            </p>
+            <div className="input-group mt-3">
+              <input
+                type="email"
+                id="newsletter-email"
+                className="form-control form-control-sm"
+                placeholder="Enter your email..."
+              />
+              <button
+                className="btn btn-sm px-3 fw-bold text-white"
+                style={{ backgroundColor: "var(--light-blue)" }}
+                type="button"
+                onClick={() => {
+                  const emailInput =
+                    document.getElementById("newsletter-email");
+                  const email = emailInput?.value || "";
+                  if (email && email.includes("@")) {
+                    pushAlert({
+                      type: "success",
+                      text: `Thank you for subscribing, ${email}!`,
+                    });
+                    emailInput.value = "";
+                  } else {
+                    pushAlert({
+                      type: "error",
+                      text: "Please enter a valid email.",
+                    });
+                  }
+                }}
+              >
+                Subscribe
+              </button>
             </div>
           </div>
         </div>
-        <hr className="my-4 opacity-25" />
+
+        <hr
+          className="my-4"
+          style={{ borderColor: "rgba(255, 255, 255, 0.2)" }}
+        />
+
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-          <p className="mb-0 text-muted small">© 2026 AvoCart Inc. All Rights Reserved.</p>
-          <div className="d-flex gap-4 small text-muted">
+          <p
+            className="mb-0 small"
+            style={{ color: "rgba(255, 255, 255, 0.75)" }}
+          >
+            © 2026 AvoCart Inc. All Rights Reserved.
+          </p>
+          <div className="d-flex gap-4 small">
             <button
               type="button"
-              className="btn btn-link p-0 text-muted small text-decoration-none shadow-none"
-              onClick={() => pushAlert({ type: "info", text: "Privacy Policy: Customer data is protected with 256-bit encryption." })}
+              className="attirex-footer-link"
+              onClick={() =>
+                pushAlert({
+                  type: "info",
+                  text: "Privacy Policy: Customer data is protected with 256-bit encryption.",
+                })
+              }
             >
               Privacy Policy
             </button>
             <button
               type="button"
-              className="btn btn-link p-0 text-muted small text-decoration-none shadow-none"
-              onClick={() => pushAlert({ type: "info", text: "Terms of Service: 10-day replacement and 100% authentic products guaranteed." })}
+              className="attirex-footer-link"
+              onClick={() =>
+                pushAlert({
+                  type: "info",
+                  text: "Terms of Service: 10-day replacement and 100% authentic products guaranteed.",
+                })
+              }
             >
               Terms of Service
             </button>
             <button
               type="button"
-              className="btn btn-link p-0 text-muted small text-decoration-none shadow-none"
-              onClick={() => pushAlert({ type: "info", text: "Cookie Settings: Essential session & cart cookies enabled." })}
+              className="attirex-footer-link"
+              onClick={() =>
+                pushAlert({
+                  type: "info",
+                  text: "Cookie Settings: Essential session & cart cookies enabled.",
+                })
+              }
             >
               Cookie Settings
             </button>
