@@ -72,7 +72,7 @@ Watch a walkthrough (5-7 minutes) of all major features of this app:<br>
 
 ## Reference
 
-## ![](./assets/avoCart.png)
+## ![](./assets/landing.png)
 
 ## ![](./assets/auth.png)
 
