@@ -1,4 +1,5 @@
 import FiltersSidebar from "../components/FiltersSidebar";
+import Loading from "../components/Loading";
 import { FilteredProduct } from "../components/product-list";
 import useProduct from "../hooks/useProduct";
 
@@ -22,8 +23,7 @@ export const ProductListing = () => {
     filtered,
   } = useProduct();
 
-  if (loading)
-    return <p className="text-center py-5 text-muted">Loading products...</p>;
+  if (loading) return <Loading variant="products" />;
 
   return (
     <>

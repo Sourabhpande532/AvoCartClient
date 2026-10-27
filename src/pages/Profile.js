@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 import { useAppFeatures } from "../contexts/AppContext";
 import { useAuth } from "../contexts/AuthContext";
 import { getFallbackImage, getProductImage } from "../utils/fallbackImage";
@@ -68,12 +69,7 @@ export const Profile = () => {
   };
 
   if (loading) {
-    return (
-      <div className="container py-5 text-center">
-        <div className="spinner-border text-secondary" role="status" />
-        <p className="mt-3 text-muted small">Loading your profile...</p>
-      </div>
-    );
+    return <Loading variant="profile" />;
   }
 
   const primaryAddress = addresses?.[0];

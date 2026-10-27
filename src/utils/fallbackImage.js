@@ -8,7 +8,7 @@ export const titleToImageMap = {
   "Portable Bluetooth Speaker":
     "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop&q=80",
 
-  // Men (ATTIREX studio portrait fashion photos)
+  // Men
   "Men Premium Jacket":
     "https://res.cloudinary.com/dptfwcnro/image/upload/v1684160852/E-comm%20ATTIREX/Mens-Fashion/istockphoto-1439804198-612x612_upwx0z.jpg",
   "Men Premium Jacket.":
@@ -34,7 +34,7 @@ export const titleToImageMap = {
   "Men Trending Safari pant.":
     "https://res.cloudinary.com/dptfwcnro/image/upload/v1684231008/E-comm%20ATTIREX/Mens-Fashion/istockphoto-1345963025-612x612_ostie7.jpg",
 
-  // Women (ATTIREX studio portrait fashion photos)
+  // Women
   "Women Premium Jacket":
     "https://res.cloudinary.com/dptfwcnro/image/upload/v1684160313/E-comm%20ATTIREX/Womens-Fashion/istockphoto-1421800979-612x612_jhezda.jpg",
   "Premium Jacket.":
@@ -62,7 +62,7 @@ export const titleToImageMap = {
   "Girls frokes.":
     "https://res.cloudinary.com/dptfwcnro/image/upload/v1684160787/E-comm%20ATTIREX/Kids-Fashion/istockphoto-1361311726-612x612_cnjg6c.jpg",
 
-  // Kids (ATTIREX studio portrait kids fashion photos)
+  // Kids
   "Kids Premium Jacket":
     "https://res.cloudinary.com/dptfwcnro/image/upload/v1684621708/E-comm%20ATTIREX/Kids-Fashion/hmgoepprod_zvhtpt.webp",
   "Kids Premium Jacket.":
@@ -84,7 +84,7 @@ export const titleToImageMap = {
   "Jens little baby":
     "https://res.cloudinary.com/dptfwcnro/image/upload/v1684160742/E-comm%20ATTIREX/Kids-Fashion/istockphoto-1296361252-612x612_rkq0ow.jpg",
 
-  // Home & Activewear (ATTIREX studio portrait activewear & casual photos)
+  // Home & Activewear
   "Home Premium Clothes":
     "https://res.cloudinary.com/dptfwcnro/image/upload/v1684156820/E-comm%20ATTIREX/Womens-Fashion/istockphoto-1366038769-612x612_pa4c9e.jpg",
   "Home Premium Cloths.":
@@ -127,7 +127,6 @@ export const titleToImageMap = {
     "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&auto=format&fit=crop&q=80",
 };
 
-// Direct 1-to-1 Collection Tiles matching ATTIREX ClothingCategories.jsx & product images
 export const COLLECTION_TILES = [
   {
     title: "Active Wear",

@@ -90,20 +90,27 @@ const ChatBoat = () => {
   }, [messages, showModal]);
 
   const handleChat = async () => {
-    if (!chatInput.trim()) return;
+    const promptText = chatInput.trim();
+    if (!promptText || loading) return;
 
-    const userMessage = { type: "user", text: chatInput };
+    const userMessage = { type: "user", text: promptText };
     setMessages((prev) => [...prev, userMessage]);
     setChatInput("");
     setLoading(true);
     setError("");
 
     try {
-      const res = await API.post("/ai/chat", { message: chatInput });
+      const res = await API.post("/ai/chat", { message: promptText });
+      const rawReply = (res.data?.reply || "").trim();
+      const cleanedReply = rawReply
+        .replace(/^(user\s+safe|safely\s+safe|safe|unsafe)[\s:,.-]*/gi, "")
+        .trim();
 
       const aiMessage = {
         type: "ai",
-        text: res.data.reply || "No response from AI",
+        text:
+          cleanedReply ||
+          "Welcome to AvoCart! Ask me about our Men, Women, Kids, Home, or Electronics collections, prices, free shipping, or 10-day return policy.",
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -178,6 +185,7 @@ const ChatBoat = () => {
                 className='modal-body bg-body-tertiary'
                 style={{
                   height: "390px",
+                  maxHeight: "62vh",
                   overflowY: "auto",
                   padding: "1.25rem",
                   display: "flex",

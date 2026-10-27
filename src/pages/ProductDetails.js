@@ -85,7 +85,7 @@ export function ProductDetails() {
     };
   }, [id]);
 
-  if (detailLoading) return <Loading />;
+  if (detailLoading) return <Loading variant="detail" />;
 
   if (notFound || !product) {
     return (

@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import PopupMessage from "../components/PopupMessage";
+import Loading from "../components/Loading";
 import { useAppFeatures } from "../contexts/AppContext";
 import { getFallbackImage, getProductImage } from "../utils/fallbackImage";
 
@@ -89,13 +90,7 @@ export const CartPage = () => {
         </span>
       </div>
 
-      {loading && (
-        <div className="text-center py-5">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      )}
+      {loading && <Loading variant="cart" />}
 
       {!loading && filteredCart.length === 0 && (
         <div className="card border shadow-sm rounded-4 p-5 text-center mx-auto" style={{ maxWidth: "640px" }}>
