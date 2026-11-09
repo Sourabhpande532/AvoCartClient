@@ -37,6 +37,7 @@ const AuthModal = () => {
         password: formData.password,
       });
       if (res.data.success) {
+        setFormData({ name: "", email: "", password: "" });
         login(res.data.data.token, res.data.data.user);
         setShowAuthModal(false);
       }
@@ -62,6 +63,7 @@ const AuthModal = () => {
         password: formData.password,
       });
       if (res.data.success) {
+        setFormData({ name: "", email: "", password: "" });
         login(res.data.data.token, res.data.data.user);
         setShowAuthModal(false);
       }
@@ -78,6 +80,7 @@ const AuthModal = () => {
     try {
       const res = await axios.post(`${BASE_URL}/auth/guest`);
       if (res.data.success) {
+        setFormData({ name: "", email: "", password: "" });
         login(res.data.data.token, res.data.data.user);
         setShowAuthModal(false);
       }
@@ -135,7 +138,7 @@ const AuthModal = () => {
         {error && <div className="auth-error">{error}</div>}
 
         {tab === "signin" && (
-          <form onSubmit={handleSignIn} className="auth-form" id="form-signin">
+          <form onSubmit={handleSignIn} className="auth-form" id="form-signin" autoComplete="off">
             <div className="auth-field">
               <label htmlFor="signin-email">Email Address</label>
               <input
@@ -146,20 +149,26 @@ const AuthModal = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                autoComplete="email"
+                autoComplete="off"
               />
             </div>
             <div className="auth-field">
               <label htmlFor="signin-password">Password</label>
               <input
                 id="signin-password"
-                type="password"
+                type="text"
                 name="password"
+                className="auth-password-mask"
                 placeholder="Enter password"
                 value={formData.password}
                 onChange={handleChange}
                 required
-                autoComplete="current-password"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                data-lpignore="true"
+                data-form-type="other"
               />
             </div>
             <button id="btn-signin" type="submit" className="auth-btn-primary" disabled={submitting}>
@@ -169,7 +178,7 @@ const AuthModal = () => {
         )}
 
         {tab === "signup" && (
-          <form onSubmit={handleSignUp} className="auth-form" id="form-signup">
+          <form onSubmit={handleSignUp} className="auth-form" id="form-signup" autoComplete="off">
             <div className="auth-field">
               <label htmlFor="signup-name">Full Name</label>
               <input
@@ -180,6 +189,7 @@ const AuthModal = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
+                autoComplete="off"
               />
             </div>
             <div className="auth-field">
@@ -192,20 +202,26 @@ const AuthModal = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                autoComplete="email"
+                autoComplete="off"
               />
             </div>
             <div className="auth-field">
               <label htmlFor="signup-password">Password</label>
               <input
                 id="signup-password"
-                type="password"
+                type="text"
                 name="password"
+                className="auth-password-mask"
                 placeholder="Minimum 6 characters"
                 value={formData.password}
                 onChange={handleChange}
                 required
-                autoComplete="new-password"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                data-lpignore="true"
+                data-form-type="other"
               />
             </div>
             <button id="btn-signup" type="submit" className="auth-btn-primary" disabled={submitting}>

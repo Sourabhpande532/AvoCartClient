@@ -4,27 +4,35 @@ import { Link } from "react-router-dom";
 const slides = [
   {
     image:
-      "https://res.cloudinary.com/dptfwcnro/image/upload/v1683867706/E-comm%20ATTIREX/carousel1_xdmpbx.jpg",
-    fallback:
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1400&auto=format&fit=crop&q=80",
-    heading: "Get 20% off on your first order!",
-    subtitle: "Find your perfect shopping experience at AvoCart",
+      "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&auto=format&fit=crop&q=80",
+    tag: "AVOCART SEASONAL EDIT",
+    heading: "Elevate Your Everyday Wardrobe",
+    subtitle:
+      "Discover curated fashion, contemporary essentials, and statement styles crafted for comfort.",
   },
   {
     image:
-      "https://res.cloudinary.com/dptfwcnro/image/upload/v1683867723/E-comm%20ATTIREX/carousel2_ubxgzo.jpg",
-    fallback:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&auto=format&fit=crop&q=80",
-    heading: "New Season Arrivals 2026",
-    subtitle: "Explore timeless menswear, designer dresses, and modern essentials",
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&auto=format&fit=crop&q=80",
+    tag: "LIMITED TIME OFFER",
+    heading: "Flat 25% Off New Arrivals",
+    subtitle:
+      "Refresh your look with designer dresses, tailored menswear, and trending collections.",
   },
   {
     image:
-      "https://res.cloudinary.com/dptfwcnro/image/upload/v1683867713/E-comm%20ATTIREX/carousel3_thepsd.jpg",
-    fallback:
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&auto=format&fit=crop&q=80",
-    heading: "Curated Luxury & Everyday Comfort",
-    subtitle: "Premium quality crafted for every celebration and lifestyle",
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=80",
+    tag: "LUXURY & LIFESTYLE",
+    heading: "Timeless Classics & Modern Fits",
+    subtitle:
+      "Handpicked apparel and accessories designed for every celebration and season.",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&auto=format&fit=crop&q=80",
+    tag: "EXPRESS DELIVERY",
+    heading: "Curated Style Delivered Free",
+    subtitle:
+      "Enjoy free nationwide shipping and 10-day hassle-free returns on every AvoCart order.",
   },
 ];
 
@@ -34,7 +42,7 @@ export const Hero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5500);
+    }, 3800);
     return () => clearInterval(timer);
   }, []);
 
@@ -42,16 +50,24 @@ export const Hero = () => {
 
   return (
     <section className="attirex-carousel">
-      <div
-        className="attirex-banner"
-        style={{
-          backgroundImage: `url("${active.image}"), url("${active.fallback}")`,
-        }}>
+      <div className="attirex-banner">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`attirex-hero-slide-bg ${
+              index === currentSlide ? "active" : ""
+            }`}
+            style={{ backgroundImage: `url("${slide.image}")` }}
+            aria-hidden="true"
+          />
+        ))}
+
         <div className="attirex-banner-text">
+          <span className="attirex-hero-tag">{active.tag}</span>
           <h2>{active.heading}</h2>
           <p>{active.subtitle}</p>
           <Link to="/products" className="attirex-hero-btn">
-            Shop Now
+            Explore Collection
           </Link>
         </div>
 

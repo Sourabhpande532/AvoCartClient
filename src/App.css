@@ -488,7 +488,7 @@ body {
   }
 }
 
-/* ─── ATTIREX HERO SLIDESHOW CAROUSEL ────────────────────────── */
+/* ─── AVOCART HERO SLIDESHOW CAROUSEL ────────────────────────── */
 .attirex-carousel {
   width: 100%;
   position: relative;
@@ -496,45 +496,84 @@ body {
 }
 
 .attirex-banner {
-  background-size: cover;
-  background-position: center top;
-  height: 33rem;
+  background-color: #0f172a;
+  height: 32.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   position: relative;
-  transition: background-image 0.7s ease-in-out;
+  overflow: hidden;
   padding: 1.5rem;
+}
+
+.attirex-hero-slide-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.9s ease-in-out, transform 4.2s ease-out;
+  z-index: 0;
+}
+
+.attirex-hero-slide-bg.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .attirex-banner::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
-    to bottom,
-    rgba(18, 25, 50, 0.22) 0%,
-    rgba(18, 25, 50, 0.42) 100%
+    135deg,
+    rgba(15, 23, 42, 0.58) 0%,
+    rgba(18, 25, 50, 0.35) 50%,
+    rgba(15, 23, 42, 0.62) 100%
   );
 }
 
 .attirex-banner-text {
   position: relative;
   z-index: 2;
-  background-color: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 2.35rem 2.75rem;
-  border-radius: 0.5rem;
-  max-width: 640px;
-  box-shadow: 0 12px 32px rgba(18, 25, 50, 0.22);
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2.25rem 2.85rem;
+  border-radius: 0.85rem;
+  max-width: 650px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
 }
 
 [data-bs-theme="dark"] .attirex-banner-text,
 .dark .attirex-banner-text {
-  background-color: rgba(18, 25, 50, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-color: rgba(15, 23, 42, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+}
+
+.attirex-hero-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 0.85rem;
+  background: rgba(18, 25, 50, 0.09);
+  color: var(--deep-blue);
+}
+
+[data-bs-theme="dark"] .attirex-hero-tag,
+.dark .attirex-hero-tag {
+  background: rgba(96, 165, 250, 0.16);
+  color: #93c5fd;
 }
 
 .attirex-banner-text h2 {
@@ -551,10 +590,11 @@ body {
 }
 
 .attirex-banner-text p {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  margin-bottom: 1.75rem;
-  color: var(--light-blue);
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  margin-bottom: 1.65rem;
+  color: var(--medium-blue);
 }
 
 [data-bs-theme="dark"] .attirex-banner-text p,
@@ -646,20 +686,25 @@ body {
 
 @media (max-width: 767px) {
   .attirex-banner {
-    height: 15.8rem;
+    height: 16.5rem;
     padding: 0.85rem;
   }
   .attirex-banner-text {
-    padding: 0.95rem 1.15rem;
-    max-width: 84%;
-    border-radius: 0.35rem;
+    padding: 1rem 1.15rem;
+    max-width: 86%;
+    border-radius: 0.6rem;
+  }
+  .attirex-hero-tag {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.45rem;
   }
   .attirex-banner-text h2 {
-    font-size: 1rem;
+    font-size: 1.05rem;
     margin-bottom: 0.35rem;
   }
   .attirex-banner-text p {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     margin-bottom: 0.75rem;
   }
   .attirex-hero-btn {
@@ -2223,6 +2268,11 @@ body {
 .auth-field input:focus {
   border-color: #60a5fa;
   box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.25);
+}
+
+.auth-password-mask {
+  -webkit-text-security: disc;
+  text-security: disc;
 }
 
 .auth-btn-primary {
