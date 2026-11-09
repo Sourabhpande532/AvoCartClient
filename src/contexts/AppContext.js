@@ -45,7 +45,7 @@ const AppProvider = ({ children }) => {
         setProducts(normalizeProductList(pRes.data.data.products || []));
         setCategories(cRes.data.data.categories || []);
       } catch (error) {
-        console.error(error);
+        // Fallback handled gracefully by empty/cached state
       }
       setLoading(false);
     }
@@ -66,7 +66,7 @@ const AppProvider = ({ children }) => {
       const res = await API.get("/cart");
       setCart(normalizeItemsProduct(res.data.data.cart || []));
     } catch (error) {
-      console.error(error);
+      // Handled silently on background sync
     }
   };
 
@@ -78,7 +78,6 @@ const AppProvider = ({ children }) => {
         pushAlert({ type: "success", text: "Added to cart" });
       }
     } catch (error) {
-      console.error(error);
       if (!silent) {
         pushAlert({ type: "error", text: "Failed to add to cart" });
       }
@@ -96,7 +95,6 @@ const AppProvider = ({ children }) => {
         text: isIncreasing ? "Quantity increased in cart" : "Quantity decreased in cart",
       });
     } catch (error) {
-      console.error(error);
       pushAlert({ type: "error", text: "Failed to update cart" });
     }
   };
@@ -109,7 +107,6 @@ const AppProvider = ({ children }) => {
         pushAlert({ type: "warning", text: "Removed from cart" });
       }
     } catch (error) {
-      console.error(error);
       if (!silent) {
         pushAlert({ type: "error", text: "Failed to remove from cart" });
       }
@@ -121,7 +118,7 @@ const AppProvider = ({ children }) => {
       const res = await API.get("/wishlist");
       setWishlist(normalizeItemsProduct(res.data.data.wishlist || []));
     } catch (error) {
-      console.error(error);
+      // Handled silently on background sync
     }
   };
 
@@ -133,7 +130,6 @@ const AppProvider = ({ children }) => {
         pushAlert({ type: "success", text: "Added to wishlist" });
       }
     } catch (error) {
-      console.error(error);
       if (!silent) {
         pushAlert({ type: "error", text: "Failed to add to wishlist" });
       }
@@ -148,7 +144,6 @@ const AppProvider = ({ children }) => {
         pushAlert({ type: "warning", text: "Removed from wishlist" });
       }
     } catch (error) {
-      console.error(error);
       if (!silent) {
         pushAlert({ type: "error", text: "Failed to remove wishlist item" });
       }
@@ -162,7 +157,6 @@ const AppProvider = ({ children }) => {
       await removeFromCart(cartItem._id, true);
       pushAlert({ type: "success", text: "Moved to wishlist" });
     } catch (error) {
-      console.error(error);
       pushAlert({ type: "error", text: "Failed to move item to wishlist" });
     }
   };
@@ -174,7 +168,6 @@ const AppProvider = ({ children }) => {
       await removeFromWishlist(wishlistItem._id, true);
       pushAlert({ type: "success", text: "Moved to cart" });
     } catch (error) {
-      console.error(error);
       pushAlert({ type: "error", text: "Failed to move item to cart" });
     }
   };
@@ -184,7 +177,7 @@ const AppProvider = ({ children }) => {
       const res = await API.get("/addresses");
       setAddresses(res.data.data.addresses || []);
     } catch (error) {
-      console.error(error);
+      // Handled silently on background sync
     }
   };
 
@@ -194,7 +187,6 @@ const AppProvider = ({ children }) => {
       setAddresses(res.data.data.addresses || []);
       pushAlert({ type: "success", text: "Address added" });
     } catch (error) {
-      console.error(error);
       pushAlert({ type: "error", text: "Failed to add address" });
     }
   };
@@ -206,7 +198,6 @@ const AppProvider = ({ children }) => {
       pushAlert({ type: "info", text: "Address updated" });
       return res.data.data.address;
     } catch (error) {
-      console.error(error);
       pushAlert({ type: "error", text: "Failed to update address" });
     }
   };
@@ -217,7 +208,6 @@ const AppProvider = ({ children }) => {
       await fetchAddresses();
       pushAlert({ type: "warning", text: "Address deleted" });
     } catch (error) {
-      console.error(error);
       pushAlert({ type: "error", text: "Failed to delete address" });
     }
   };
@@ -233,7 +223,7 @@ const AppProvider = ({ children }) => {
         }))
       );
     } catch (error) {
-      console.error(error);
+      // Handled silently on background sync
     }
   };
 
@@ -248,7 +238,6 @@ const AppProvider = ({ children }) => {
       pushAlert({ type: "success", text: "Order Placed Successfully." });
       return created;
     } catch (err) {
-      console.error(err);
       pushAlert({ type: "error", text: "Failed to place order" });
     }
   };
@@ -259,7 +248,6 @@ const AppProvider = ({ children }) => {
       await fetchOrders();
       pushAlert({ type: "danger", text: "Order deleted" });
     } catch (error) {
-      console.error(error);
       pushAlert({ type: "error", text: "Failed to delete order" });
     }
   };

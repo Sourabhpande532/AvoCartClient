@@ -6,33 +6,29 @@ const slides = [
     image:
       "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&auto=format&fit=crop&q=80",
     tag: "AVOCART SEASONAL EDIT",
-    heading: "Elevate Your Everyday Wardrobe",
-    subtitle:
-      "Discover curated fashion, contemporary essentials, and statement styles crafted for comfort.",
+    heading: "Elevate Your Everyday Style",
+    subtitle: "Discover curated fashion and contemporary essentials at AvoCart.",
   },
   {
     image:
       "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&auto=format&fit=crop&q=80",
     tag: "LIMITED TIME OFFER",
     heading: "Flat 25% Off New Arrivals",
-    subtitle:
-      "Refresh your look with designer dresses, tailored menswear, and trending collections.",
+    subtitle: "Refresh your wardrobe with designer dresses and tailored fits.",
   },
   {
     image:
       "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=80",
     tag: "LUXURY & LIFESTYLE",
     heading: "Timeless Classics & Modern Fits",
-    subtitle:
-      "Handpicked apparel and accessories designed for every celebration and season.",
+    subtitle: "Handpicked apparel designed for every celebration and season.",
   },
   {
     image:
       "https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&auto=format&fit=crop&q=80",
     tag: "EXPRESS DELIVERY",
     heading: "Curated Style Delivered Free",
-    subtitle:
-      "Enjoy free nationwide shipping and 10-day hassle-free returns on every AvoCart order.",
+    subtitle: "Enjoy free shipping and 10-day easy returns on every order.",
   },
 ];
 
@@ -67,7 +63,7 @@ export const Hero = () => {
           <h2>{active.heading}</h2>
           <p>{active.subtitle}</p>
           <Link to="/products" className="attirex-hero-btn">
-            Explore Collection
+            Shop Now
           </Link>
         </div>
 

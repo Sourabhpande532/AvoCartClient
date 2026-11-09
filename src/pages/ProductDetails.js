@@ -67,7 +67,6 @@ export function ProductDetails() {
           }
         }
       } catch (error) {
-        console.error(error);
         if (isMounted) {
           setProduct(null);
           setNotFound(true);

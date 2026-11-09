@@ -360,11 +360,15 @@ export const getProductImage = (product) => {
   if (titleToImageMap[trimmedTitle]) {
     return titleToImageMap[trimmedTitle];
   }
+  const normalizedTitle = formatProductTitle(trimmedTitle);
+  if (titleToImageMap[normalizedTitle]) {
+    return titleToImageMap[normalizedTitle];
+  }
   const img = product.images && product.images[0];
   if (img && typeof img === "string" && !img.includes("pollinations.ai")) {
     return img;
   }
-  return getFallbackImage(product.title);
+  return getFallbackImage(normalizedTitle || trimmedTitle);
 };
 
 const TYPO_TITLE_MAP = {
